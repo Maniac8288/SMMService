@@ -1,0 +1,110 @@
+﻿@section styles {
+    <link href="~/asserts/js/plugins/jasny-bootstrap/css/jasny-bootstrap.min.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/asserts/js/plugins/jasny-bootstrap/js/jasny-bootstrap.min.js"></script>
+    <script src="~/asserts/js/Social/Model.js"></script>
+    <script src="~/asserts/js/Social/ViewModel.js"></script>
+    <script src="~/asserts/js/knockout-Extansion/knockout-socialName.js"></script>
+    <script>
+        var Social = new Social.ViewModel();
+    </script>
+}
+
+<div class="container body-content">
+    @Html.Partial("_Partial/_HeadMenu")
+
+
+    <div class="col-md-9">
+        <div class="list-media add-post">
+            <div class="item ">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                    <div align="center">
+                        <span class="btn-file ">
+                            <span class="fileinput-new">
+                                <img src="~/asserts/img/icons/white-camera.png" />
+                               Фото
+                            </span><span class="fileinput-exists">Change</span><input type="file" name="...">
+                        </span>
+                      
+                    </div>
+                </div>
+            </div>
+            <div class="item ">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                    <div align="center">
+                        <span class="btn-file ">
+                            <span class="fileinput-new">
+                                <img src="~/asserts/img/icons/photos-mini.png" />
+                                Несколько фото
+                            </span><span class="fileinput-exists">Change</span><input type="file" multiple name="...">
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="item ">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                    <div align="center">
+                        <span class="btn-file ">
+                            <span class="fileinput-new">
+                                <img src="~/asserts/img/icons/videos-mini.png" />                            
+                                Видео
+                            </span><span class="fileinput-exists">Change</span><input type="file" multiple name="...">
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="item ">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                    <div align="center">
+                        <span class="btn-file ">
+                            <span class="fileinput-new">
+                                <img src="~/asserts/img/icons/href.png" />                             
+                                Ссылка
+                            </span><span class="fileinput-exists">Change</span><input type="file" multiple name="...">
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-box-post">
+            <textarea placeholder="Введите текст..."></textarea>
+            <i class="icon-smile"></i>
+            <span class="hashtags">#хэштэги</span>
+        </div>
+        <div class="title-section">
+            Выберите в какие соц. сети опубликовать пост:
+        </div>
+        @Html.Partial("_Partial/_Social")
+        <div class="title-section">
+            График публикации
+        </div>
+        <div class="description-section">
+            Выберите дату и время в будущем, когда вы хотите разместить свою публикацию.
+        </div>
+        <div class="choose-date">
+            <input type="date" />
+            <input type="time" />
+            <span>UTC+02</span>
+        </div>
+        <div class="list-menu ">
+            <div class="item">
+                <button class="blue-btn">Опубликовать сейчас</button>
+            </div>
+            <div class="item">
+                <button class="blue-btn">Запланировать</button>
+            </div>
+            <div class="item">
+                <button class="red-btn">Отправить на проверку</button>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,167 @@
+﻿@section styles{
+    <link href="~/asserts/js/plugins/Calendar/fullcalendar.min.css" rel="stylesheet" />
+    <link href="~/asserts/js/plugins/Calendar/fullcalendar.print.css"   rel="stylesheet" />
+    <link href="~/asserts/js/plugins/datepickerrange/daterangepicker.css" rel="stylesheet" />
+}
+@section scripts {
+    <script src="~/asserts/js/plugins/datepickerrange/moment-with-locales.js"></script>
+    <script src="~/asserts/js/plugins/datepickerrange/daterangepicker.js"></script>
+    <script src="~/asserts/js/Calendar/ViewModel.js"></script>
+    <script>
+        var ViewModel = new Calendar.ViewModel();
+
+    </script>
+    <script src="~/asserts/js/Common/DateInit.js"></script>
+    <script src="~/asserts/js/plugins/Calendar/fullcalendar.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var target;
+            $('#calendar').fullCalendar({
+                selectable: true,            
+                dayClick: function (date) {
+                    console.log('clicked ' + date.format());
+                },
+                select: function (startDate, endDate, e) {
+                     target = e.target;
+                    target.className += " selected"
+                    console.log(e);
+                    console.log('clicked ' + startDate.format());
+                },
+                unselect: function (startDate, endDate, e) {
+                    target.classList.remove("selected");
+                    console.log(e);
+              
+                },
+                eventSources: [
+                    // your event source
+                    {
+                        events: [ // put the array in the `events` property
+                            {
+                                title: 'Lorem  dolor sit 1',
+                                start: '2018-04-05',
+                                icon: "vk" 
+                            },                         
+                        ],                      
+                        className:'active'
+           
+                    },
+
+                    {
+                        events: [ // put the array in the `events` property
+                            {
+                                title: 'Lorem ipsum dolor sit 1',
+                                start: '2018-04-06',
+                                icon:'facebook'
+                            },
+                          
+                        ],
+                        className: 'wait'
+                   
+                    },
+                    // any other event sources...
+
+                ],
+                eventRender: function (event, element) {
+                    if (event.icon) {
+                        element.find(".fc-title").prepend("<i class='icon-calendar-" + event.icon + "'></i>");
+                    }
+                },
+                firstDay: 1,
+                height: 200,
+                header: {
+                    left: 'prev,next today',
+                    center: '',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'οюнь', 'οюль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                monthNamesShort: ['Янв.', 'Фев.', 'Март', 'Апр.', 'Май', 'οюнь', 'οюль', 'Авг.', 'Сент.', 'Окт.', 'Ноя.', 'Дек.'],
+                dayNames: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
+                dayNamesShort: ["ВС", "ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ"],
+                buttonText: {
+                    prev: "&nbsp;&#9668;&nbsp;",
+                    next: "&nbsp;&#9658;&nbsp;",
+                    prevYear: "&nbsp;&lt;&lt;&nbsp;",
+                    nextYear: "&nbsp;&gt;&gt;&nbsp;",
+                    today: "Сегодня",
+                    month: "Месяц",
+                    week: "Неделя",
+                    day: "День"
+                }
+            });
+        });
+    </script>
+}
+<div class="container body-content">
+    @Html.Partial("_Partial/_HeadMenu")
+</div>
+
+<div class="blue-filter">
+    <div class="container body-content" style="height:100%">
+        <div class="row filter">
+            <div class="item">
+                <a href="@Url.Action("Archive","Post")">
+                    <i class="icon icon-chronicle"></i>  Хроника
+                </a>
+            </div>
+            <div class="item">
+                <a href="@Url.Action("Calendar","Post")">
+                    <i class="icon icon-calendar"></i>  Календарь
+                </a>
+            </div>
+            <div class="item diaposon active" data-bind="style:{'display': ViewModel.RangeTime() === ''? 'flex':'inline-block'}" id="dateRange">
+                <!--ko if:ViewModel.RangeTime() !== ""-->
+                Другой диапазон <i class="icon-arrow-down"></i>
+                <div class="time" data-bind="text:ViewModel.RangeTime">
+                    4 февраля 2018г. - 4 марта 2018 г.
+                </div>
+                <!--/ko-->
+                <!--ko if:ViewModel.RangeTime() === ""-->
+                Выбирете дату<i class="icon-arrow-down"></i>
+
+                <!--/ko-->
+            </div>
+            <div class="item sort">
+                <i class="icon-lines"></i>
+
+                Сортировать по соц сети
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container body-content">
+    <div class="col-md-12">
+        <div class="grey-box">
+            <div class="filter-archive">
+                <button class="blue-btn ">Все</button>
+                <button class="green-btn  ">Опубликовано</button>
+                <button class="blue-btn ">Запланировано </button>
+                <button class="red-btn active">Ждет подтверждения</button>
+                <div class="pull-right">
+                    <span class="active">
+                        Неделя
+                    </span>
+                    <span>
+                        Месяц
+                    </span>
+                </div>
+            </div>
+            <div class="calendar-box">
+
+                <div id="calendar"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>

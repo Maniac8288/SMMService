@@ -1,0 +1,127 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section Scripts {
+
+    <script src="~/asserts/js/Social/Model.js"></script>
+    <script src="~/asserts/js/Social/ViewModel.js"></script>
+    <script src="~/asserts/js/knockout-Extansion/knockout-socialName.js"></script>
+    <script>
+        var Social = new Social.ViewModel();
+    </script>
+}
+
+<div class="container body-content">
+    @Html.Partial("_Partial/_HeadMenu")
+</div>
+<section class="grey-hr"></section>
+<div class="container body-content">
+    <div class="col-md-9">
+        <div class="post">
+            <div class="date-post">
+                Создан <span>14.01.18 - 12:00</span>
+            </div>
+            <div class="box-post">
+                <div class="pull-right">
+                    <i class="icon-pen"></i>
+                    <div class="tooltip-box">
+                        Заменить фото
+                    </div>
+                    <i class="icon-trash"></i>
+                    <i class="icon-downlaod"></i>
+                </div>
+                <div class="img-post">
+                    <img src="~/asserts/img/Temp/вид-у-клиента.png" />
+                </div>
+                <div class="text-post">
+                    Доброе утро!
+                    Желаем Вам приятных выходных!
+                    <div class="pull-right">
+                        <div class="edit-text">
+                            <div class="tooltip-box">
+                                Редактировать текст
+                            </div>
+                            <i class="icon-pen"></i>
+
+                        </div>
+                        <i class="icon-file"></i>
+                        <div class="tooltip-box file">
+                            Копировать текст
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="info-post">
+                <div class="date">
+                    Дата публикации: <span>14.01.18  18:00</span>
+                </div>
+                @Html.Partial("_Partial/_Social")
+                <div class="status-post">
+                    <div>
+                        Статус проверки:
+                    </div>
+                    <div class="decline">
+                        <img src="~/asserts/img/icons/minus.png" />
+                        <span>Не подтвержден</span>
+                    </div>
+                    <div class="accept">
+                        <img src="~/asserts/img/icons/red-acept.png" />
+                        Подтвержден клиентом <span>14.01.18</span>
+                    </div>
+                </div>
+            </div>
+            <div class="comments-box">
+                <div class="send-box">
+                    <div class="col-md-2">
+                        <div class="image-circle"></div>
+                    </div>
+                    <div class="col-md-10 send">
+                        <div>
+                            <div class="send-input">
+                                <input type="text" placeholder="Написать комментарий" id="add" />    <span class="icon icon-smile"></span>
+                                <span class="icon icon-camera"></span>
+                            </div>
+
+                        </div>
+                        <div>
+                            Нажмите “Enter”, чтобы прокомментировать
+                            <div class="radios">
+                                <div class="item">
+                                    <label class="container-radio">
+                                        для команды
+                                        <input type="radio" name="type">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="item">
+                                    <label class="container-radio">
+                                        для всех
+                                        <input type="radio" name="type">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comments-container ">
+                    <div class="row">
+                        <div class="col-md-3 info-user">
+                            <div class="image-circle"></div>
+                            <div class="name">
+                                Serghei
+                            </div>
+                        </div>
+                        <div class="message col-md-9">
+                            Благодарю всех кто отреагировал на пост.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

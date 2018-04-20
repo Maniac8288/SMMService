@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Settings";
+}
+<div class="container body-content">
+    @Html.Partial("_Partial/_HeadMenu")
+
+    <div class="col-md-7">
+        <div class="group-setting">
+            <div class="title-setting">
+                <span>Основная информация</span>
+            </div>
+            <div class="setting">
+                <textarea class="text-box text-box-big"></textarea>
+            </div>
+        </div>
+        <div class="group-setting">
+            <div class="title-setting">
+                <span>Дополнительная информация</span>
+            </div>
+            <div class="setting">
+                <textarea class="text-box"></textarea>
+            </div>
+        </div>
+        <div class="group-setting">
+            <div class="title-setting">
+                <span>Добавить карточку...</span>
+            </div>
+            <div class="setting">
+                <div>
+                    <input type="text" class="text-box text-box-input" placeholder="Введите название"/>
+                </div>
+                <div>
+                    <textarea placeholder="Введите описание" class="text-box text-box-small"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="group-setting " style="float:right;">
+            <button class="blue-btn">Сохранить</button>
+        </div>
+    </div>
+</div>

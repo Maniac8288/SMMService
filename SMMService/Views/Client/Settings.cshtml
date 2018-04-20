@@ -1,0 +1,45 @@
+﻿@section styles {
+
+    <link href="~/asserts/js/plugins/jasny-bootstrap/css/jasny-bootstrap.min.css" rel="stylesheet" />
+}
+@section scripts {
+    <script src="~/asserts/js/plugins/jasny-bootstrap/js/jasny-bootstrap.min.js"></script>
+    <script src="~/asserts/js/Social/Model.js"></script>
+    <script src="~/asserts/js/Social/ViewModel.js"></script>
+    <script src="~/asserts/js/knockout-Extansion/knockout-socialName.js"></script>
+    <script>
+        var Social = new Social.ViewModel();
+    </script>
+}
+
+<div class="container body-content">
+    @Html.Partial("_Partial/_HeadMenu")
+    <div class="col-md-9">
+        <div class="upload-image-box">
+            <div class="list-media long">
+                <div class="item ">
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                        <div align="center">
+                            <span class="btn-file ">
+                                <span class="fileinput-new">
+                                    <img src="~/asserts/img/icons/white-camera.png" />
+                                    Лого/фото клиента
+                                </span><span class="fileinput-exists">Change</span><input type="file" name="...">
+                            </span>
+                            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="title-text">Подключить соц сеть </div>
+            @Html.Partial("_Partial/_Social")
+            <button class="blue-btn-active">
+                <img src="~/asserts/img/icons/plus-white.png" /> Добавить проект
+            </button>
+        </div>
+    </div>
+</div>
+

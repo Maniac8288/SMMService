@@ -1,0 +1,125 @@
+﻿
+@{
+    Layout = null;
+}
+<div class="container head-container ">
+    <h1 class="title-head">
+        Belșug outlet
+    </h1>
+    <div class="menu">
+        <a href="@Url.Action("SettingsPerson","Client")" class="blue-btn">Информация о клиенте</a>
+        <a href="@Url.Action("Settings","Client")" class="blue-btn">Настройка клиента</a>
+    </div>
+</div>
+
+<div class="list-users">
+    <div class="user">
+        <div class="image-circle"></div>
+        <span class="name">A</span>
+    </div>
+    <div class="user">
+        <div class="image-circle"></div>
+    </div>
+    <div class="user">
+        <div class="image-circle"></div>
+    </div>
+    <div class="user">
+        <div class="image-circle"></div>
+        <span class="name">K</span>
+    </div>
+    <div class="setting">
+
+
+        <div class="dropdown">
+            <a id="drop-setting" role="button" data-toggle="dropdown" href="#">    <i class="icon-settings"></i></a>
+
+            <ul class="dropdown-menu users-menu" role="menu" aria-labelledby="drop-setting">
+
+                <li>
+                    <div class="title col-md-12 item" >
+                        Настройки доступа
+                    </div>
+                </li>
+                <li class="">
+                    <div class="title black col-md-12 item ">
+                        Люди
+                    </div>
+                </li>
+                <li>
+                    <div class="invate-user col-md-12 item ">
+                        <a>
+                            <span class="icon-circle">+</span>
+                            <span class="grey">Пригласить участников</span>
+                        </a>
+
+                    </div>
+                </li>
+                <li class="user row">
+                    <div class="col-md-2 item">
+                        <div class="image-circle"></div>
+                    </div>
+                    <div class="col-md-5 item name">
+                        dois admin
+                    </div>
+                    <div class="col-md-5 item grey">
+                        администратор
+                        <a class="vertical">...</a>
+                    </div>
+                </li>
+                <li class="user row">
+                    <div class="col-md-2 item">
+                        <div class="image-circle"></div>
+                    </div>
+                    <div class="col-md-5 item name">
+                        Sergey Dragan
+                    </div>
+                    <div class="col-md-5 item">
+                        участник команды
+                        <a class="vertical">...</a>
+                    </div>
+                </li>
+                <li class="user row">
+                    <div class="col-md-2 item">
+                        <div class="image-circle"></div>
+                    </div>
+                    <div class="col-md-5 item name">
+                        Dois Manager
+                    </div>
+                    <div class="col-md-5 item">
+                        участник команды
+                        <a class="vertical">...</a>
+                    </div>
+                </li>
+                <li class="user row">
+                    <div class="col-md-2 item">
+                        <div class="image-circle"></div>
+                    </div> 
+                    <div class="col-md-5 item name">
+                        Иван Иванович
+                    </div>
+                    <div class="col-md-5 item">
+                        клиент
+                        <a class="vertical">...</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<div class="col-md-10 nav-menu">
+    <div class="item m-right-100">
+        <a href="@Url.Action("Add","Post")" class="blue-btn">Добавить</a>
+    </div>
+    <div class="item ">
+        <a class="blue-btn active">На проверке</a>
+    </div>
+    <div class="item">
+        <a class="blue-btn">Все посты</a>
+    </div>
+    <div class="item">
+        <a href="@Url.Action("Statistic","Client")" class="blue-btn">Статистика</a>
+    </div>
+</div>
+

@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "Statistic";
+}
+@section Styles {
+    <link href="~/asserts/js/plugins/highcharts/css/highcharts.css" rel="stylesheet" />
+    <link href="~/asserts/js/plugins/datepickerrange/daterangepicker.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/asserts/js/plugins/highcharts/js/highcharts.js"></script>
+    <script src="~/asserts/js/knockout-Extansion/knockout-hightchart.js"></script>
+    <script src="~/asserts/js/plugins/datepickerrange/moment-with-locales.js"></script>
+    <script src="~/asserts/js/plugins/datepickerrange/daterangepicker.js"></script>
+    <script src="~/asserts/js/Statistic/ViewModel.js"></script>
+    <script>
+
+        var ViewModel = new Statistic.ViewModel();
+    </script>
+    <script src="~/asserts/js/Common/DateInit.js"></script>
+}
+<div class="container body-content">
+    @Html.Partial("_Partial/_HeadMenu")
+</div>
+<div class="blue-filter">
+    <div class="container body-content" style="height:100%">
+        <div class="row filter">
+            <div class="item diaposon active" data-bind="style:{'display': ViewModel.RangeTime() === ''? 'flex':'inline-block'}" id="dateRange">
+                <!--ko if:ViewModel.RangeTime() !== ""-->
+                Другой диапазон <i class="icon-arrow-down"></i>
+                <div class="time" data-bind="text:ViewModel.RangeTime">
+                    4 февраля 2018г. - 4 марта 2018 г.
+                </div>
+                <!--/ko-->
+                <!--ko if:ViewModel.RangeTime() === ""-->
+                Выбирете дату<i class="icon-arrow-down"></i>
+
+                <!--/ko-->
+            </div>
+            <div class="item sort">
+                <i class="icon-lines"></i>
+
+                Сортировать по соц сети
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container body-content" data-bind="with:ViewModel">
+    <div class="col-md-10">
+        <div class="filter-stat">
+            <a class="blue-btn" data-bind="click:IsPost.bind($data,true),css:{active:IsPost()}">
+                Публикации
+            </a>
+            <a class="blue-btn" data-bind="click:IsPost.bind($data,false),css:{active:!IsPost()}">
+                Подписчики
+            </a>
+        </div>
+        <!--ko if:IsPost-->
+        @Html.Partial("_Partial/Statistic/Posts")
+        <!--/ko-->
+        <!--ko ifnot:IsPost-->
+        @Html.Partial("_Partial/Statistic/Subscribers")
+        <!--/ko-->
+    </div>
+</div>

@@ -1,0 +1,118 @@
+﻿@section styles {
+    <link href="~/asserts/js/plugins/datepickerrange/daterangepicker.css" rel="stylesheet" />
+}
+@section scripts {
+
+    <script src="~/asserts/js/plugins/datepickerrange/moment-with-locales.js"></script>
+    <script src="~/asserts/js/plugins/datepickerrange/daterangepicker.js"></script>
+    <script src="~/asserts/js/archive/ViewModel.js"></script>
+    <script>
+        var ViewModel = new Archive.ViewModel();
+
+    </script>
+    <script src="~/asserts/js/Common/DateInit.js"></script>
+}
+<div class="container body-content">
+    @Html.Partial("_Partial/_HeadMenu")
+</div>
+
+<div class="blue-filter">
+    <div class="container body-content" style="height:100%">
+        <div class="row filter">
+            <div class="item">
+                <a href="@Url.Action("Archive","Post")">
+                    <i class="icon icon-chronicle"></i>  Хроника
+                </a>
+            </div>
+            <div class="item">
+                <a href="@Url.Action("Calendar","Post")">
+                    <i class="icon icon-calendar"></i>  Календарь
+                </a>
+            </div>
+            <div class="item diaposon active" data-bind="style:{'display': ViewModel.RangeTime() === ''? 'flex':'inline-block'}" id="dateRange">
+                <!--ko if:ViewModel.RangeTime() !== ""-->
+                Другой диапазон <i class="icon-arrow-down"></i>
+                <div class="time" data-bind="text:ViewModel.RangeTime">
+                    4 февраля 2018г. - 4 марта 2018 г.
+                </div>
+                <!--/ko-->
+                <!--ko if:ViewModel.RangeTime() === ""-->
+                Выбирете дату<i class="icon-arrow-down"></i>
+
+                <!--/ko-->
+            </div>
+            <div class="item sort">
+                <i class="icon-lines"></i>
+
+                Сортировать по соц сети
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container body-content">
+    <div class="col-md-9">
+
+        <div class="filter-archive">
+            <button class="blue-btn">Все</button>
+            <button class="green-btn">Опубликовано</button>
+            <button class="blue-btn">Запланировано </button>
+            <button class="red-btn active">Ждет подтверждения</button>
+
+        </div>
+
+        <div class="post archive">
+            <div class="box-post">
+                <div class="img-post">
+                    <img src="~/asserts/img/Temp/вид-у-клиента.png" />
+                </div>
+                Доброе утро!
+                Желаем Вам приятных выодных!
+            </div>
+            <div class="info-post">
+                <div class="date">
+                    Дата публикации: <span>14.01.18  18:00</span>
+                </div>
+
+                <div class="publish-in">
+                    Опубликовано в:
+
+                    <img src="~/asserts/img/icons/social/Facebook.png" />
+                    <img src="~/asserts/img/icons/social/vk-mini.png" />
+
+                </div>
+
+                <div class="status-post">
+                    <div>
+                        Статус проверки:
+                    </div>
+                    <div class="decline">
+                        <img src="~/asserts/img/icons/minus.png" />
+                        <span>Не подтвержден</span>
+                    </div>
+                    <div class="accept">
+                        <img src="~/asserts/img/icons/red-acept.png" />
+                        Подтвержден клиентом <span>14.01.18</span>
+                    </div>
+                </div>
+            </div>
+            <div class="comments-box">
+
+                <div class="comments-container ">
+                    <div class="row">
+                        <div class="col-md-3 info-user">
+                            <div class="image-circle"></div>
+                            <div class="name">
+                                Serghei
+                            </div>
+                        </div>
+                        <div class="message col-md-9">
+                            Благодарю всех кто отреагировал на пост.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

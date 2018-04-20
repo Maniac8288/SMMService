@@ -1,0 +1,193 @@
+﻿@using SMM.Social.Services
+@{
+    Layout = null;
+}
+
+<div class="navbar header navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>*@
+            <div class="dropdown">
+                <a id="drop-setting" class="navbar-brand" role="button" data-toggle="dropdown" href="#">Проекты</a>
+
+                <ul class="dropdown-menu project-menu" role="menu" aria-labelledby="drop-setting">
+
+                    <li>
+                        <div align="center" class="archiv-projects">
+                            <span>Архивированные проекты</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div align="center">
+                            <input type="text" class="search-project" placeholder="Поиск по названию..." />
+                        </div>
+                    </li>
+                    <li class="title-section">
+                        <i class="icon-star-mini"></i>
+                        <span class="title">Избранные</span>
+                    </li>
+                    <li class="project col-md-12">
+                        <div>
+                            <img src="~/asserts/img/Temp/tem-client.png" />
+                            <div class="project-info">
+                                <span><i class="icon icon-star-gold"></i></span>
+                                <span class="title"> Artizana Fashion Salon</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="project col-md-12">
+                        <div>
+                            <img src="~/asserts/img/Temp/вид-у-клиента.png" />
+                            <div class="project-info">
+                                <span><i class="icon icon-star active"></i></span>
+                                <span class="title"> Artizana Fashion Salon</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="project col-md-12">
+                        <div>
+                            <img src="~/asserts/img/Temp/tem-client.png" />
+                            <div class="project-info">
+                                <span><i class="icon icon-star active"></i></span>
+                                <span class="title"> Artizana Fashion Salon</span>
+                            </div>
+                        </div>
+                    </li>
+
+
+
+
+                    <li class="title-section">
+                        <i class="icon-clock"></i>
+                        <span class="title">Недавние</span>
+                    </li>
+                    <li class="project col-md-12">
+                        <div>
+                            <img src="~/asserts/img/Temp/tem-client.png" />
+                            <div class="project-info">
+                                <span><i class="icon icon-star active"></i></span>
+                                <span class="title"> Artizana Fashion Salon</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="project col-md-12">
+                        <div>
+                            <img src="~/asserts/img/Temp/вид-у-клиента.png" />
+                            <div class="project-info">
+                                <span><i class="icon icon-star active"></i></span>
+                                <span class="title"> Artizana Fashion Salon</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="project col-md-12">
+                        <div>
+                            <img src="~/asserts/img/Temp/tem-client.png" />
+                            <div class="project-info">
+                                <span><i class="icon icon-star active"></i></span>
+                                <span class="title"> Artizana Fashion Salon</span>
+                            </div>
+                        </div>
+                    </li>
+
+
+
+                    <li class="title-section">
+                        <i class="icon-boards"></i>
+                        <span class="title">Персональные доски</span>
+                    </li>
+                    <li class="project col-md-12">
+                        <div>
+                            <img src="~/asserts/img/Temp/tem-client.png" />
+                            <div class="project-info">
+                                <span><i class="icon icon-star active"></i></span>
+                                <span class="title"> Artizana Fashion Salon</span>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            @*@Html.ActionLink("Проекты", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+        </div>
+        <div class="pull-right">
+            <ul class="nav navbar-nav header-menu">
+                <li class="nav-item">
+
+                    <div class="dropdown">
+                        <a id="drop001" role="button" data-toggle="dropdown" href="#">  <i class="icon icon-plus"></i></a>
+
+                        <ul class="dropdown-menu info-menu" role="menu" aria-labelledby="drop001">
+                            <i class="icon icon-close close">
+
+                            </i>
+                            <li>
+                                <div class="title col-md-12">
+                                    <a tabindex="-1" href="http://veliovgroup.com">Создание</a>
+                                </div>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="http://veliovgroup.com" target="_blank">
+                                    <div class="title col-md-12">
+                                        Создание проекта
+                                    </div>
+                                    <div class="description col-md-10">
+                                        Проект представляет собой
+                                        совокупность карточек,
+                                        упорядоченных в списках.
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider">
+                                <div class="title col-md-12">
+                                    Создание команды
+                                </div>
+                                <div class="description col-md-12">
+                                    Команда представляет собой группу
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <i class="icon icon-info"></i>
+
+                </li>
+                <li class="nav-item">
+                    <i class="icon icon-notife"></i>
+                </li>
+                @if (!User.IsAuthorized)
+                {
+                    <li class="text"><a href="@VKService.GetUrl()">Вход</a></li>
+                }
+                else
+                {
+
+                    <li class="nav-item"><div class="image-circle"><img src="@User.ImageUrl" /></div></li>
+                    <li class="text user nav-item">
+
+                        <div class="dropdown">
+                            <a id="drop001" role="button" data-toggle="dropdown" href="#" class="user-a">  @User.FirstName</a>
+
+                            <ul class="dropdown-menu user-menu" role="menu" aria-labelledby="drop001">
+                                <li class="item-menu">
+                                    <a tabindex="-1" href="http://veliovgroup.com" target="_blank">
+                                        Команда
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                    </li>
+                }
+
+            </ul>
+        </div>
+    </div>
+</div>
+
