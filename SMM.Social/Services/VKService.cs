@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using SMM.Social.Models.BaseResponse;
 using SMM.Social.Models.Vk;
+using SMM.Social.Models.Vk.Group;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +15,7 @@ namespace SMM.Social.Services
 {
     public class VKService
     {
-      
+
 
         #region Свойства
 
@@ -30,6 +32,7 @@ namespace SMM.Social.Services
         /// Редирект ссылка на наш сайт 
         /// </summary>
         private static string redirectUri = WebConfigurationManager.AppSettings["redirectUriVk"];
+        //private static string redirectUri = "https://oauth.vk.com/blank.html";
         /// <summary>
         /// Ссылка для получение доступа ключа
         /// </summary>
@@ -46,11 +49,17 @@ namespace SMM.Social.Services
         /// Ссылка для получение информации о пользователе
         /// </summary>
         private static string sendPostUrl = "https://api.vk.com/method/wall.post?";
+        /// <summary>
+        /// Ссылка для получение групп
+        /// </summary>
+        private static string getGroupsUrl = "https://api.vk.com/method/groups.get?";
 
         /// <summary>
         /// Версия апи
         /// </summary>
         private static string version = "5.74";
+
+        private const string scope = "friends,wall,offline,groups";
 
         #endregion
 
@@ -61,7 +70,7 @@ namespace SMM.Social.Services
         /// <returns></returns>
         public static string GetUrl()
         {
-            return ($"{authorizeUrl}client_id={clientId}&display=page&redirect_uri={redirectUri}&scope=friends,wall,offline&response_type=code&v={version}");
+            return ($"{authorizeUrl}client_id={clientId}&display=page&redirect_uri={redirectUri}&scope={scope}&response_type=code&v={version}");
         }
 
         /// <summary>
@@ -69,17 +78,25 @@ namespace SMM.Social.Services
         /// </summary>
         /// <param name="code">Код полученный с диалога авторизации вк</param>
         /// <returns></returns>
-        public AccessTokenResponse GetAccessToken(string code)
+        public BaseResponseSocial<AccessTokenResponse> GetAccessToken(string code)
         {
-            //Создает Get запрос для получение ключа
-            var url = ($"{access_tokenUrl}client_id={clientId}&client_secret={secretKey}&redirect_uri={redirectUri}&code={code}");
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            WebResponse response = (HttpWebResponse)request.GetResponse();
-            // Конвертим получены ответ
-            var stream = response.GetResponseStream();
-            StreamReader sr = new StreamReader(stream);
-            string content = sr.ReadToEnd();
-            return JsonConvert.DeserializeObject<AccessTokenResponse>(content);
+            try
+            {
+                //Создает Get запрос для получение ключа
+                var url = ($"{access_tokenUrl}client_id={clientId}&client_secret={secretKey}&redirect_uri={redirectUri}&code={code}");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                WebResponse response = (HttpWebResponse)request.GetResponse();
+                // Конвертим получены ответ
+                var stream = response.GetResponseStream();
+                StreamReader sr = new StreamReader(stream);
+                string content = sr.ReadToEnd();
+                var model = JsonConvert.DeserializeObject<AccessTokenResponse>(content);
+                return new BaseResponseSocial<AccessTokenResponse>(model);
+            }
+            catch (Exception e)
+            {
+                return new BaseResponseSocial<AccessTokenResponse>(EnumResponseStatusSocial.Exception, e.Message);
+            }
 
         }
         #endregion
@@ -91,23 +108,31 @@ namespace SMM.Social.Services
         /// <param name="userId">Ид вк пользователя</param>
         /// <param name="access_token">Ключ доступа к апи</param>
         /// <returns>Модель ответа о пользователе</returns>
-        public ModelUser GetUser(int userId, string access_token)
+        public BaseResponseSocial<ModelUser> GetUser(int userId, string access_token)
         {
-            //Создает Get запрос для получение ключа
-            var url = ($"{userGetUrl}user_ids={userId}&fields=photo_max_orig&access_token={access_token}&v={version}");
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            WebResponse response = (HttpWebResponse)request.GetResponse();
-            // Конвертим получены ответ
-            var stream = response.GetResponseStream();
-            StreamReader sr = new StreamReader(stream);
-            string content = sr.ReadToEnd();
-            return JsonConvert.DeserializeObject<UserResponse>(content).response.First();
+            try
+            {
+                //Создает Get запрос для получение ключа
+                var url = ($"{userGetUrl}user_ids={userId}&fields=photo_max_orig&access_token={access_token}&v={version}");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                WebResponse response = (HttpWebResponse)request.GetResponse();
+                // Конвертим получены ответ
+                var stream = response.GetResponseStream();
+                StreamReader sr = new StreamReader(stream);
+                string content = sr.ReadToEnd();
+                var model = JsonConvert.DeserializeObject<UserResponse>(content).response.First();
+                return new BaseResponseSocial<ModelUser>(model);
+            }
+            catch (Exception e)
+            {
+                return new BaseResponseSocial<ModelUser>(EnumResponseStatusSocial.Exception, e.Message);
+            }
         }
         #endregion
 
         #region Публикация
 
-        public string SendPost(int ownerId, string message,string access_token)
+        public string SendPost(int ownerId, string message, string access_token)
         {
             var url = ($"{sendPostUrl}owner_id={ownerId}&message={message}&access_token={access_token}&v={version}");
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
@@ -121,5 +146,29 @@ namespace SMM.Social.Services
         }
 
         #endregion
+
+        #region Работа с группами
+
+        public BaseResponseSocial<List<ModelGroup>> GetGroup(string access_token)
+        {
+            try
+            {
+                var url = ($"{getGroupsUrl}extended=1&v={version}&access_token={access_token}");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                WebResponse response = (HttpWebResponse)request.GetResponse();
+                // Конвертим получены ответ
+                var stream = response.GetResponseStream();
+                StreamReader sr = new StreamReader(stream);
+                string content = sr.ReadToEnd();
+                var groups = JsonConvert.DeserializeObject<BaseResponseVK<ModelResponseGetGroup>>(content).response.items;
+                return new BaseResponseSocial<List<ModelGroup>>(groups);
+            }
+            catch (Exception e)
+            {
+                return new BaseResponseSocial<List<ModelGroup>>(EnumResponseStatusSocial.Exception, e.Message);
+            }
+        }
+
+        #endregion 
     }
 }

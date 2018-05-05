@@ -1,5 +1,6 @@
-﻿@section styles {
-
+﻿@model SMM.Web.Models.ViewModels.ModelSettingClient
+ @using Newtonsoft.Json
+@section styles {
     <link href="~/asserts/js/plugins/jasny-bootstrap/css/jasny-bootstrap.min.css" rel="stylesheet" />
 }
 @section scripts {
@@ -8,7 +9,9 @@
     <script src="~/asserts/js/Social/ViewModel.js"></script>
     <script src="~/asserts/js/knockout-Extansion/knockout-socialName.js"></script>
     <script>
-        var Social = new Social.ViewModel();
+        var params = {};
+        params.Socials = @Html.Raw(JsonConvert.SerializeObject(Model.Social));
+        var Social = new Social.ViewModel(params);
     </script>
 }
 
@@ -36,6 +39,7 @@
         <div class="col-md-6">
             <div class="title-text">Подключить соц сеть </div>
             @Html.Partial("_Partial/_Social")
+
             <button class="blue-btn-active">
                 <img src="~/asserts/img/icons/plus-white.png" /> Добавить проект
             </button>

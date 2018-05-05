@@ -4,7 +4,7 @@
 
     Social.ViewModel = function (theParams) {
         theParams = theParams || {};
-        this.Socials = ko.observable([{ Name: "vk" }, { Name: "ok" }, { Name: "facebook" }].map(x => new Social.Model(x)));
+        this.Socials = ko.observable(theParams.Socials ? theParams.Socials.map(function (x) { return new Social.Model(x) }) : []);     
         return this;
     };
 
@@ -13,5 +13,13 @@
     */
     Social.ViewModel.prototype.constructor = Social.ViewModel;
 
+    Social.ViewModel.prototype.OffModal = function (social) {
+        this.Socials().forEach(function (item) {
+            item.IsVisibleGroup(false);
+        });
+        if (social) {
+            social.IsVisibleGroup(true);
+        }
+    }
 
 })();

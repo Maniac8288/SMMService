@@ -50,6 +50,7 @@
     <Compile Include="Enums\EnumResponseStatus.cs" />
     <Compile Include="Enums\EnumSocial.cs" />
     <Compile Include="Interface\IUserService.cs" />
+    <Compile Include="Models\Group\ModelGroup.cs" />
     <Compile Include="Models\Responses\BaseResponse.cs" />
     <Compile Include="Models\User\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -17,12 +17,25 @@ namespace SMM.IServices.Interface
         /// <returns></returns>
         BaseResponse<string> GetAccessTokenVk(int userId);
         /// <summary>
+        /// Получить ключ доступа от одноклассников
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        BaseResponse<string> GetAccessTokenOk(int userId);
+        /// <summary>
         /// Устоновить ключ доступа от вк
         /// </summary>
         /// <param name="accessToken"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
         BaseResponse SetAccessTokenVk(string accessToken, int userId);
+        /// <summary>
+        /// Устоновить ключ доступа от одноклассников
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        BaseResponse SetAccessTokenOk(string accessToken, int userId);
         /// <summary>
         /// Установить пользователя в куки
         /// </summary>

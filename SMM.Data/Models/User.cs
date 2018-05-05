@@ -39,5 +39,9 @@ namespace SMM.Data.Models
         /// Токен доступа от вк
         /// </summary>
         public string AccessTokenVk { get; set; }
+        /// <summary>
+        /// Токен доступа от одноклассников
+        /// </summary>
+        public string AccessTokenOk { get; set; }
     }
 }

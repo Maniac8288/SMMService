@@ -162,7 +162,8 @@
                 </li>
                 @if (!User.IsAuthorized)
                 {
-                    <li class="text"><a href="@VKService.GetUrl()">Вход</a></li>
+                    @*<li class="text"><a href="@VKService.GetUrl()">Вход</a></li>*@
+                    <li class="text"><a href="@OKService.GetUrl()">Вход</a></li>
                 }
                 else
                 {

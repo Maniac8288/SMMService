@@ -44,12 +44,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\BaseResponse\BaseResponseSocial.cs" />
+    <Compile Include="Models\BaseResponse\EnumResponseStatusSocial.cs" />
     <Compile Include="Models\OK\AccessTokenOKResponse.cs" />
+    <Compile Include="Models\OK\Group\ModelGroupOk.cs" />
+    <Compile Include="Models\OK\Group\OkGetGroupsResponse.cs" />
     <Compile Include="Models\OK\OKGetInfoResponse.cs" />
     <Compile Include="Models\OK\OKUserModel.cs" />
-    <Compile Include="Models\Vk\AccessTokenResponse.cs" />
+    <Compile Include="Models\OK\Photos\ModelPhoto.cs" />
+    <Compile Include="Models\OK\Photos\ResponseGetPhotoInfo.cs" />
+    <Compile Include="Models\OK\Publication\AttachmentModel.cs" />
+    <Compile Include="Models\Vk\BaseResponse\AccessTokenResponse.cs" />
+    <Compile Include="Models\Vk\BaseResponse\BaseResponseVk.cs" />
+    <Compile Include="Models\Vk\Group\ModelGroup.cs" />
+    <Compile Include="Models\Vk\Group\ModelResponseGetGroup.cs" />
     <Compile Include="Models\Vk\ModelUser.cs" />
-    <Compile Include="Models\Vk\UserResponse.cs" />
+    <Compile Include="Models\Vk\BaseResponse\BaseResponseListVK.cs" />
+    <Compile Include="Models\Vk\BaseResponse\UserResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CryptographyService.cs" />
     <Compile Include="Services\FacebookService.cs" />

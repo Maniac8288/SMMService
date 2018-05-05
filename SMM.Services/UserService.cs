@@ -33,12 +33,43 @@ namespace SMM.Services
                     var user = db.Users.FirstOrDefault(x => x.Id == userId);
                     if (user == null)
                         return new BaseResponse(EnumResponseStatus.Error, "Пользователь не найден");
-                    user.AccessTokenVk = accessToken;
-                    db.SaveChanges();
+                    if (user.AccessTokenVk != accessToken)
+                    {
+                        user.AccessTokenVk = accessToken;
+                        db.SaveChanges();
+                    }
                     return new BaseResponse(EnumResponseStatus.Success, "Токен успешно установлен");
                 }
             }
             catch(Exception e)
+            {
+                return new BaseResponse(EnumResponseStatus.Exception, e.Message);
+            }
+        }
+        /// <summary>
+        /// Устоновить ключ доступа от одноклассников
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public BaseResponse SetAccessTokenOk(string accessToken, int userId)
+        {
+            try
+            {
+                using (var db = new DataContext())
+                {
+                    var user = db.Users.FirstOrDefault(x => x.Id == userId);
+                    if (user == null)
+                        return new BaseResponse(EnumResponseStatus.Error, "Пользователь не найден");
+                    if (user.AccessTokenOk != accessToken)
+                    {
+                        user.AccessTokenOk = accessToken;
+                        db.SaveChanges();
+                    }
+                    return new BaseResponse(EnumResponseStatus.Success, "Токен успешно установлен");
+                }
+            }
+            catch (Exception e)
             {
                 return new BaseResponse(EnumResponseStatus.Exception, e.Message);
             }
@@ -59,6 +90,29 @@ namespace SMM.Services
                         return new BaseResponse<string>(EnumResponseStatus.Error, "Пользователь не найден");
                     
                     return new BaseResponse<string>(EnumResponseStatus.Success, "Токен успешно получен",user.AccessTokenVk);
+                }
+            }
+            catch (Exception e)
+            {
+                return new BaseResponse<string>(EnumResponseStatus.Exception, e.Message);
+            }
+        }
+        /// <summary>
+        /// Получить ключ доступа от одноклассников
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public BaseResponse<string> GetAccessTokenOk(int userId)
+        {
+            try
+            {
+                using (var db = new DataContext())
+                {
+                    var user = db.Users.FirstOrDefault(x => x.Id == userId);
+                    if (user == null)
+                        return new BaseResponse<string>(EnumResponseStatus.Error, "Пользователь не найден");
+
+                    return new BaseResponse<string>(EnumResponseStatus.Success, "Токен успешно получен", user.AccessTokenOk);
                 }
             }
             catch (Exception e)

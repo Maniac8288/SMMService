@@ -26,12 +26,16 @@ namespace SMM.Web.Controllers
             if (responseAccessToken.IsSuccess)
             {
                 var client = new VKService();
-                var response = client.SendPost(165167297, "Hellloooooo", responseAccessToken.Value);
+                var response = client.SendPost(-165167297, "Hellloooooo", responseAccessToken.Value);
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
             return Json(responseAccessToken.Message, JsonRequestBehavior.AllowGet);
         }
         #region Авторизация
+        public ActionResult ErrorAuth()
+        {
+            return View();
+        }
         /// <summary>
         /// Авторизация через вк
         /// </summary>
@@ -40,8 +44,14 @@ namespace SMM.Web.Controllers
         public ActionResult AuthorizationVK(string code)
         {
             var client = new VKService();
-            var model = client.GetAccessToken(code);
-            var user = client.GetUser(model.user_id, model.access_token);
+            var responseAccess = client.GetAccessToken(code);
+            if (!responseAccess.IsSuccess)
+                return RedirectToAction("ErrorAuth");
+            var model = responseAccess.Value;
+            var responseGetUser = client.GetUser(model.user_id, model.access_token);
+            if (!responseGetUser.IsSuccess)
+                return RedirectToAction("ErrorAuth");
+            var user = responseGetUser.Value;
             var userModel = new UserModel()
             {
                 FirstName = user.first_name,
@@ -84,9 +94,9 @@ namespace SMM.Web.Controllers
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        public ActionResult AuthorizationFacebook(string code,string error)
+        public ActionResult AuthorizationFacebook(string code, string error)
         {
-            return Json(code); 
+            return Json(code);
         }
 
         /// <summary>
@@ -94,11 +104,17 @@ namespace SMM.Web.Controllers
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        public ActionResult AuthorizationOk(string code,string error)
+        public ActionResult AuthorizationOk(string code, string error)
         {
             var client = new OKService();
-            var model = client.GetAccessToken(code);
-            var user = client.GetCurrentUser(model.access_token);
+            var accessResponse = client.GetAccessToken(code);
+            if (!accessResponse.IsSuccess)
+                return RedirectToAction("ErrorAuth");
+            var model = accessResponse.Value;
+            var userResponse = client.GetCurrentUser(model.access_token);
+            if (!userResponse.IsSuccess)
+                return RedirectToAction("ErrorAuth");
+            var user = userResponse.Value;
             var userModel = new UserModel()
             {
                 FirstName = user.first_name,
@@ -125,11 +141,12 @@ namespace SMM.Web.Controllers
                     FirstName = userModel.FirstName,
                     LastName = userModel.LastName,
                     ImageUrl = user.ImageUrl
-                    
+
                 };
                 System.Web.HttpContext.Current.Session["UserSession"] = webUser;
 
                 _userService.SetUserCookie(webUser.UserId);
+                _userService.SetAccessTokenOk(model.refresh_token, userId);
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");

@@ -1762,13 +1762,14 @@ input:checked + .switcher:before {
         font-size: 16px;
         font-family: Roboto-Light;
         color: #212121;
-        
     }
+
         .table-flex .item-user .dropdown #drop-menu {
             display: flex;
             align-items: center;
             flex-direction: row;
         }
+
         .table-flex .item-user .name {
             margin-left: 10px;
         }
@@ -1787,6 +1788,7 @@ input:checked + .switcher:before {
         cursor: pointer;
         margin-left: 10px;
     }
+
 .team-add-menu {
     box-shadow: 0px 3px 10px 1px #cdcdcd;
     background-color: #e4e4e4;
@@ -1797,27 +1799,109 @@ input:checked + .switcher:before {
     text-align: center;
     width: 250px;
 }
+
     .team-add-menu input {
         width: 95%;
         padding-left: 10px;
         font-size: 14px;
         font-weight: bold;
-        border:none;
-        height:25px;
+        border: none;
+        height: 25px;
         color: #9dacb4;
     }
+
     .team-add-menu .item {
-        margin:10px 0;
+        margin: 10px 0;
     }
+
     .team-add-menu button {
         width: 95%;
         background-color: #1976d2;
-        color:white;
-        height:25px;
-        padding:0;
-        font-size:16px;
+        color: white;
+        height: 25px;
+        padding: 0;
+        font-size: 16px;
     }
+
     .team-add-menu .close {
         position: relative;
         right: 6px;
     }
+
+.list-groups ul {
+    width: 300px;
+    left: 230px !important;
+    top: -140px !important;
+    max-height: 250px;
+    overflow-y: scroll;
+}
+
+.list-groups .title {
+    color: #607d8b;
+    font-size: 18px;
+    font-family: Roboto-Regular;
+}
+
+.list-groups ul li {
+    border-top: 1px solid #97a4ab;
+    height: 45px;
+    padding: 8px;
+}
+
+    .list-groups ul li img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .list-groups ul li.first {
+        border-top: none;
+    }
+
+    .list-groups ul li.group {
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        color: #607d8b;
+        font-size: 16px;
+        font-family: Roboto-Light;
+        cursor: pointer;
+    }
+
+        .list-groups ul li.group div {
+            margin-right: 10px;
+            overflow: hidden;
+        }
+
+        .list-groups ul li.group:hover {
+            background-color: #1976d2;
+            color: #fff;
+        }
+
+.modal input {
+    border: none;
+    color: #9dacb4;
+    border-bottom: 1px solid #9dacb4;
+    width: 100%;
+}
+
+    .modal input:active, .modal input:focus {
+        outline: none;
+    }
+.modal .add-project-body {
+    justify-content: center !important;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    padding: 15px 40px;
+}
+    .modal .add-project-body .blue-btn-active {
+        margin-top: 10px;
+        width:100%;
+    }
+.modal .input-block {
+    width: 80%;
+    align-self: center;
+}
+.modal.add .modal-sm {
+   max-width:330px !important;
+}

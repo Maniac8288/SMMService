@@ -1,18 +1,44 @@
 ﻿
 <div class="social-choose" data-bind="foreach:Social.Socials">
-    <div class="form-group row item">
+    <div class="form-group row item" >
         <div>
             <label class="switch">
                 <input type="checkbox" data-bind="checked:IsActive">
                 <span class="switcher round"></span>
             </label>
         </div>
-        <div>
-            <i class="icon  " data-bind="iconName:Name,css:{active:IsActive}"></i>
+        <div data-bind="click:Social.OffModal.bind(Social,$data)">
+            <i class="icon  " data-bind="iconName:Name,css:{active:IsActive}" ></i>
         </div>
-        <div>
+        <!--ko if:SelectedGroup() !== null-->
+        <div data-bind="text:SelectedGroup().Name,click:Social.OffModal.bind(Social,$data)"  >
             Belșug Outlet
         </div>
+        <!--/ko-->
+        <!--ko if:SelectedGroup() === null-->
+        <div data-bind="click:Social.OffModal.bind(Social,$data)">
+            Выбрать
+        </div>
+        <!--/ko-->
     </div>
+    <div class="list-groups">
+        <div class="dropdown">
+            <ul class="dropdown-menu users-menu" role="menu" data-bind="style:{'display': IsVisibleGroup() ? 'block' : 'none'}" aria-labelledby="drop-setting">
+                <li class="first">
+                    <div class="title black">
+                        Группы
+                    </div>
+                </li>
+                <!--ko foreach:Groups-->
+                <li class="group" data-bind="click:$parent.SelectGroup.bind($parent,$data)">
+                    <div>
+                        <img data-bind="attr:{src:Url}" />
+                    </div>
+                    <div data-bind="text:Name"></div>
+                </li>
+                <!--/ko-->                            
+            </ul>
+        </div>
 
+    </div>
 </div>

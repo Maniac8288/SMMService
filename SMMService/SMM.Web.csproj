@@ -159,6 +159,8 @@
     <Compile Include="Infrastructura\AuthorizationAttribute.cs" />
     <Compile Include="Infrastructura\AuthorizeViewPage.cs" />
     <Compile Include="Infrastructura\WebUser.cs" />
+    <Compile Include="Models\ModelSocial.cs" />
+    <Compile Include="Models\ViewModels\ModelSettingClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +208,7 @@
     <Content Include="asserts\img\Temp\tem-client.png" />
     <Content Include="asserts\img\Temp\вид-у-клиента.png" />
     <Content Include="asserts\js\archive\ViewModel.js" />
+    <Content Include="asserts\js\Calendar\ViewModel.js" />
     <Content Include="asserts\js\Common\DateInit.js" />
     <Content Include="asserts\js\knockout-Extansion\knockout-hightchart.js" />
     <Content Include="asserts\js\knockout-Extansion\knockout-socialName.js" />
@@ -222,6 +225,7 @@
     <Content Include="asserts\js\plugins\jasny-bootstrap\css\jasny-bootstrap.min.css" />
     <Content Include="asserts\js\plugins\jasny-bootstrap\js\jasny-bootstrap.js" />
     <Content Include="asserts\js\plugins\jasny-bootstrap\js\jasny-bootstrap.min.js" />
+    <Content Include="asserts\js\Project\SettignsViewModel.js" />
     <Content Include="asserts\js\Social\Model.js" />
     <Content Include="asserts\js\Social\ViewModel.js" />
     <Content Include="asserts\js\Statistic\ViewModel.js" />
@@ -335,10 +339,11 @@
     <Content Include="Views\Client\Settings.cshtml" />
     <Content Include="Views\Post\Verification.cshtml" />
     <Content Include="Views\Client\Team.cshtml" />
+    <Content Include="Views\Home\ErrorAuth.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="asserts\js\Post\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

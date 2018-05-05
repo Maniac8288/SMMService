@@ -64,6 +64,10 @@
     <Compile Include="Migrations\201804181104155_addColumn_AccessTokenVK.Designer.cs">
       <DependentUpon>201804181104155_addColumn_AccessTokenVK.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804291344155_addColumn_AccessTokenOk_IN_User.cs" />
+    <Compile Include="Migrations\201804291344155_addColumn_AccessTokenOk_IN_User.Designer.cs">
+      <DependentUpon>201804291344155_addColumn_AccessTokenOk_IN_User.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,6 +88,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804181104155_addColumn_AccessTokenVK.resx">
       <DependentUpon>201804181104155_addColumn_AccessTokenVK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804291344155_addColumn_AccessTokenOk_IN_User.resx">
+      <DependentUpon>201804291344155_addColumn_AccessTokenOk_IN_User.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

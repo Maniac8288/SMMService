@@ -6,6 +6,9 @@
         theParams = theParams || {};
         this.IsActive = ko.observable(theParams.IsActive || false);
         this.Name = ko.observable(theParams.Name || "");
+        this.Groups = ko.observableArray(theParams.Groups || []);
+        this.IsVisibleGroup = ko.observable(false);
+        this.SelectedGroup = ko.observable(theParams.Group || null);      
         return this;
     };
 
@@ -14,5 +17,9 @@
     */
     Social.Model.prototype.constructor = Social.Model;
 
+    Social.Model.prototype.SelectGroup = function (group) {
+        this.SelectedGroup(group);
+        this.IsVisibleGroup(false);
+    }
 
 })();

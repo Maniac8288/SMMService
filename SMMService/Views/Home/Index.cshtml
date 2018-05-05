@@ -2,7 +2,7 @@
 
     <div class="menu-list">
         <div class="item">
-            <a class="blue-btn" href="@Url.Action("Team","Client")">
+            <a class="blue-btn" data-toggle="modal" data-target="#addProject">
                 Добавить проект
             </a>
             <a class="blue-btn">
@@ -1246,3 +1246,17 @@
     </div>
 
 </div>
+<div class="modal fade add" id="addProject">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body add-project-body">
+                <div class="input-block">
+                    <input type="text" name="name" placeholder="Введите название проекта" />
+                </div>
+                <div>
+                    <button onclick="window.location.href = '@Url.Action("Settings","Client")'" class="blue-btn-active" href="@Url.Action("Settings","Client")" >Добавить</button>
+                </div>
+            </div>
+        </div><!-- /.модальное окно-Содержание -->
+    </div><!-- /.модальное окно-диалог -->
+</div><!-- /.модальное окно --> 
