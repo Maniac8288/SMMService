@@ -6,8 +6,13 @@
     <script src="~/asserts/js/Social/Model.js"></script>
     <script src="~/asserts/js/Social/ViewModel.js"></script>
     <script src="~/asserts/js/knockout-Extansion/knockout-socialName.js"></script>
+    <script src="~/asserts/js/Post/PostModel.js"></script>
+    <script src="~/asserts/js/Post/Add/AddViewModel.js"></script>
     <script>
         var Social = new Social.ViewModel();
+        var params = {};
+        params.UrlPublicNow = '@Url.Action("PublicationNow","Post")';
+        var ViewModel = new Post.Add.AddViewModel(params);
     </script>
 }
 
@@ -15,7 +20,7 @@
     @Html.Partial("_Partial/_HeadMenu")
 
 
-    <div class="col-md-9">
+    <div class="col-md-9" data-bind="with:ViewModel.Post">
         <div class="list-media add-post">
             <div class="item ">
                 <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -24,10 +29,10 @@
                         <span class="btn-file ">
                             <span class="fileinput-new">
                                 <img src="~/asserts/img/icons/white-camera.png" />
-                               Фото
+                                Фото
                             </span><span class="fileinput-exists">Change</span><input type="file" name="...">
                         </span>
-                      
+
                     </div>
                 </div>
             </div>
@@ -51,7 +56,7 @@
                     <div align="center">
                         <span class="btn-file ">
                             <span class="fileinput-new">
-                                <img src="~/asserts/img/icons/videos-mini.png" />                            
+                                <img src="~/asserts/img/icons/videos-mini.png" />
                                 Видео
                             </span><span class="fileinput-exists">Change</span><input type="file" multiple name="...">
                         </span>
@@ -65,7 +70,7 @@
                     <div align="center">
                         <span class="btn-file ">
                             <span class="fileinput-new">
-                                <img src="~/asserts/img/icons/href.png" />                             
+                                <img src="~/asserts/img/icons/href.png" />
                                 Ссылка
                             </span><span class="fileinput-exists">Change</span><input type="file" multiple name="...">
                         </span>
@@ -75,7 +80,7 @@
             </div>
         </div>
         <div class="text-box-post">
-            <textarea placeholder="Введите текст..."></textarea>
+            <textarea placeholder="Введите текст..." data-bind="textInput:Content"></textarea>
             <i class="icon-smile"></i>
             <span class="hashtags">#хэштэги</span>
         </div>
@@ -96,7 +101,7 @@
         </div>
         <div class="list-menu ">
             <div class="item">
-                <button class="blue-btn">Опубликовать сейчас</button>
+                <button class="blue-btn" data-bind="click:ViewModel.PublicNow.bind(ViewModel)">Опубликовать сейчас</button>
             </div>
             <div class="item">
                 <button class="blue-btn">Запланировать</button>

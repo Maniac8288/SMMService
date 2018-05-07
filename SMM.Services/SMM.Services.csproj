@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PostService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserService.cs" />
   </ItemGroup>
@@ -59,6 +60,10 @@
     <ProjectReference Include="..\SMM.IServices\SMM.IServices.csproj">
       <Project>{68B6F455-F956-4C41-8B99-13A3E8DAC4AC}</Project>
       <Name>SMM.IServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SMM.Social\SMM.Social.csproj">
+      <Project>{97851A90-C8E8-4551-92D8-396F745D3690}</Project>
+      <Name>SMM.Social</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

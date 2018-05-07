@@ -236,7 +236,7 @@ namespace SMM.Social.Services
 
         #region Публикация
 
-        public BaseResponseSocial<OkGetGroupsResponse> Post(string access_token, string text,string groupId)
+        public BaseResponseSocial Post(string access_token, string text,string groupId)
         {
             try
             {
@@ -269,13 +269,13 @@ namespace SMM.Social.Services
                     webClient.Encoding = Encoding.UTF8;
                     var response = webClient.UploadValues(methodsUrl, pars);
                     string content = webClient.Encoding.GetString(response);
-                    var model = JsonConvert.DeserializeObject<OkGetGroupsResponse>(content);
-                    return new BaseResponseSocial<OkGetGroupsResponse>(model);
+             
+                    return new BaseResponseSocial();
                 }
             }
             catch (Exception e)
             {
-                return new BaseResponseSocial<OkGetGroupsResponse>(EnumResponseStatusSocial.Exception, e.Message);
+                return new BaseResponseSocial(EnumResponseStatusSocial.Exception, e.Message);
             }
         }
 

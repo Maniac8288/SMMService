@@ -1,4 +1,5 @@
 ﻿using SMM.IServices.Interface;
+using SMM.IServices.Models.Post;
 using SMM.Services;
 using SMM.Social.Services;
 using SMM.Web.Infrastructura;
@@ -13,6 +14,7 @@ namespace SMM.Web.Controllers
     public class PostController : Controller
     {
         private IUserService _userService = new UserService();
+        private IPostService _postService = new PostService();
         // GET: Post
         public ActionResult Index()
         {
@@ -35,21 +37,16 @@ namespace SMM.Web.Controllers
             return View();
         }
 
-        public ActionResult PublicationOk()
+        /// <summary>
+        /// Опубликовать пост сейчас
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult PublicationNow(PostModel model)
         {
-            var client = new OKService();
             var userId = new WebUser().UserId;
-            var refresh_token = _userService.GetAccessTokenOk(userId);
-            if (refresh_token.IsSuccess)
-            {
-                var accessToken = client.GetAccessTokenWithRefreshToken(refresh_token.Value);
-                if (!accessToken.IsSuccess)
-                    return Json(accessToken);
-                var postResponse = client.Post(accessToken.Value.access_token,"Тестовая запись", "59033221267498");
-             
-                return Json(postResponse);
-            }
-            return Json("");
+            var response = _postService.Publication(userId, model);
+            return Json(response);
         }
     }
 }
