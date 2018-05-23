@@ -24,24 +24,32 @@ namespace SMM.Data.Models
         /// </summary>
         public string LastName { get; set; }
         /// <summary>
-        /// Ид социальной сети
-        /// </summary>
-        public int? VkId { get; set; }
-        /// <summary>
-        /// Ид одноклассников
-        /// </summary>
-        public string OkId { get; set; }
-        /// <summary>
         /// Сссылка на изображение
         /// </summary>
-        public string ImageUrl { get; set; } 
+        public string ImageUrl { get; set; }
+
+
+
+        #region Связанные объекты 
         /// <summary>
-        /// Токен доступа от вк
+        /// Связь  с таблицей проектов
         /// </summary>
-        public string AccessTokenVk { get; set; }
+        public List<Project> Projects { get; set; }
         /// <summary>
-        /// Токен доступа от одноклассников
+        /// Связь с таблицей постов
         /// </summary>
-        public string AccessTokenOk { get; set; }
+        public List<Post> Posts { get; set; }
+
+        #region Связь с социальными сетями
+        /// <summary>
+        /// Связь с пользователем ОК
+        /// </summary>
+        public UserOk UserOk { get; set; }
+        /// <summary>
+        /// Связь с пользователем ВК
+        /// </summary>
+        public UserVk UserVk { get; set; }
+        #endregion
+        #endregion
     }
 }

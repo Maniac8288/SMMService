@@ -24,24 +24,24 @@ namespace SMM.Services
         /// <param name="accessToken"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public BaseResponse SetAccessTokenVk(string accessToken,int userId)
+        public BaseResponse SetAccessTokenVk(string accessToken, int userId)
         {
             try
             {
-                using(var db = new DataContext())
+                using (var db = new DataContext())
                 {
                     var user = db.Users.FirstOrDefault(x => x.Id == userId);
                     if (user == null)
                         return new BaseResponse(EnumResponseStatus.Error, "Пользователь не найден");
-                    if (user.AccessTokenVk != accessToken)
+                    if (user.UserVk.AccessToken != accessToken)
                     {
-                        user.AccessTokenVk = accessToken;
+                        user.UserVk.AccessToken = accessToken;
                         db.SaveChanges();
                     }
                     return new BaseResponse(EnumResponseStatus.Success, "Токен успешно установлен");
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return new BaseResponse(EnumResponseStatus.Exception, e.Message);
             }
@@ -61,9 +61,9 @@ namespace SMM.Services
                     var user = db.Users.FirstOrDefault(x => x.Id == userId);
                     if (user == null)
                         return new BaseResponse(EnumResponseStatus.Error, "Пользователь не найден");
-                    if (user.AccessTokenOk != accessToken)
+                    if (user.UserOk.AccessToken != accessToken)
                     {
-                        user.AccessTokenOk = accessToken;
+                        user.UserOk.AccessToken = accessToken;
                         db.SaveChanges();
                     }
                     return new BaseResponse(EnumResponseStatus.Success, "Токен успешно установлен");
@@ -88,8 +88,8 @@ namespace SMM.Services
                     var user = db.Users.FirstOrDefault(x => x.Id == userId);
                     if (user == null)
                         return new BaseResponse<string>(EnumResponseStatus.Error, "Пользователь не найден");
-                    
-                    return new BaseResponse<string>(EnumResponseStatus.Success, "Токен успешно получен",user.AccessTokenVk);
+
+                    return new BaseResponse<string>(EnumResponseStatus.Success, "Токен успешно получен", user.UserVk.AccessToken);
                 }
             }
             catch (Exception e)
@@ -112,7 +112,7 @@ namespace SMM.Services
                     if (user == null)
                         return new BaseResponse<string>(EnumResponseStatus.Error, "Пользователь не найден");
 
-                    return new BaseResponse<string>(EnumResponseStatus.Success, "Токен успешно получен", user.AccessTokenOk);
+                    return new BaseResponse<string>(EnumResponseStatus.Success, "Токен успешно получен", user.UserOk.AccessToken);
                 }
             }
             catch (Exception e)
@@ -162,11 +162,28 @@ namespace SMM.Services
                     {
                         FirstName = user.FirstName,
                         LastName = user.LastName,
-                        VkId = user.VkId,
-                        OkId = user.OkId,
                         ImageUrl = user.ImageUrl
                     };
                     db.Users.Add(userModel);
+                    db.SaveChanges();
+                    if (user.VkId != null)
+                    {
+                        var userVk = new UserVk()
+                        {
+                            UserId = userModel.Id,
+                            VkId = user.VkId
+                        };
+                        db.UsersVk.Add(userVk);
+                    }
+                    if (!string.IsNullOrEmpty(user.OkId))
+                    {
+                        var userOk = new UserOk()
+                        {
+                            UserId = userModel.Id,
+                            OkId = user.OkId
+                        };
+                        db.UsersOk.Add(userOk);
+                    }
                     db.SaveChanges();
                     return new BaseResponse<int>(EnumResponseStatus.Success, "Пользователь успешно зарегистрирован", userModel.Id);
                 }
@@ -189,13 +206,13 @@ namespace SMM.Services
             {
                 using (var db = new DataContext())
                 {
-                    var user = db.Users.FirstOrDefault(x => x.VkId == socialId);
+                    var user = db.UsersVk.FirstOrDefault(x => x.VkId == socialId);
                     if (user == null)
                     {
                         return new BaseResponse<int>(EnumResponseStatus.Error, "Пользователь не найден");
                     }
                     else
-                        return new BaseResponse<int>(user.Id);
+                        return new BaseResponse<int>(user.UserId);
                 }
             }
             catch (Exception e)
@@ -203,7 +220,7 @@ namespace SMM.Services
                 return new BaseResponse<int>(EnumResponseStatus.Exception, e.Message);
             }
         }
-      
+
         #endregion
 
         #region OK
@@ -218,13 +235,13 @@ namespace SMM.Services
             {
                 using (var db = new DataContext())
                 {
-                    var user = db.Users.FirstOrDefault(x => x.OkId == id);
+                    var user = db.UsersOk.FirstOrDefault(x => x.OkId == id);
                     if (user == null)
                     {
                         return new BaseResponse<int>(EnumResponseStatus.Error, "Пользователь не найден");
                     }
                     else
-                        return new BaseResponse<int>(user.Id);
+                        return new BaseResponse<int>(user.UserId);
                 }
             }
             catch (Exception e)
@@ -232,7 +249,7 @@ namespace SMM.Services
                 return new BaseResponse<int>(EnumResponseStatus.Exception, e.Message);
             }
         }
-   
+
         #endregion
     }
 }
