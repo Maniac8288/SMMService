@@ -50,6 +50,7 @@
     <Compile Include="Enums\EnumResponseStatus.cs" />
     <Compile Include="Enums\EnumSocial.cs" />
     <Compile Include="Interface\IPostService.cs" />
+    <Compile Include="Interface\IProjectService.cs" />
     <Compile Include="Interface\IUserService.cs" />
     <Compile Include="Models\Group\ModelGroup.cs" />
     <Compile Include="Models\Post\PostModel.cs" />

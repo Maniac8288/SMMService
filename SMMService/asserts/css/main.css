@@ -1905,3 +1905,6 @@ input:checked + .switcher:before {
 .modal.add .modal-sm {
    max-width:330px !important;
 }
+.error {
+    color: red;
+}

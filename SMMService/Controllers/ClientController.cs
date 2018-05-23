@@ -21,7 +21,7 @@ namespace SMM.Web.Controllers
         {
             return View();
         }
-        public ActionResult Settings()
+        public ActionResult Settings(int id)
         {
             var social = new List<ModelSocial>
             {

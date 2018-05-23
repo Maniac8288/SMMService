@@ -153,6 +153,7 @@
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -210,6 +211,8 @@
     <Content Include="asserts\js\archive\ViewModel.js" />
     <Content Include="asserts\js\Calendar\ViewModel.js" />
     <Content Include="asserts\js\Common\DateInit.js" />
+    <Content Include="asserts\js\Forms\Home\HomeViewModel.js" />
+    <Content Include="asserts\js\Forms\Project\ProjectModel.js" />
     <Content Include="asserts\js\knockout-Extansion\knockout-hightchart.js" />
     <Content Include="asserts\js\knockout-Extansion\knockout-socialName.js" />
     <Content Include="asserts\js\plugins\Calendar\fullcalendar.min.css" />
@@ -227,7 +230,6 @@
     <Content Include="asserts\js\plugins\jasny-bootstrap\js\jasny-bootstrap.min.js" />
     <Content Include="asserts\js\Post\Add\AddViewModel.js" />
     <Content Include="asserts\js\Post\PostModel.js" />
-    <Content Include="asserts\js\Project\SettignsViewModel.js" />
     <Content Include="asserts\js\Social\Model.js" />
     <Content Include="asserts\js\Social\ViewModel.js" />
     <Content Include="asserts\js\Statistic\ViewModel.js" />
@@ -345,6 +347,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Project\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -193,6 +193,17 @@ namespace SMM.Services
                 return new BaseResponse<int>(EnumResponseStatus.Exception, e.Message);
             }
         }
+        /// <summary>
+        /// Проверить авторизован ли пользователь (вызывать методо после WebUser().UserId)
+        /// </summary>
+        /// <param name="userId">Ид пользователя</param>
+        /// <returns></returns>
+        public BaseResponse CheckAuthUser(int userId)
+        {
+            if (userId == 0)
+                return new BaseResponse(EnumResponseStatus.Error, "Вы не авторизованы");
+            return new BaseResponse(EnumResponseStatus.Success);
+        }
         #region VK
 
         /// <summary>

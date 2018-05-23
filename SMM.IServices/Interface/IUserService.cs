@@ -30,6 +30,12 @@ namespace SMM.IServices.Interface
         /// <returns></returns>
         BaseResponse SetAccessTokenVk(string accessToken, int userId);
         /// <summary>
+        /// Проверить авторизован ли пользователь (вызывать методо после WebUser().UserId)
+        /// </summary>
+        /// <param name="userId">Ид пользователя</param>
+        /// <returns></returns>
+        BaseResponse CheckAuthUser(int userId);
+        /// <summary>
         /// Устоновить ключ доступа от одноклассников
         /// </summary>
         /// <param name="accessToken"></param>
