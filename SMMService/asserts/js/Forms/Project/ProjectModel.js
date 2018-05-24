@@ -6,6 +6,8 @@
         theParams = theParams || {};
         this.Id = ko.observable(theParams.Id || 0);
         this.Name = ko.observable(theParams.Name || "");
+        this.ImageFile = ko.observable(theParams.ImageFile || "");
+        this.ImageUrl = ko.observable(theParams.ImageUrl|| "");
         return this;
     };
 
@@ -17,7 +19,9 @@
     Project.ProjectModel.prototype.GetData = function () {
         return {
             Id: this.Id(),
-            Name: this.Name()
+            Name: this.Name(),
+            ImageFile: this.ImageFile(),
+            
         }
     }
 

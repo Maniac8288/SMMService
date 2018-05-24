@@ -16,6 +16,7 @@ namespace SMM.Web.Controllers
     public class ClientController : Controller
     {
         private IUserService _userService = new UserService();
+        private IProjectService _projectService = new ProjectService();
         // GET: Client
         public ActionResult Index()
         {
@@ -23,6 +24,13 @@ namespace SMM.Web.Controllers
         }
         public ActionResult Settings(int id)
         {
+            var userId = new WebUser().UserId;
+            var project = _projectService.GetProject(id);
+            if (!project.IsSuccess || userId != project.Value.CreatorId)
+            {
+                //todo: сделать переход на страницу с ошибкой!
+                return RedirectToAction("Index", "Home");
+            }
             var social = new List<ModelSocial>
             {
                 new ModelSocial
@@ -36,9 +44,10 @@ namespace SMM.Web.Controllers
                 }
             };
 
-            var model = new ModelSettingClient
+            var model = new SettingProjectModel
             {
-                Social = social
+                Social = social,
+                Project = project.Value
             };
 
             return View(model);

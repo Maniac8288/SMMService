@@ -39,6 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,6 +55,7 @@
     <Compile Include="Interface\IUserService.cs" />
     <Compile Include="Models\Group\ModelGroup.cs" />
     <Compile Include="Models\Post\PostModel.cs" />
+    <Compile Include="Models\Project\ProjectModel.cs" />
     <Compile Include="Models\Responses\BaseResponse.cs" />
     <Compile Include="Models\User\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

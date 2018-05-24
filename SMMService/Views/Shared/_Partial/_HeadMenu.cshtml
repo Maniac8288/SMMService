@@ -1,10 +1,10 @@
-﻿
+﻿@model string
 @{
     Layout = null;
 }
 <div class="container head-container ">
     <h1 class="title-head">
-        Belșug outlet
+        @Model
     </h1>
     <div class="menu">
         <a href="@Url.Action("SettingsPerson","Client")" class="blue-btn">Информация о клиенте</a>

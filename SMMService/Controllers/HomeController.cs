@@ -4,6 +4,7 @@ using SMM.IServices.Models.User;
 using SMM.Services;
 using SMM.Social.Services;
 using SMM.Web.Infrastructura;
+using SMM.Web.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,17 @@ namespace SMM.Web.Controllers
     public class HomeController : Controller
     {
         private IUserService _userService = new UserService();
+        private IProjectService _projectService = new ProjectService();
         public ActionResult Index()
         {
-            return View();
+            var userId = new WebUser().UserId;
+            var projects =  _projectService.GetListProjects(userId);
+            var model = new HomeModel()
+            {
+                Projects = projects
+            };
+                
+            return View(model);
         }
         public ActionResult SendPostTest()
         {
