@@ -1043,10 +1043,11 @@ input:checked + .switcher:before {
 
 .text-box-post {
     margin: 25px 0;
+    position: relative;
 }
 
     .text-box-post textarea {
-        width: 96%;
+        width: 100%;
         border: none;
         background-color: #e4e4e4;
         padding: 10px;
@@ -1096,14 +1097,15 @@ input:checked + .switcher:before {
 
 
 .text-box-post .icon-smile {
-    left: -120px;
-    top: -5px;
+    right: 95px;
+    bottom: 10px;
+    top: auto;
 }
 
 .text-box-post .hashtags {
-    left: 85%;
-    position: relative;
-    top: -35px;
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
     color: #607d8b;
     cursor: pointer;
     font-family: Roboto-Light;

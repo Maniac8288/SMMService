@@ -5,6 +5,7 @@ using SMM.IServices.Interface;
 using SMM.IServices.Models.Responses;
 using SMM.IServices.Models.User;
 using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,7 +31,7 @@ namespace SMM.Services
             {
                 using (var db = new DataContext())
                 {
-                    var user = db.Users.FirstOrDefault(x => x.Id == userId);
+                    var user = db.Users.Include(x=>x.UserVk).FirstOrDefault(x => x.Id == userId);
                     if (user == null)
                         return new BaseResponse(EnumResponseStatus.Error, "Пользователь не найден");
                     if (user.UserVk.AccessToken != accessToken)
@@ -85,7 +86,7 @@ namespace SMM.Services
             {
                 using (var db = new DataContext())
                 {
-                    var user = db.Users.FirstOrDefault(x => x.Id == userId);
+                    var user = db.Users.Include(x=>x.UserVk).FirstOrDefault(x => x.Id == userId);
                     if (user == null)
                         return new BaseResponse<string>(EnumResponseStatus.Error, "Пользователь не найден");
 

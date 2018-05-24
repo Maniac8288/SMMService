@@ -26,7 +26,7 @@ namespace SMM.Web.Controllers
             if (responseAccessToken.IsSuccess)
             {
                 var client = new VKService();
-                var response = client.SendPost(-165167297, "Hellloooooo", responseAccessToken.Value);
+                var response = client.SendPost(-175295931, "Hellloooooo", responseAccessToken.Value);
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
             return Json(responseAccessToken.Message, JsonRequestBehavior.AllowGet);

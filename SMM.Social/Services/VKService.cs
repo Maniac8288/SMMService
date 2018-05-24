@@ -70,7 +70,12 @@ namespace SMM.Social.Services
         /// <returns></returns>
         public static string GetUrl()
         {
-            return ($"{authorizeUrl}client_id={clientId}&display=page&redirect_uri={redirectUri}&scope={scope}&response_type=code&v={version}");
+            return ($"{authorizeUrl}" +
+                    $"client_id={clientId}" +
+                    $"&display=page" +
+                    $"&redirect_uri={redirectUri}" +
+                    $"&scope={scope}" +
+                    $"&response_type=code&v={version}");
         }
 
         /// <summary>
@@ -83,7 +88,11 @@ namespace SMM.Social.Services
             try
             {
                 //Создает Get запрос для получение ключа
-                var url = ($"{access_tokenUrl}client_id={clientId}&client_secret={secretKey}&redirect_uri={redirectUri}&code={code}");
+                var url = ($"{access_tokenUrl}" +
+                           $"client_id={clientId}" +
+                           $"&client_secret={secretKey}" +
+                           $"&redirect_uri={redirectUri}" +
+                           $"&code={code}");
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 WebResponse response = (HttpWebResponse)request.GetResponse();
                 // Конвертим получены ответ
@@ -113,7 +122,10 @@ namespace SMM.Social.Services
             try
             {
                 //Создает Get запрос для получение ключа
-                var url = ($"{userGetUrl}user_ids={userId}&fields=photo_max_orig&access_token={access_token}&v={version}");
+                var url = ($"{userGetUrl}user_ids={userId}" +
+                           $"&fields=photo_max_orig" +
+                           $"&access_token={access_token}" +
+                           $"&v={version}");
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 WebResponse response = (HttpWebResponse)request.GetResponse();
                 // Конвертим получены ответ
@@ -134,7 +146,11 @@ namespace SMM.Social.Services
 
         public string SendPost(int ownerId, string message, string access_token)
         {
-            var url = ($"{sendPostUrl}owner_id={ownerId}&message={message}&access_token={access_token}&v={version}");
+            var url = ($"{sendPostUrl}" +
+                       $"owner_id={ownerId}" +
+                       $"&message={message}" +
+                       $"&access_token={access_token}" +
+                       $"&v={version}");
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             WebResponse response = (HttpWebResponse)request.GetResponse();
             // Конвертим получены ответ

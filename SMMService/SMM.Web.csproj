@@ -234,6 +234,8 @@
     <Content Include="asserts\js\Social\ViewModel.js" />
     <Content Include="asserts\js\Statistic\ViewModel.js" />
     <Content Include="asserts\js\User\SettingViewModel.js" />
+    <Content Include="asserts\plugins\emojionearea\emojionearea.min.css" />
+    <Content Include="asserts\plugins\emojionearea\emojionearea.min.js" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -387,7 +389,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62684</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
