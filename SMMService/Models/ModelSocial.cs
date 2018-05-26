@@ -16,5 +16,13 @@ namespace SMM.Web.Models
         /// Группы социальной сети
         /// </summary>
         public List<ModelGroup> Groups { get; set; }
+        /// <summary>
+        /// Подключена ли социальная сеть у пользователя
+        /// </summary>
+        public bool IsAuth { get; set; }
+        /// <summary>
+        /// Выбраная группа
+        /// </summary>
+        public ModelGroup Group { get; set; }
     }
 }

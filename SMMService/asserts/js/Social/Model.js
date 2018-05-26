@@ -8,7 +8,10 @@
         this.Name = ko.observable(theParams.Name || "");
         this.Groups = ko.observableArray(theParams.Groups || []);
         this.IsVisibleGroup = ko.observable(false);
-        this.SelectedGroup = ko.observable(theParams.Group || null);      
+        if (theParams.Group)
+            theParams.Group = this.SetGroup(theParams.Group);
+        this.SelectedGroup = ko.observable(theParams.Group || null);
+        this.IsAuth = ko.observable(theParams.IsAuth || false);
         return this;
     };
 
@@ -32,8 +35,17 @@
                 return {
                     GroupVk: this.SelectedGroup().Id
                 }
-                break;           
-        }     
+                break;
+        }
+    }
+    Social.Model.prototype.SetGroup = function (data) {
+        if (!data.Id)
+            return undefined;
+        var group = this.Groups().filter(function (item) { return item.Id == data.Id })[0];
+        if (group)
+            this.IsActive(true);
+        return group;
     }
 
+   
 })();

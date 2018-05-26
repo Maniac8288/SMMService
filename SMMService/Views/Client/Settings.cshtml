@@ -1,4 +1,5 @@
 ﻿@model SMM.Web.Models.ViewModels.SettingProjectModel
+@using SMM.Social.Services
 @using Newtonsoft.Json
 @section styles {
     <link href="~/asserts/js/plugins/jasny-bootstrap/css/jasny-bootstrap.min.css" rel="stylesheet" />
@@ -13,6 +14,8 @@
     <script>
         var params = {};
         params.Socials = @Html.Raw(JsonConvert.SerializeObject(Model.Social));
+        params.UrlAuthorizationOk = '@OKService.GetUrl()'
+        params.UrlAuthorizationVk = '@VKService.GetUrl()'
         var Social = new Social.ViewModel(params);
         var viewParams = {};
         viewParams.UrlSave = '@Url.Action("EditProject","Project")';

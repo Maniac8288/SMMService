@@ -7,7 +7,9 @@
         this.Id = ko.observable(theParams.Id || 0);
         this.Name = ko.observable(theParams.Name || "");
         this.ImageFile = ko.observable(theParams.ImageFile || "");
-        this.ImageUrl = ko.observable(theParams.ImageUrl|| "");
+        this.ImageUrl = ko.observable(theParams.ImageUrl || "");
+        this.GroupOk = ko.observable(theParams.GroupOK || "");
+        this.GroupVk = ko.observable(theParams.GroupVK || "");
         return this;
     };
 
