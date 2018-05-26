@@ -26,6 +26,10 @@ namespace SMM.IServices.Enums
         /// <summary>
         /// Исключение
         /// </summary>
-        Exception = 3
+        Exception = 3,
+        /// <summary>
+        /// Не существует социальной сети (Для того что бы предложить пользователю авторизоватся через эту социальную сеть)
+        /// </summary>
+        SocialNotExist = 4
     }
 }

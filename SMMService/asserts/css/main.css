@@ -12,7 +12,9 @@
     font-family: 'Roboto-Medium';
     src: url('../../font/Roboto-Medium.ttf') format('truetype');
 }
-
+a,a:hover{
+    text-decoration:none;
+}
 body {
     background-color: #fff;
 }
@@ -1145,6 +1147,7 @@ input:checked + .switcher:before {
 
         .list-clients .client .image {
             margin-bottom: -20px;
+            cursor:pointer;
         }
 
             .list-clients .client .image img {

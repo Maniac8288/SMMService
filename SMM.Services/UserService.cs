@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Data.Entity;
 
 namespace SMM.Services
 {
@@ -59,7 +60,7 @@ namespace SMM.Services
             {
                 using (var db = new DataContext())
                 {
-                    var user = db.Users.FirstOrDefault(x => x.Id == userId);
+                    var user = db.Users.Include(x => x.UserOk).FirstOrDefault(x => x.Id == userId);
                     if (user == null)
                         return new BaseResponse(EnumResponseStatus.Error, "Пользователь не найден");
                     if (user.UserOk.AccessToken != accessToken)
@@ -89,7 +90,8 @@ namespace SMM.Services
                     var user = db.Users.Include(x=>x.UserVk).FirstOrDefault(x => x.Id == userId);
                     if (user == null)
                         return new BaseResponse<string>(EnumResponseStatus.Error, "Пользователь не найден");
-
+                    if (user.UserVk == null)
+                        return new BaseResponse<string>(EnumResponseStatus.SocialNotExist, "Пользователь не авторизован через ВК");
                     return new BaseResponse<string>(EnumResponseStatus.Success, "Токен успешно получен", user.UserVk.AccessToken);
                 }
             }
@@ -109,10 +111,11 @@ namespace SMM.Services
             {
                 using (var db = new DataContext())
                 {
-                    var user = db.Users.FirstOrDefault(x => x.Id == userId);
+                    var user = db.Users.Include(x => x.UserOk).FirstOrDefault(x => x.Id == userId);
                     if (user == null)
                         return new BaseResponse<string>(EnumResponseStatus.Error, "Пользователь не найден");
-
+                    if (user.UserOk == null)
+                        return new BaseResponse<string>(EnumResponseStatus.SocialNotExist, "Пользователь не авторизован через ОК");
                     return new BaseResponse<string>(EnumResponseStatus.Success, "Токен успешно получен", user.UserOk.AccessToken);
                 }
             }
@@ -204,6 +207,35 @@ namespace SMM.Services
             if (userId == 0)
                 return new BaseResponse(EnumResponseStatus.Error, "Вы не авторизованы");
             return new BaseResponse(EnumResponseStatus.Success);
+        }
+        /// <summary>
+        /// Проверить авторизован ли пользователь в социальной сети
+        /// </summary>
+        /// <param name="userId">Ид пользователя</param>
+        /// <param name="social">Социальная сеть</param>
+        /// <returns></returns>
+        public BaseResponse CheckAuthUserSocial(int userId, EnumSocial social)
+        {
+            using (var db = new DataContext())
+            {
+                var user = db.Users.Include(x => x.UserOk).Include(x => x.UserVk).FirstOrDefault(x => x.Id == userId);
+                if (user == null)
+                    return new BaseResponse(EnumResponseStatus.Error, "Пользователь не найден");
+
+                switch (social)
+                {
+                    case EnumSocial.vk:
+                        if (user.UserVk == null)
+                            return new BaseResponse(EnumResponseStatus.SocialNotExist, "Пользователь не авторизован через VK");
+                        break;
+                    case EnumSocial.ok:
+                        if (user.UserOk == null)
+                            return new BaseResponse(EnumResponseStatus.SocialNotExist, "Пользователь не авторизован через OK");
+                        break;
+                }
+
+                return new BaseResponse(EnumResponseStatus.Success);
+            }
         }
         #region VK
 

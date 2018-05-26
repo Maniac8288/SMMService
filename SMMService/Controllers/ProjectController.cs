@@ -1,10 +1,12 @@
 ﻿using SMM.IServices.Interface;
+using SMM.IServices.Models.Project;
 using SMM.Services;
 using SMM.Web.Infrastructura;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace SMM.Web.Controllers
@@ -29,6 +31,21 @@ namespace SMM.Web.Controllers
             if (!checkAuth.IsSuccess)
                 return Json(checkAuth);
             var response = _projectService.CreateProject(name, userId);
+            return Json(response);
+        }
+        /// <summary>
+        /// Создать проект
+        /// </summary>
+        [HttpPost]
+        public ActionResult EditProject(ProjectModel model)
+            {
+            var userId = new WebUser().UserId;
+            var response = _projectService.EditProject(userId, model);
+            if (response.IsSuccess)
+            {
+                var path = Server.MapPath(WebConfigurationManager.AppSettings["ProjectImage"] + model.Id + "/Image/");
+                FileService.UploadImageProject(path, model.ImageFile);
+            }
             return Json(response);
         }
     }

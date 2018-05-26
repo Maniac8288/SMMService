@@ -1,4 +1,5 @@
-﻿using SMM.IServices.Models.Responses;
+﻿using SMM.IServices.Enums;
+using SMM.IServices.Models.Responses;
 using SMM.IServices.Models.User;
 using System;
 using System.Collections.Generic;
@@ -60,6 +61,13 @@ namespace SMM.IServices.Interface
         /// <param name="user"></param>
         /// <returns></returns>
         BaseResponse<int> RegisterUserFromSocial(UserModel user);
+        /// <summary>
+        /// Проверить авторизован ли пользователь в социальной сети
+        /// </summary>
+        /// <param name="userId">Ид пользователя</param>
+        /// <param name="social">Социальная сеть</param>
+        /// <returns></returns>
+        BaseResponse CheckAuthUserSocial(int userId, EnumSocial social);
 
 
         #region OK

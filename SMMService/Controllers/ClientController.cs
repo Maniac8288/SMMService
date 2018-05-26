@@ -1,4 +1,5 @@
-﻿using SMM.IServices.Interface;
+﻿using SMM.IServices.Enums;
+using SMM.IServices.Interface;
 using SMM.IServices.Models.Group;
 using SMM.Services;
 using SMM.Social.Services;
@@ -16,6 +17,7 @@ namespace SMM.Web.Controllers
     public class ClientController : Controller
     {
         private IUserService _userService = new UserService();
+        private IProjectService _projectService = new ProjectService();
         // GET: Client
         public ActionResult Index()
         {
@@ -23,22 +25,38 @@ namespace SMM.Web.Controllers
         }
         public ActionResult Settings(int id)
         {
+            var userId = new WebUser().UserId;
+            var project = _projectService.GetProject(id);
+            if (!project.IsSuccess || userId != project.Value.CreatorId)
+            {
+                //todo: сделать переход на страницу с ошибкой!
+                return RedirectToAction("Index", "Home");
+            }
             var social = new List<ModelSocial>
             {
                 new ModelSocial
                 {
                     Groups = GetGroupsVK(),
-                    Name = "vk"
+                    Name = EnumSocial.vk.ToString(),
+                    IsAuth = _userService.CheckAuthUserSocial(userId,EnumSocial.vk).IsSuccess,
+                    Group = new ModelGroup{
+                        Id = project.Value.GroupVk
+                    }
                 },
                 new ModelSocial {
                     Groups = GetGroupsOK(),
-                    Name = "ok"
+                    Name = EnumSocial.ok.ToString(),
+                    IsAuth = _userService.CheckAuthUserSocial(userId,EnumSocial.ok).IsSuccess,
+                    Group = new ModelGroup{
+                        Id = project.Value.GroupOK
+                    }
                 }
             };
 
-            var model = new ModelSettingClient
+            var model = new SettingProjectModel
             {
-                Social = social
+                Social = social,
+                Project = project.Value
             };
 
             return View(model);

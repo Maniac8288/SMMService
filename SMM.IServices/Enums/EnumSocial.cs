@@ -14,6 +14,10 @@ namespace SMM.IServices.Enums
         /// <summary>
         /// Вконтакте
         /// </summary>
-        Vk = 1
+        vk = 1,
+        /// <summary>
+        /// Одноклассники
+        /// </summary>
+        ok = 2
     }
 }

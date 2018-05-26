@@ -1,6 +1,6 @@
 ﻿
 <div class="social-choose" data-bind="foreach:Social.Socials">
-    <div class="form-group row item" >
+    <div class="form-group row item">
         <div>
             <label class="switch">
                 <input type="checkbox" data-bind="checked:IsActive">
@@ -8,10 +8,10 @@
             </label>
         </div>
         <div data-bind="click:Social.OffModal.bind(Social,$data)">
-            <i class="icon  " data-bind="iconName:Name,css:{active:IsActive}" ></i>
+            <i class="icon  " data-bind="iconName:Name,css:{active:IsActive}"></i>
         </div>
         <!--ko if:SelectedGroup() !== null-->
-        <div data-bind="text:SelectedGroup().Name,click:Social.OffModal.bind(Social,$data)"  >
+        <div data-bind="text:SelectedGroup().Name,click:Social.OffModal.bind(Social,$data)">
             Belșug Outlet
         </div>
         <!--/ko-->
@@ -36,9 +36,24 @@
                     </div>
                     <div data-bind="text:Name"></div>
                 </li>
-                <!--/ko-->                            
+                <!--/ko-->
             </ul>
         </div>
 
     </div>
 </div>
+<div class="modal fade add" id="notAuth" data-bind="with:Social.SelectSocial">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body add-project-body">
+                <p>
+                    К сожалению к вашему аккаунту еще не привязан аккаунт от <span data-bind="text:Name"></span>, хотите подключить аккаунт?
+                </p>
+                <div>
+                    <a  class="blue-btn-active" data-bind="attr:{href:Social.Authorization.bind(Social,$data)()}">Добавить</a>
+                    <button class="btn" data-toggle="modal" data-target="#notAuth" data-dismiss="modal">Отмена</button>
+                </div>
+            </div>
+        </div><!-- /.модальное окно-Содержание -->
+    </div><!-- /.модальное окно-диалог -->
+</div><!-- /.модальное окно --> 
