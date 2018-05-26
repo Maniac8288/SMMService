@@ -17,6 +17,7 @@
         var viewParams = {};
         viewParams.UrlSave = '@Url.Action("EditProject","Project")';
         viewParams.Project = @Html.Raw(JsonConvert.SerializeObject(Model.Project));
+        viewParams.Socials = Social.Socials;
         var ViewModel = new Project.ProjectViewModel(viewParams);
     </script>
 }

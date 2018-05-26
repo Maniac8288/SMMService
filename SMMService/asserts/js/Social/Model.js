@@ -21,5 +21,19 @@
         this.SelectedGroup(group);
         this.IsVisibleGroup(false);
     }
+    Social.Model.prototype.GetData = function () {
+        switch (this.Name()) {
+            case "ok":
+                return {
+                    GroupOK: this.SelectedGroup().Id
+                }
+                break;
+            case "vk":
+                return {
+                    GroupVk: this.SelectedGroup().Id
+                }
+                break;           
+        }     
+    }
 
 })();

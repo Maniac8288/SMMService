@@ -59,7 +59,7 @@ namespace SMM.Services
             {
                 using (var db = new DataContext())
                 {
-                    var user = db.Users.FirstOrDefault(x => x.Id == userId);
+                    var user = db.Users.Include(x=>x.UserOk).FirstOrDefault(x => x.Id == userId);
                     if (user == null)
                         return new BaseResponse(EnumResponseStatus.Error, "Пользователь не найден");
                     if (user.UserOk.AccessToken != accessToken)
@@ -86,7 +86,7 @@ namespace SMM.Services
             {
                 using (var db = new DataContext())
                 {
-                    var user = db.Users.FirstOrDefault(x => x.Id == userId);
+                    var user = db.Users.Include(x=>x.UserVk).FirstOrDefault(x => x.Id == userId);
                     if (user == null)
                         return new BaseResponse<string>(EnumResponseStatus.Error, "Пользователь не найден");
 
