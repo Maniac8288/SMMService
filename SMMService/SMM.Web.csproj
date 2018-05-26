@@ -213,8 +213,9 @@
     <Content Include="asserts\js\Common\DateInit.js" />
     <Content Include="asserts\js\Forms\Home\HomeViewModel.js" />
     <Content Include="asserts\js\Forms\Project\ProjectModel.js" />
-    <Content Include="asserts\js\knockout-Extansion\knockout-hightchart.js" />
-    <Content Include="asserts\js\knockout-Extansion\knockout-socialName.js" />
+    <Content Include="asserts\js\knockoutExtensions\knockout-hightchart.js" />
+    <Content Include="asserts\js\knockoutExtensions\knockout-emoji.js" />
+    <Content Include="asserts\js\knockoutExtensions\knockout-socialName.js" />
     <Content Include="asserts\js\plugins\Calendar\fullcalendar.min.css" />
     <Content Include="asserts\js\plugins\Calendar\fullcalendar.min.js" />
     <Content Include="asserts\js\plugins\Calendar\fullcalendar.print.css" />
@@ -234,6 +235,7 @@
     <Content Include="asserts\js\Social\ViewModel.js" />
     <Content Include="asserts\js\Statistic\ViewModel.js" />
     <Content Include="asserts\js\User\SettingViewModel.js" />
+    <Content Include="asserts\plugins\emojionearea\emoji-custom.css" />
     <Content Include="asserts\plugins\emojionearea\emojionearea.min.css" />
     <Content Include="asserts\plugins\emojionearea\emojionearea.min.js" />
     <Content Include="Content\bootstrap-grid.css" />

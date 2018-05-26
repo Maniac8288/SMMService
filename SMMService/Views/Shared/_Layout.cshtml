@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title – приложение ASP.NET</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/bundles/css/plugins/emoji")
     <link href="~/asserts/css/main.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
     @RenderSection("styles", required: false)
 </head>
 <body>
@@ -21,6 +22,10 @@
     <script src="~/Scripts/popper.min.js"></script>
     @Scripts.Render("~/bundles/bootstrap")
     <script src="~/Scripts/knockout-3.4.2.js"></script>
+
+    @Scripts.Render("~/bundles/js/plugins/emoji")
+
+    @Scripts.Render("~/bundles/js/knockoutExtensions")
     @RenderSection("scripts", required: false)
 
 

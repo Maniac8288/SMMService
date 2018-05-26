@@ -26,6 +26,16 @@ namespace SMMService
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/css/plugins/emoji").Include(
+                "~/asserts/plugins/emojionearea/emojionearea.min.css",
+                "~/asserts/plugins/emojionearea/emoji-custom.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/knockoutExtensions")
+                .IncludeDirectory("~/asserts/js/knockoutExtensions", "*.js", true));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/plugins/emoji").Include(
+                "~/asserts/plugins/emojionearea/emojionearea.min.js"));
         }
     }
 }

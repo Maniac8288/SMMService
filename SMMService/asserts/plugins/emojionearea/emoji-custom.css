@@ -1,0 +1,8 @@
+﻿.emojionearea .emojionearea-button {
+    bottom: 3px;
+    top: unset;
+}
+
+    .emojionearea .emojionearea-button.active + .emojionearea-picker-position-top {
+        margin-top: -180px;
+    }

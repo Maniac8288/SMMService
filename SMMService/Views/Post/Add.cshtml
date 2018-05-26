@@ -5,7 +5,6 @@
     <script src="~/asserts/js/plugins/jasny-bootstrap/js/jasny-bootstrap.min.js"></script>
     <script src="~/asserts/js/Social/Model.js"></script>
     <script src="~/asserts/js/Social/ViewModel.js"></script>
-    <script src="~/asserts/js/knockout-Extansion/knockout-socialName.js"></script>
     <script src="~/asserts/js/Post/PostModel.js"></script>
     <script src="~/asserts/js/Post/Add/AddViewModel.js"></script>
     <script>
@@ -80,8 +79,7 @@
             </div>
         </div>
         <div class="text-box-post">
-            <textarea placeholder="Введите текст..." data-bind="textInput:Content"></textarea>
-            <i class="icon-smile"></i>
+            <textarea placeholder="Введите текст..." data-bind="textInput:Content,emoji:Content"></textarea>
             <span class="hashtags">#хэштэги</span>
         </div>
         <div class="title-section">
