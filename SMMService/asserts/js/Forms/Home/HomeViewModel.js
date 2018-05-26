@@ -15,7 +15,8 @@
         this.ErrorCreateProject = ko.observable("");
 
         this.Projects = ko.observableArray(theParams.Projects ? theParams.Projects.map(function (item) { return new Project.ProjectModel(item) }) : []);
-        console.log(this.Projects() );
+
+        this.TypeFilter = ko.observable("squad")
         return this;
     };
 

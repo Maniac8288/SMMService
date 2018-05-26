@@ -16,7 +16,7 @@ namespace SMM.Services
     public class PostService : IPostService
     {
         private IUserService _userService = new UserService();
-      
+
         /// <summary>
         /// Опубликовать пост
         /// </summary>
@@ -29,7 +29,10 @@ namespace SMM.Services
             {
                 using (var db = new DataContext())
                 {
-                    var okRes = PublicationOK(userId, post, "59033221267498");
+                    var project = db.Projects.FirstOrDefault(x => x.Id == post.ProjectId);
+                    if (project == null)
+                        return new BaseResponse(EnumResponseStatus.Error, "Проект не найден");
+                    var okRes = PublicationOK(userId, post, project.GroupOK);
                     return okRes;
                 }
             }
