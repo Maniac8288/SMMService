@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Data.Entity;
 
 namespace SMM.Services
 {
@@ -108,7 +109,7 @@ namespace SMM.Services
             {
                 using (var db = new DataContext())
                 {
-                    var user = db.Users.FirstOrDefault(x => x.Id == userId);
+                    var user = db.Users.Include(x=>x.UserOk).FirstOrDefault(x => x.Id == userId);
                     if (user == null)
                         return new BaseResponse<string>(EnumResponseStatus.Error, "Пользователь не найден");
 
