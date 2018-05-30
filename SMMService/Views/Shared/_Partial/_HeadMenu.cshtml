@@ -1,10 +1,10 @@
-﻿@model string
+﻿@model SMM.IServices.Models.Project.ProjectModel
 @{
     Layout = null;
 }
 <div class="container head-container ">
     <h1 class="title-head">
-        @Model
+        @(Model != null ?  Model.Name : "")
     </h1>
     <div class="menu">
         <a href="@Url.Action("SettingsPerson","Client")" class="blue-btn">Информация о клиенте</a>
@@ -110,7 +110,7 @@
 
 <div class="col-md-10 nav-menu">
     <div class="item m-right-100">
-        <a href="@Url.Action("Add","Post")" class="blue-btn">Добавить</a>
+        <a href="@Url.Action("Add","Post",new { id = Model.Id})" class="blue-btn">Добавить</a>
     </div>
     <div class="item ">
         <a class="blue-btn active">На проверке</a>

@@ -16,6 +16,12 @@ namespace SMM.IServices.Interface
         /// <param name="userId">Ид пользователя</param>
         /// <param name="post">Пост</param>
         /// <returns></returns>
-        BaseResponse Publication(int userId, PostModel post);
+        BaseResponse<int> Publication(int userId, PostModel post);
+        /// <summary>
+        /// Получить пост по ид
+        /// </summary>
+        /// <param name="postId"></param>
+        /// <returns></returns>
+        PostModel GetPostById(int postId);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SMM.Data;
+using SMM.Data.Models;
 using SMM.IServices.Enums;
 using SMM.IServices.Interface;
 using SMM.IServices.Models.Post;
@@ -23,7 +24,7 @@ namespace SMM.Services
         /// <param name="userId">Ид пользователя</param>
         /// <param name="post">Пост</param>
         /// <returns></returns>
-        public BaseResponse Publication(int userId, PostModel post)
+        public BaseResponse<int> Publication(int userId, PostModel post)
         {
             try
             {
@@ -31,15 +32,49 @@ namespace SMM.Services
                 {
                     var project = db.Projects.FirstOrDefault(x => x.Id == post.ProjectId);
                     if (project == null)
-                        return new BaseResponse(EnumResponseStatus.Error, "Проект не найден");
+                        return new BaseResponse<int>(EnumResponseStatus.Error, "Проект не найден");
                     var okRes = PublicationOK(userId, post, project.GroupOK);
-                    return okRes;
+                    if (okRes.IsSuccess)
+                    {
+                        var model = new Post()
+                        {
+                            Content = post.Content,
+                            DateCreate = DateTime.Now,
+                            DatePublic = DateTime.Now,
+                            ProjectId = post.ProjectId,
+                            UserId = userId
+                         
+                        };
+                        db.Posts.Add(model);
+                        db.SaveChanges();
+                        return new BaseResponse<int>() { Status = okRes.Status, Message = okRes.Message, Value = model.Id };
+                    }
+                    return new BaseResponse<int>() { Status = okRes.Status, Message = okRes.Message };
                 }
             }
             catch (Exception e)
             {
-                return new BaseResponse(EnumResponseStatus.Exception, e.Message);
+                return new BaseResponse<int>(EnumResponseStatus.Exception, e.Message);
             }
+        }
+
+        /// <summary>
+        /// Получить пост по ид
+        /// </summary>
+        /// <param name="postId"></param>
+        /// <returns></returns>
+        public PostModel GetPostById(int postId)
+        {
+
+            using (var db = new DataContext())
+            {
+                var post = db.Posts.FirstOrDefault(x => x.Id == postId);
+                if (post == null)
+                    return new PostModel();
+                return ConvertToPostModel(post);
+            }
+
+
         }
         #region Одкноклассники 
         private BaseResponse PublicationOK(int userId, PostModel post, string groupId)
@@ -70,6 +105,17 @@ namespace SMM.Services
             {
                 Status = model.Status,
                 Message = model.Message
+            };
+        }
+        private PostModel ConvertToPostModel(Post model)
+        {
+            return new PostModel()
+            {
+                Content = model.Content,
+                DateCreate =model.DateCreate,
+                DatePublic = model.DatePublic,
+                ProjectId = model.ProjectId,
+                UserId = model.UserId
             };
         }
         #endregion

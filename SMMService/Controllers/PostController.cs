@@ -15,14 +15,17 @@ namespace SMM.Web.Controllers
     {
         private IUserService _userService = new UserService();
         private IPostService _postService = new PostService();
+        private IProjectService _projectService = new ProjectService();
         // GET: Post
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            return View();
+            var post = _postService.GetPostById(id);
+            return View(post);
         }
-        public ActionResult Add()
+        public ActionResult Add(int id)
         {
-            return View();
+            var post = _projectService.GetProject(id);
+            return View(post.Value);
         }
         public ActionResult Archive()
         {
@@ -46,7 +49,7 @@ namespace SMM.Web.Controllers
         {
             var userId = new WebUser().UserId;
             var response = _postService.Publication(userId, model);
-            return Json(response);
+            return Json(new { IsSuccess = response.IsSuccess, Message = response.Message, Url = Url.Action("Index","Post",new { id = response.Value}) });
         }
     }
 }

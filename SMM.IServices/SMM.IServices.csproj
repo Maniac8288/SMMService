@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Enums\EnumResponseStatus.cs" />
     <Compile Include="Enums\EnumSocial.cs" />
+    <Compile Include="Enums\EnumStatusProject.cs" />
     <Compile Include="Interface\IPostService.cs" />
     <Compile Include="Interface\IProjectService.cs" />
     <Compile Include="Interface\IUserService.cs" />

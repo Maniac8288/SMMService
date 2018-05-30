@@ -7,6 +7,7 @@ Post.Add = Post.Add || {};
         theParams = theParams || {};
         this.UrlPublicNow = theParams.UrlPublicNow;
         this.Post = new Post.PostModel(theParams.Post);
+        this.Project = new Project.ProjectModel(theParams.Project)
         return this;
     };
 
@@ -18,10 +19,10 @@ Post.Add = Post.Add || {};
     Post.Add.AddViewModel.prototype.PublicNow = function () {
         var self = this;
         var model = this.Post.GetData();
-        console.log(model);
+        model.ProjectId = this.Project.Id();    
         $.post(this.UrlPublicNow, model).done(function (res) {
             if (res.IsSuccess) {
-                window.location.href = res.Value;
+                window.location.href = res.Url;
             }
             else {
                 console.log(res.Message);

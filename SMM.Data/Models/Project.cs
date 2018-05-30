@@ -35,6 +35,10 @@ namespace SMM.Data.Models
         /// Дата создание проекта
         /// </summary>
         public DateTime DateCreate { get; set; }
+        /// <summary>
+        /// Статус проекта (EnumStatusProject)
+        /// </summary>
+        public int Status { get; set; }
 
         #region Связанные объекты
         /// <summary>

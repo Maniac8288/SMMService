@@ -1,9 +1,12 @@
-﻿@section styles {
+﻿@model SMM.IServices.Models.Project.ProjectModel
+@using Newtonsoft.Json
+@section styles {
     <link href="~/asserts/js/plugins/jasny-bootstrap/css/jasny-bootstrap.min.css" rel="stylesheet" />
 }
 @section Scripts {
     <script src="~/asserts/js/plugins/jasny-bootstrap/js/jasny-bootstrap.min.js"></script>
     <script src="~/asserts/js/Social/Model.js"></script>
+    <script src="~/asserts/js/Forms/Project/ProjectModel.js"></script>
     <script src="~/asserts/js/Social/ViewModel.js"></script>
     <script src="~/asserts/js/Post/PostModel.js"></script>
     <script src="~/asserts/js/Post/Add/AddViewModel.js"></script>
@@ -11,12 +14,13 @@
         var Social = new Social.ViewModel();
         var params = {};
         params.UrlPublicNow = '@Url.Action("PublicationNow","Post")';
+        params.Project = @Html.Raw(JsonConvert.SerializeObject(Model));
         var ViewModel = new Post.Add.AddViewModel(params);
     </script>
 }
 
 <div class="container body-content">
-    @Html.Partial("_Partial/_HeadMenu")
+    @Html.Partial("_Partial/_HeadMenu", Model)
 
 
     <div class="col-md-9" data-bind="with:ViewModel.Post">

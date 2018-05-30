@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SMM.IServices.Models.Post.PostModel
+@{
     ViewBag.Title = "Home Page";
 }
 @section Scripts {
@@ -28,13 +29,12 @@
                     <img src="~/asserts/img/Temp/вид-у-клиента.png" />
                 </div>
                 <div class="text-post">
-                    Доброе утро!
-                    Желаем Вам приятных выходных!
+          @Model.Content
                 </div>
             </div>
             <div class="info-post">
                 <div class="date">
-                    Дата публикации: <span>14.01.18  18:00</span>
+                    Дата публикации: <span>@Model.DatePublic</span>
                 </div>
                 @Html.Partial("_Partial/_Social")
                 <div class="status-post">
@@ -57,12 +57,12 @@
             <div class="comments-box">
                 <div class="send-box">
                     <div class="col-md-2">
-                        <div class="image-circle"></div>
+                        <div class="image-circle"><img src="@User.ImageUrl" /></div>
                     </div>
                     <div class="col-md-10 send">
                         <div>
                             <div class="send-input">
-                                <input type="text" placeholder="Написать комментарий"  id="add"/>    <span class="icon icon-smile"></span>
+                                <input type="text" placeholder="Написать комментарий" id="add" />    <span class="icon icon-smile"></span>
                                 <span class="icon icon-camera"></span>
                             </div>
 
@@ -75,7 +75,7 @@
                                         для команды
                                         <input type="radio" name="type">
                                         <span class="checkmark"></span>
-                                    </label>                                    
+                                    </label>
                                 </div>
                                 <div class="item">
                                     <label class="container-radio">
