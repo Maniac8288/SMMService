@@ -29,65 +29,67 @@
             </div>
         </div>
         <!--ko if:ViewModel.TypeFilter() === 'squad'-->
-        <div class="list-clients col-md-12" data-bind="foreach:ViewModel.Projects">
-            <div class="client">
-                <a data-bind="attr:{href:'@Url.Action("Settings","Client")/'+Id()}">
-                    <div class="image">
-                        <span class="title" data-bind="text:Name">
+        <div class="row">
+            <div class="list-clients col-md-12" data-bind="foreach:ViewModel.Projects">
+                <div class="client">
+                    <a data-bind="attr:{href:'@Url.Action("Settings","Client")/'+Id()}">
+                        <div class="image">
+                            <span class="title" data-bind="text:Name">
 
-                        </span>
-                        <img data-bind="attr:{src:ImageUrl()}" />
-                        <span class="favorit"><i class="icon-star active"></i></span>
-                    </div>
-                </a>
-                <div class="menu-clients">
-
-                    <div class="list-users">
-                        <div class="user">
-                            <div class="image-circle"></div>
-                            <span class="name">A</span>
+                            </span>
+                            <img data-bind="attr:{src:ImageUrl()}" />
+                            <span class="favorit"><i class="icon-star active"></i></span>
                         </div>
-                        <div class="user">
-                            <div class="image-circle"></div>
-                        </div>
-                        <div class="user">
-                            <div class="image-circle"></div>
-                        </div>
-                        <div class="user">
-                            <div class="image-circle"></div>
-                            <span class="name">K</span>
-                        </div>
-                        <div class="setting">
-                            <div class="dropdown">
-                                <a id="drop-setting" role="button" data-toggle="dropdown" href="#">    <i class="icon-settings"></i></a>
+                    </a>
+                    <div class="menu-clients">
 
-                                <ul class="dropdown-menu users-menu" role="menu" aria-labelledby="drop-setting">
-
-                                    <li>
-                                        <div class="title black">
-                                            Сменить группу
-                                        </div>
-                                    </li>
-                                    <li class="user row">
-                                        <div>Без группы</div>
-                                        <span class="active-group"></span>
-                                    </li>
-                                    <li class="user row">
-                                        <div>Группа 1</div>
-                                    </li>
-                                    <li class="user row">
-                                        <div>Группа 2</div>
-                                    </li>
-                                    <li class="user row">
-                                        <div>Группа 3</div>
-                                    </li>
-                                    <li class="user row">
-                                        <div>Архивировать</div>
-                                    </li>
-
-                                </ul>
+                        <div class="list-users">
+                            <div class="user">
+                                <div class="image-circle"></div>
+                                <span class="name">A</span>
                             </div>
+                            <div class="user">
+                                <div class="image-circle"></div>
+                            </div>
+                            <div class="user">
+                                <div class="image-circle"></div>
+                            </div>
+                            <div class="user">
+                                <div class="image-circle"></div>
+                                <span class="name">K</span>
+                            </div>
+                            <div class="setting">
+                                <div class="dropdown">
+                                    <a id="drop-setting" role="button" data-toggle="dropdown" href="#">    <i class="icon-settings"></i></a>
 
+                                    <ul class="dropdown-menu users-menu" role="menu" aria-labelledby="drop-setting">
+
+                                        <li>
+                                            <div class="title black">
+                                                Сменить группу
+                                            </div>
+                                        </li>
+                                        <li class="user row">
+                                            <div>Без группы</div>
+                                            <span class="active-group"></span>
+                                        </li>
+                                        <li class="user row">
+                                            <div>Группа 1</div>
+                                        </li>
+                                        <li class="user row">
+                                            <div>Группа 2</div>
+                                        </li>
+                                        <li class="user row">
+                                            <div>Группа 3</div>
+                                        </li>
+                                        <li class="user row">
+                                            <div>Архивировать</div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>

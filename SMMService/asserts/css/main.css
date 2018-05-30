@@ -1119,6 +1119,7 @@ input:checked + .switcher:before {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+    margin-bottom: 15px;
 }
 
     .menu-list a, .menu-list i {
@@ -1146,8 +1147,9 @@ input:checked + .switcher:before {
     }
 
         .list-clients .client .image {
-            margin-bottom: -20px;
+            /*margin-bottom: -20px;*/
             cursor:pointer;
+            position: relative;
         }
 
             .list-clients .client .image img {
@@ -1195,14 +1197,14 @@ input:checked + .switcher:before {
         }
 
         .list-clients .client .favorit {
-            position: relative;
-            top: -210px;
-            left: 88%;
+            position: absolute;
+            top: 5px;
+            right: 5px;
         }
 
         .list-clients .client .title {
-            position: relative;
-            top: 30px;
+            position: absolute;
+            top: 5px;
             color: #ffffff;
             font-family: Roboto-Regular;
             font-size: 16px;
