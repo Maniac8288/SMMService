@@ -35,6 +35,10 @@ namespace SMM.Data.Models
         /// Ид пользователя создавшего пост
         /// </summary>
         public int UserId { get; set; }
+        /// <summary>
+        /// Статус поста (EnumStatusPost)
+        /// </summary>
+        public int Status { get; set; }
 
         #region Связаные объекты
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SMM.IServices.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,5 +42,9 @@ namespace SMM.IServices.Models.Project
         /// Дата создание проекта
         /// </summary>
         public DateTime DateCreate { get; set; }
+        /// <summary>
+        /// Статус проекта
+        /// </summary>
+        public EnumStatusProject Status { get; set; }
     }
 }

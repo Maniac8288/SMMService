@@ -76,6 +76,10 @@
     <Compile Include="Migrations\201805301939120_addColumn_Status_IN_Project.Designer.cs">
       <DependentUpon>201805301939120_addColumn_Status_IN_Project.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805302011520_addColumn_Statis_IN_Post.cs" />
+    <Compile Include="Migrations\201805302011520_addColumn_Statis_IN_Post.Designer.cs">
+      <DependentUpon>201805302011520_addColumn_Statis_IN_Post.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Project.cs" />
@@ -110,6 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805301939120_addColumn_Status_IN_Project.resx">
       <DependentUpon>201805301939120_addColumn_Status_IN_Project.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805302011520_addColumn_Statis_IN_Post.resx">
+      <DependentUpon>201805302011520_addColumn_Statis_IN_Post.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
