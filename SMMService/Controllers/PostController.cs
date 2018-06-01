@@ -45,11 +45,24 @@ namespace SMM.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult PublicationNow(PostModel model)
+        public ActionResult Publication(PostModel model)
         {
             var userId = new WebUser().UserId;
             var response = _postService.Publication(userId, model);
-            return Json(new { IsSuccess = response.IsSuccess, Message = response.Message, Url = Url.Action("Index","Post",new { id = response.Value}) });
+            return Json(new { IsSuccess = response.IsSuccess, Message = response.Message, Url = Url.Action("Index", "Post", new { id = response.Value }) });
+        }
+
+        /// <summary>
+        /// Ид поста
+        /// </summary>
+        /// <param name="postId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult Verification(int postId)
+        {
+            var userId = new WebUser().UserId;
+            var response = _postService.VerificationPost(userId, postId);
+            return Json(response);
         }
     }
 }

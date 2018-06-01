@@ -19,7 +19,22 @@ Post.Add = Post.Add || {};
     Post.Add.AddViewModel.prototype.PublicNow = function () {
         var self = this;
         var model = this.Post.GetData();
-        model.ProjectId = this.Project.Id();    
+        model.ProjectId = this.Project.Id();
+        model.Status = 1;
+        $.post(this.UrlPublicNow, model).done(function (res) {
+            if (res.IsSuccess) {
+                window.location.href = res.Url;
+            }
+            else {
+                console.log(res.Message);
+            }
+        });
+    }
+    Post.Add.AddViewModel.prototype.SchedulePublic = function () {
+        var self = this;
+        var model = this.Post.GetData();
+        model.ProjectId = this.Project.Id();
+        model.Status = 2;
         $.post(this.UrlPublicNow, model).done(function (res) {
             if (res.IsSuccess) {
                 window.location.href = res.Url;

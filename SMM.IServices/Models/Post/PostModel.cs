@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SMM.IServices.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,5 +37,9 @@ namespace SMM.IServices.Models.Post
         /// Ид пользователя создавшего пост
         /// </summary>
         public int UserId { get; set; }
+        /// <summary>
+        /// Статус пользователя
+        /// </summary>
+        public EnumStatusPost Status { get; set; }
     }
 }

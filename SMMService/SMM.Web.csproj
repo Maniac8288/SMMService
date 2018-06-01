@@ -232,6 +232,7 @@
     <Content Include="asserts\js\plugins\jasny-bootstrap\js\jasny-bootstrap.js" />
     <Content Include="asserts\js\plugins\jasny-bootstrap\js\jasny-bootstrap.min.js" />
     <Content Include="asserts\js\Post\Add\AddViewModel.js" />
+    <Content Include="asserts\js\Post\Index\PostViewModel.js" />
     <Content Include="asserts\js\Post\PostModel.js" />
     <Content Include="asserts\js\Social\Model.js" />
     <Content Include="asserts\js\Social\ViewModel.js" />

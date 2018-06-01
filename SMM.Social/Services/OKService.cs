@@ -218,7 +218,7 @@ namespace SMM.Social.Services
                     var response = webClient.UploadValues(methodsUrl, pars);
                     string content = webClient.Encoding.GetString(response);
                     var model = JsonConvert.DeserializeObject<List<ModelGroupOk>>(content);
-                    foreach(var item in model)
+                    foreach (var item in model)
                     {
                         var photoRes = GetPhoto(access_token, item.photo_id);
                         if (photoRes.IsSuccess)
@@ -236,18 +236,24 @@ namespace SMM.Social.Services
 
         #region Публикация
 
-        public BaseResponseSocial Post(string access_token, string text,string groupId)
+        public BaseResponseSocial<string> Post(string access_token, string text, string groupId, DateTime? datePublic)
         {
             try
             {
-                var attachmentModel = new List<AttachmentModel>
+                var media = new List<MediaModel>
                 {
-                    new AttachmentModel{
-                    type = "text",
-                    text = text
+                    new MediaModel {
+                        type = "text",
+                        text = text
                     }
                 };
-                var attachment = JsonConvert.SerializeObject(new { media = attachmentModel });
+                var attachmentModel = new AttachmentModel() {
+                    media = media
+                };
+         
+                if (datePublic.HasValue)
+                    attachmentModel.publishAt = ((DateTime)(datePublic)).ToString("yyyy-MM-dd HH':'mm':'ss");
+                var attachment = JsonConvert.SerializeObject(attachmentModel);
                 var param = $"application_key={appKey}attachment={attachment}format=jsongid={groupId}method=mediatopic.posttype=GROUP_THEME";
                 var sig = getSign(param, access_token);
                 using (var webClient = new WebClient())
@@ -269,13 +275,29 @@ namespace SMM.Social.Services
                     webClient.Encoding = Encoding.UTF8;
                     var response = webClient.UploadValues(methodsUrl, pars);
                     string content = webClient.Encoding.GetString(response);
-             
-                    return new BaseResponseSocial();
+                    var responsePost = new BaseResponseSocial<string>();
+                    if (content.Contains("error_code"))
+                    {
+                        var responseContent = JsonConvert.DeserializeObject<OKErrorModel>(content);
+                        responsePost = new BaseResponseSocial<string>()
+                        {
+                            Status = responseContent.error_code,
+                            Message = responseContent.error_msg
+                        };
+                    }
+                    else
+                    {
+                        var id = JsonConvert.DeserializeObject<string>(content);
+                        responsePost.Status = 0;
+                        responsePost.Value = id;
+                    }
+                    return responsePost;
+                    
                 }
             }
             catch (Exception e)
             {
-                return new BaseResponseSocial(EnumResponseStatusSocial.Exception, e.Message);
+                return new BaseResponseSocial<string>(EnumResponseStatusSocial.Exception, e.Message);
             }
         }
 
@@ -287,7 +309,7 @@ namespace SMM.Social.Services
             try
             {
                 var fields = "";
-            
+
                 var param = $"application_key={appKey}format=jsonmethod=photos.getPhotoInfophoto_id={photo_id}";
                 var sig = getSign(param, access_token);
                 using (var webClient = new WebClient())
@@ -296,7 +318,7 @@ namespace SMM.Social.Services
                     var pars = new NameValueCollection();
 
                     // Добавляем необходимые параметры в виде пар ключ, значение
-                    pars.Add("application_key", appKey);            
+                    pars.Add("application_key", appKey);
                     pars.Add("format", "json");
                     pars.Add("method", "photos.getPhotoInfo");
                     pars.Add("photo_id", photo_id);
@@ -308,7 +330,7 @@ namespace SMM.Social.Services
                     var response = webClient.UploadValues(methodsUrl, pars);
                     string content = webClient.Encoding.GetString(response);
                     var model = JsonConvert.DeserializeObject<ResponseGetPhotoInfo>(content);
-                    if(model.photo == null)
+                    if (model.photo == null)
                     {
                         return new BaseResponseSocial<ModelPhoto>(EnumResponseStatusSocial.Error, "Photo not found");
                     }

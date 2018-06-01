@@ -1,4 +1,7 @@
 ﻿@model SMM.IServices.Models.Post.PostModel
+@using SMM.IServices.Enums;
+@using Newtonsoft.Json
+
 @{
     ViewBag.Title = "Home Page";
 }
@@ -6,9 +9,16 @@
 
     <script src="~/asserts/js/Social/Model.js"></script>
     <script src="~/asserts/js/Social/ViewModel.js"></script>
+    <script src="~/asserts/js/Post/PostModel.js"></script>
+    <script src="~/asserts/js/Post/Index/PostViewModel.js"></script>
     <script>
         var Social = new Social.ViewModel();
+        var params = {};
+        params.UrlVerification = '@Url.Action("Verification", "Post")';
+        params.Post = @Html.Raw(JsonConvert.SerializeObject(Model));
+        var ViewModel = new Post.PostViewModel(params);
     </script>
+
 }
 
 <div class="container body-content">
@@ -29,7 +39,7 @@
                     <img src="~/asserts/img/Temp/вид-у-клиента.png" />
                 </div>
                 <div class="text-post">
-          @Model.Content
+                    @Model.Content
                 </div>
             </div>
             <div class="info-post">
@@ -41,17 +51,26 @@
                     <div>
                         Статус проверки:
                     </div>
-                    <div>
-                        <span class="status">
-                            Ждет подтверждения
-                        </span>
-
-                    </div>
-                    <div>
-                        <button class="blue-btn">
-                            Подтвердить
-                        </button>
-                    </div>
+                    @if (Model.Status == EnumStatusPost.OnVerification)
+                    {
+                        <div>
+                            <span class="status">
+                                Ждет подтверждения
+                            </span>
+                        </div>
+                        <div>
+                            <button class="blue-btn" data-bind="click:ViewModel.Verification.bind(ViewModel)">
+                                Подтвердить
+                            </button>
+                        </div>
+                    }
+                    else if (Model.Status == EnumStatusPost.Published)
+                    {
+                        <div class="accept">
+                            <img src="~/asserts/img/icons/red-acept.png" />
+                            Подтвержден клиентом <span>14.01.18</span>
+                        </div>
+                    }
                 </div>
             </div>
             <div class="comments-box">

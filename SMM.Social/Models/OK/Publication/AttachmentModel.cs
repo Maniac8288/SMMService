@@ -9,12 +9,12 @@ namespace SMM.Social.Models.OK.Publication
     public class AttachmentModel
     {
         /// <summary>
-        /// Тип поста
+        /// Медия
         /// </summary>
-        public string type { get; set;}
+        public List<MediaModel> media { get; set; }
         /// <summary>
-        /// Текст поста
+        /// Время публикации отложенной темы в формате YYYY-mm-dd hh:mi:ss (в таймзоне Europe/Moscow (GMT+3:00)). Необходимо для создания отложенной темы.
         /// </summary>
-        public string text { get; set; }
+        public string publishAt { get; set; }
     }
 }

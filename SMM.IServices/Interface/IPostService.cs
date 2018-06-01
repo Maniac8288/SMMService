@@ -23,5 +23,12 @@ namespace SMM.IServices.Interface
         /// <param name="postId"></param>
         /// <returns></returns>
         PostModel GetPostById(int postId);
+        /// <summary>
+        /// Потвердить пост к отправке
+        /// </summary>
+        /// <param name="userId">Ид пользователя</param>
+        /// <param name="postId">Id Постa</param>
+        /// <returns></returns>
+        BaseResponse VerificationPost(int userId, int postId);
     }
 }

@@ -39,6 +39,10 @@ namespace SMM.Data.Models
         /// Статус поста (EnumStatusPost)
         /// </summary>
         public int Status { get; set; }
+        /// <summary>
+        /// Ид поста в одноклассниках
+        /// </summary>
+        public string PostIdOK { get; set; }
 
         #region Связаные объекты
         /// <summary>

@@ -7,6 +7,8 @@
         this.Id = ko.observable(theParams.Id || 0);
         this.Name = ko.observable(theParams.Name || "");
         this.Content = ko.observable(theParams.Content || "");
+        this.DatePublic = ko.observable(theParams.DatePublic || "");
+        this.DatePublicTime = ko.observable(theParams.DatePublicTime || "");
         return this;
     };
 
@@ -19,7 +21,8 @@
         return {
             Id: this.Id(),
             Name: this.Name(),
-            Content: this.Content()
+            Content: this.Content(),
+            DatePublic: new Date(this.DatePublic() + " " + this.DatePublicTime()).toISOString()
         };
     }
 

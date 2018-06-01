@@ -13,7 +13,7 @@
     <script>
         var Social = new Social.ViewModel();
         var params = {};
-        params.UrlPublicNow = '@Url.Action("PublicationNow","Post")';
+        params.UrlPublicNow = '@Url.Action("Publication", "Post")';
         params.Project = @Html.Raw(JsonConvert.SerializeObject(Model));
         var ViewModel = new Post.Add.AddViewModel(params);
     </script>
@@ -97,8 +97,8 @@
             Выберите дату и время в будущем, когда вы хотите разместить свою публикацию.
         </div>
         <div class="choose-date">
-            <input type="date" />
-            <input type="time" />
+            <input type="date" data-bind="value:DatePublic"/>
+            <input type="time" data-bind="value:DatePublicTime" />
             <span>UTC+02</span>
         </div>
         <div class="list-menu ">
@@ -106,7 +106,7 @@
                 <button class="blue-btn" data-bind="click:ViewModel.PublicNow.bind(ViewModel)">Опубликовать сейчас</button>
             </div>
             <div class="item">
-                <button class="blue-btn">Запланировать</button>
+                <button class="blue-btn" data-bind="click:ViewModel.SchedulePublic.bind(ViewModel)">Запланировать</button>
             </div>
             <div class="item">
                 <button class="red-btn">Отправить на проверку</button>
