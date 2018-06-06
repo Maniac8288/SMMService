@@ -9,6 +9,9 @@
         this.Content = ko.observable(theParams.Content || "");
         this.DatePublic = ko.observable(theParams.DatePublic || "");
         this.DatePublicTime = ko.observable(theParams.DatePublicTime || "");
+        this.Status = ko.observable(theParams.Status || "");
+        this.ImageFile = ko.observable(theParams.ImageFile || "");
+        this.ImagesUrl = ko.observableArray(theParams.ImagesUrl || "");
         return this;
     };
 
@@ -22,8 +25,18 @@
             Id: this.Id(),
             Name: this.Name(),
             Content: this.Content(),
-            DatePublic: new Date(this.DatePublic() + " " + this.DatePublicTime()).toISOString()
+            DatePublic: new Date(this.DatePublic() + " " + this.DatePublicTime()).toISOString(),
+            ImageFile: this.ImageFile(),
         };
     }
 
+    Post.PostModel.prototype.GetFormData = function () {
+        var formData = new FormData();
+        formData.append("Id", this.Id());
+        formData.append("Name", this.Name());
+        formData.append("Content", this.Content());
+        formData.append("DatePublic", new Date(this.DatePublic() + " " + this.DatePublicTime()).toISOString());
+        formData.append("ImageFile", this.ImageFile());
+        return formData;
+    }
 })();

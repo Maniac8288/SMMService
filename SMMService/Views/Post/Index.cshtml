@@ -36,7 +36,10 @@
         <div class="post">
             <div class="box-post">
                 <div class="img-post">
-                    <img src="~/asserts/img/Temp/вид-у-клиента.png" />
+                    @foreach (var url in Model.ImagesUrl)
+                    {
+                    <img src="@url" />
+                    }
                 </div>
                 <div class="text-post">
                     @Model.Content

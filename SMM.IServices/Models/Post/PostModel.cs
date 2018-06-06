@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace SMM.IServices.Models.Post
 {
@@ -41,5 +42,13 @@ namespace SMM.IServices.Models.Post
         /// Статус пользователя
         /// </summary>
         public EnumStatusPost Status { get; set; }
+        /// <summary>
+        /// Файл изображения (для сохранения)
+        /// </summary>
+        public HttpPostedFileBase ImageFile { get; set; }
+        /// <summary>
+        /// Ссылки на фотографию
+        /// </summary>
+        public List<string> ImagesUrl { get; set; }
     }
 }

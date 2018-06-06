@@ -3,10 +3,12 @@ using SMM.IServices.Models.Post;
 using SMM.Services;
 using SMM.Social.Services;
 using SMM.Web.Infrastructura;
+using SMM.Web.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace SMM.Web.Controllers
@@ -27,9 +29,21 @@ namespace SMM.Web.Controllers
             var post = _projectService.GetProject(id);
             return View(post.Value);
         }
-        public ActionResult Archive()
+        /// <summary>
+        /// Архив посто
+        /// </summary>
+        /// <param name="projectId">Ид проекта</param>
+        /// <returns></returns>
+        public ActionResult Archive(int projectId)
         {
-            return View();
+            var project = _projectService.GetProject(projectId);
+            var posts = _postService.GetPostsProject(projectId);
+            var viewModel = new ArhiveModel()
+            {
+                Posts = posts,
+                Project = project.Value
+            };
+            return View(viewModel);
         }
         public ActionResult Calendar()
         {
@@ -49,6 +63,11 @@ namespace SMM.Web.Controllers
         {
             var userId = new WebUser().UserId;
             var response = _postService.Publication(userId, model);
+            if (response.IsSuccess)
+            {
+                //var path = Server.MapPath(WebConfigurationManager.AppSettings["Post"] + response.Value + "/Image/");
+                //FileService.UploadPost(path, model.ImageFile);
+            }
             return Json(new { IsSuccess = response.IsSuccess, Message = response.Message, Url = Url.Action("Index", "Post", new { id = response.Value }) });
         }
 

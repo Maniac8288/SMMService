@@ -92,6 +92,7 @@ namespace SMM.Services
                 return new BaseResponse<ProjectModel>(EnumResponseStatus.Success, response);
             }
         }
+    
         /// <summary>
         /// Получить список проектов 
         /// </summary>

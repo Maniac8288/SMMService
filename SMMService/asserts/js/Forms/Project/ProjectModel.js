@@ -23,7 +23,7 @@
             Id: this.Id(),
             Name: this.Name(),
             ImageFile: this.ImageFile(),
-            
+                    
         }
     }
 

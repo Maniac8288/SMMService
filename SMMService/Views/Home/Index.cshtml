@@ -11,166 +11,172 @@
         var ViewModel = new Home.HomeViewModel(params);
     </script>
 }
-    <div class="container body-content">
+<div class="container body-content">
 
-        <div class="menu-list">
-            <div class="item">
-                <a class="blue-btn" data-toggle="modal" data-target="#addProject">
-                    Добавить проект
-                </a>
-                <a class="blue-btn">
-                    Добавить группу
-                </a>
-            </div>
-            <div class="filter-clients item">
-                <i class="icon icon-squad" data-bind="click:ViewModel.TypeFilter.bind($data,'squad')"></i>
-                <i class="icon icon-row" data-bind="click:ViewModel.TypeFilter.bind($data,'row')"></i>
-
-            </div>
+    <div class="menu-list">
+        <div class="item">
+            <a class="blue-btn" data-toggle="modal" data-target="#addProject">
+                Добавить проект
+            </a>
+            <a class="blue-btn">
+                Добавить группу
+            </a>
         </div>
-        <!--ko if:ViewModel.TypeFilter() === 'squad'-->
-        <div class="row">
-            <div class="list-clients col-md-12" data-bind="foreach:ViewModel.Projects">
-                <div class="client">
-                    <a data-bind="attr:{href:'@Url.Action("Settings","Client")/'+Id()}">
-                        <div class="image">
-                            <span class="title" data-bind="text:Name">
+        <div class="filter-clients item">
+            <i class="icon icon-squad" data-bind="click:ViewModel.TypeFilter.bind($data,'squad')"></i>
+            <i class="icon icon-row" data-bind="click:ViewModel.TypeFilter.bind($data,'row')"></i>
 
-                            </span>
-                            <img data-bind="attr:{src:ImageUrl()}" />
-                            <span class="favorit"><i class="icon-star active"></i></span>
+        </div>
+    </div>
+    <!--ko if:ViewModel.TypeFilter() === 'squad'-->
+    <div class="row">
+        <div class="list-clients col-md-12" data-bind="foreach:ViewModel.Projects">
+            <div class="client">
+                <a data-bind="attr:{href:'@Url.Action("Settings","Client")/'+Id()}">
+                    <div class="image">
+                        <span class="title" data-bind="text:Name">
+
+                        </span>
+                        <img data-bind="attr:{src:ImageUrl()}" />
+                        <span class="favorit"><i class="icon-star active"></i></span>
+                    </div>
+                </a>
+                <div class="menu-clients">
+
+                    <div class="list-users">
+                        <div class="user">
+                            <div class="image-circle"></div>
+                            <span class="name">A</span>
                         </div>
-                    </a>
-                    <div class="menu-clients">
+                        <div class="user">
+                            <div class="image-circle"></div>
+                        </div>
+                        <div class="user">
+                            <div class="image-circle"></div>
+                        </div>
+                        <div class="user">
+                            <div class="image-circle"></div>
+                            <span class="name">K</span>
+                        </div>
+                        <div class="setting">
+                            <div class="dropdown">
+                                <a id="drop-setting" role="button" data-toggle="dropdown" href="#">    <i class="icon-settings"></i></a>
 
-                        <div class="list-users">
-                            <div class="user">
-                                <div class="image-circle"></div>
-                                <span class="name">A</span>
-                            </div>
-                            <div class="user">
-                                <div class="image-circle"></div>
-                            </div>
-                            <div class="user">
-                                <div class="image-circle"></div>
-                            </div>
-                            <div class="user">
-                                <div class="image-circle"></div>
-                                <span class="name">K</span>
-                            </div>
-                            <div class="setting">
-                                <div class="dropdown">
-                                    <a id="drop-setting" role="button" data-toggle="dropdown" href="#">    <i class="icon-settings"></i></a>
+                                <ul class="dropdown-menu users-menu" role="menu" aria-labelledby="drop-setting">
 
-                                    <ul class="dropdown-menu users-menu" role="menu" aria-labelledby="drop-setting">
+                                    <li>
+                                        <div class="title black">
+                                            Сменить группу
+                                        </div>
+                                    </li>
+                                    <li class="user row">
+                                        <div>Без группы</div>
+                                        <span class="active-group"></span>
+                                    </li>
+                                    <li class="user row">
+                                        <div>Группа 1</div>
+                                    </li>
+                                    <li class="user row">
+                                        <div>Группа 2</div>
+                                    </li>
+                                    <li class="user row">
+                                        <div>Группа 3</div>
+                                    </li>
+                                    <li class="user row">
+                                        <div>Архивировать</div>
+                                    </li>
 
-                                        <li>
-                                            <div class="title black">
-                                                Сменить группу
-                                            </div>
-                                        </li>
-                                        <li class="user row">
-                                            <div>Без группы</div>
-                                            <span class="active-group"></span>
-                                        </li>
-                                        <li class="user row">
-                                            <div>Группа 1</div>
-                                        </li>
-                                        <li class="user row">
-                                            <div>Группа 2</div>
-                                        </li>
-                                        <li class="user row">
-                                            <div>Группа 3</div>
-                                        </li>
-                                        <li class="user row">
-                                            <div>Архивировать</div>
-                                        </li>
-
-                                    </ul>
-                                </div>
-
+                                </ul>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!--/ko-->
-        <!--ko if:ViewModel.TypeFilter() === 'row'-->
-        <div class="list-group">
+    </div>
+    <!--/ko-->
+    <!--ko if:ViewModel.TypeFilter() === 'row'-->
+    <div class="list-group">
 
-            <div class="section-group col-md-12">
-                <div class="title-group"></div>
-                <!--ko foreach:ViewModel.Projects-->
-                <div class="groups ">
-                    <div class="col-md-9 grey-block">
-                        <div>
+        <div class="section-group col-md-12">
+            <div class="title-group"></div>
+            <!--ko foreach:ViewModel.Projects-->
+            <div class="groups ">
+               
+                <div class="col-md-9 grey-block">
+                   
+                    <div>
+                        <a data-bind="attr:{href:'@Url.Action("Settings","Client")/'+Id()}">
                             <img style="width: 301px" data-bind="attr:{src:ImageUrl()}" />
-                        </div>
+                        </a>
+                    </div>
                         <div class="group-info">
                             <span><i class="icon icon-star active"></i></span>
                             <span class="title" data-bind="text:Name"></span>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="list-users">
-                            <div class="user">
-                                <div class="image-circle"></div>
-                                <span class="name">A</span>
-                            </div>
-                            <div class="user">
-                                <div class="image-circle"></div>
-                            </div>
-                            <div class="user">
-                                <div class="image-circle"></div>
-                            </div>
-                            <div class="user">
-                                <div class="image-circle"></div>
-                                <span class="name">K</span>
-                            </div>
-                            <div class="setting">
-                                <div class="dropdown">
-                                    <a id="drop-setting" role="button" data-toggle="dropdown" href="#">    <i class="icon-settings"></i></a>
+                    
+                </div>
+            
+                <div class="col-md-3">
+                    <div class="list-users">
+                        <div class="user">
+                            <div class="image-circle"></div>
+                            <span class="name">A</span>
+                        </div>
+                        <div class="user">
+                            <div class="image-circle"></div>
+                        </div>
+                        <div class="user">
+                            <div class="image-circle"></div>
+                        </div>
+                        <div class="user">
+                            <div class="image-circle"></div>
+                            <span class="name">K</span>
+                        </div>
+                        <div class="setting">
+                            <div class="dropdown">
+                                <a id="drop-setting" role="button" data-toggle="dropdown" href="#">    <i class="icon-settings"></i></a>
 
-                                    <ul class="dropdown-menu users-menu" role="menu" aria-labelledby="drop-setting">
+                                <ul class="dropdown-menu users-menu" role="menu" aria-labelledby="drop-setting">
 
-                                        <li>
-                                            <div class="title black">
-                                                Сменить группу
-                                            </div>
-                                        </li>
-                                        <li class="user row">
-                                            <div>Без группы</div>
-                                        </li>
-                                        <li class="user row">
-                                            <div>Группа 1</div>
-                                        </li>
-                                        <li class="user row">
-                                            <div>Группа 2</div>
-                                        </li>
-                                        <li class="user row">
-                                            <div>Группа 3</div>
-                                        </li>
-                                        <li class="user row">
-                                            <div>Архивировать</div>
-                                        </li>
+                                    <li>
+                                        <div class="title black">
+                                            Сменить группу
+                                        </div>
+                                    </li>
+                                    <li class="user row">
+                                        <div>Без группы</div>
+                                    </li>
+                                    <li class="user row">
+                                        <div>Группа 1</div>
+                                    </li>
+                                    <li class="user row">
+                                        <div>Группа 2</div>
+                                    </li>
+                                    <li class="user row">
+                                        <div>Группа 3</div>
+                                    </li>
+                                    <li class="user row">
+                                        <div>Архивировать</div>
+                                    </li>
 
-                                    </ul>
-                                </div>
-
+                                </ul>
                             </div>
+
                         </div>
                     </div>
                 </div>
-                <!--/ko-->
-
             </div>
-
-
+            <!--/ko-->
 
         </div>
-        <!--/ko-->
+
+
+
     </div>
+    <!--/ko-->
+</div>
 <div class="modal fade add" id="addProject" data-bind="with:ViewModel">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">

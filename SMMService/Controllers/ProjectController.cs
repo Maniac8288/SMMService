@@ -38,7 +38,7 @@ namespace SMM.Web.Controllers
         /// </summary>
         [HttpPost]
         public ActionResult EditProject(ProjectModel model)
-            {
+        {
             var userId = new WebUser().UserId;
             var response = _projectService.EditProject(userId, model);
             if (response.IsSuccess)
@@ -46,6 +46,17 @@ namespace SMM.Web.Controllers
                 var path = Server.MapPath(WebConfigurationManager.AppSettings["ProjectImage"] + model.Id + "/Image/");
                 FileService.UploadImageProject(path, model.ImageFile);
             }
+            return Json(response);
+        }
+        /// <summary>
+        /// Получить проекты пользователя
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult GetProjectsUser()
+        {
+            var userId = new WebUser().UserId;         
+            var response = _projectService.GetListProjects(userId);
             return Json(response);
         }
     }

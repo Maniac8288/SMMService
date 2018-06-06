@@ -11,6 +11,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
+using System.Web;
+using System.Web.Configuration;
+using SMM.Social.Models.OK.Publication;
+using SMM.Social.Models.OK.Photos;
 
 namespace SMM.Services
 {
@@ -47,16 +52,19 @@ namespace SMM.Services
                         Status = (int)post.Status
                     };
                     db.Posts.Add(model);
-
+                    db.SaveChanges();
+                    var path = HttpContext.Current.Server.MapPath(WebConfigurationManager.AppSettings["Post"] + model.Id + "/Image/");
+                    FileService.UploadPost(path, post.ImageFile);
                     if (post.Status == EnumStatusPost.Published)
                     {
                         post.DatePublic = datePublic;
                         post.DateCreate = dateCreate;
+                        post.Id = model.Id;
                         var okRes = PublicationOK(userId, post, project.GroupOK);
                         if (!okRes.IsSuccess)
                             return new BaseResponse<int>() { Status = okRes.Status, Message = okRes.Message };
                     }
-                    db.SaveChanges();
+                  
                     return new BaseResponse<int>() { Status = 0, Message = "Успешно", Value = model.Id };
                 }
             }
@@ -115,6 +123,22 @@ namespace SMM.Services
                     return new PostModel();
                 return ConvertToPostModel(post);
             }
+        }
+        /// <summary>
+        /// Получить посты по ид проекта
+        /// </summary>
+        /// <param name="projectId">Ид проекта</param>
+        /// <returns></returns>
+        public List<PostModel> GetPostsProject(int projectId)
+        {
+
+            using (var db = new DataContext())
+            {
+                var project = db.Projects.Include(x => x.Posts).FirstOrDefault(x => x.Id == projectId);
+                if (project == null)
+                    return new List<PostModel>();
+                return project.Posts.Select(ConvertToPostModel).OrderByDescending(x=>x.DateCreate).ToList();
+            }
 
 
         }
@@ -128,10 +152,40 @@ namespace SMM.Services
                 var accessToken = client.GetAccessTokenWithRefreshToken(refresh_token.Value);
                 if (!accessToken.IsSuccess)
                     return new BaseResponse<string>() { Status = accessToken.Status, Message = accessToken.Message, };
-                DateTime? datePublic = null;
+
+                var attachmentModel = new AttachmentModel();
+                var media = new List<MediaModel>
+                {
+                    new MediaModel {
+                        type = "text",
+                        text = post.Content
+                    }
+                };
+               
                 if (post.Status != EnumStatusPost.Published)
-                    datePublic = post.DatePublic;
-                var postResponse = client.Post(accessToken.Value.access_token, post.Content, groupId, datePublic);
+                    attachmentModel.publishAt = ((post.DatePublic)).ToString("yyyy-MM-dd HH':'mm':'ss");
+                if (post.ImageFile != null)
+                {
+                    var uploadUrl = client.GetUploadUrl(accessToken.Value.access_token, groupId);
+                    var files = FileService.GetListImagePostForUpload(HttpContext.Current.Server.MapPath(WebConfigurationManager.AppSettings["Post"] + post.Id + "/Image/"));
+                    var response = client.UploadPhoto(uploadUrl.Value.upload_url,files[0],uploadUrl.Value.photo_ids[0]);
+                    if (response.IsSuccess)
+                    {
+                        media.Add(new MediaModel
+                        {
+                            type = "photo",
+                            list = new List<MediaPhotoModel>()
+                            {
+                                new MediaPhotoModel()
+                                {
+                                    id = response.Value
+                                }
+                            }
+                        });
+                    }
+                }
+                attachmentModel.media = media;
+                var postResponse = client.Post(accessToken.Value.access_token, groupId, attachmentModel);
                 return new BaseResponse<string>()
                 {
                     Status = postResponse.Status,
@@ -145,6 +199,7 @@ namespace SMM.Services
                 Message = refresh_token.Message,
             };
         }
+
         #endregion
 
         #region Конвертация
@@ -158,6 +213,7 @@ namespace SMM.Services
         }
         private PostModel ConvertToPostModel(Post model)
         {
+            var path = HttpContext.Current.Server.MapPath(WebConfigurationManager.AppSettings["Post"] + model.Id + "/Image/");
             return new PostModel()
             {
                 Id = model.Id,
@@ -166,7 +222,8 @@ namespace SMM.Services
                 DatePublic = model.DatePublic,
                 ProjectId = model.ProjectId,
                 UserId = model.UserId,
-                Status = (EnumStatusPost)model.Status
+                Status = (EnumStatusPost)model.Status,
+                ImagesUrl = FileService.GetListImagePostForView(path,model.Id)
             };
         }
         #endregion

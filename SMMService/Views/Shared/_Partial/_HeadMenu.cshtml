@@ -116,7 +116,7 @@
         <a class="blue-btn active">На проверке</a>
     </div>
     <div class="item">
-        <a class="blue-btn">Все посты</a>
+        <a class="blue-btn" href="@Url.Action("Archive","Post",new { projectId = Model.Id})">Все посты</a>
     </div>
     <div class="item">
         <a href="@Url.Action("Statistic","Client")" class="blue-btn">Статистика</a>

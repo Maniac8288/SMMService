@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SMM.Social.Models.BaseResponse;
 using SMM.Social.Models.OK;
 using SMM.Social.Models.OK.Group;
@@ -236,24 +237,15 @@ namespace SMM.Social.Services
 
         #region Публикация
 
-        public BaseResponseSocial<string> Post(string access_token, string text, string groupId, DateTime? datePublic)
+        public BaseResponseSocial<string> Post(string access_token,  string groupId, AttachmentModel attachmentModel)
         {
             try
-            {
-                var media = new List<MediaModel>
-                {
-                    new MediaModel {
-                        type = "text",
-                        text = text
-                    }
-                };
-                var attachmentModel = new AttachmentModel() {
-                    media = media
-                };
-         
-                if (datePublic.HasValue)
-                    attachmentModel.publishAt = ((DateTime)(datePublic)).ToString("yyyy-MM-dd HH':'mm':'ss");
-                var attachment = JsonConvert.SerializeObject(attachmentModel);
+            {               
+                var attachment = JsonConvert.SerializeObject(attachmentModel, Formatting.None,
+                            new JsonSerializerSettings
+                            {
+                                NullValueHandling = NullValueHandling.Ignore
+                            });
                 var param = $"application_key={appKey}attachment={attachment}format=jsongid={groupId}method=mediatopic.posttype=GROUP_THEME";
                 var sig = getSign(param, access_token);
                 using (var webClient = new WebClient())
@@ -292,7 +284,7 @@ namespace SMM.Social.Services
                         responsePost.Value = id;
                     }
                     return responsePost;
-                    
+
                 }
             }
             catch (Exception e)
@@ -340,6 +332,66 @@ namespace SMM.Social.Services
             catch (Exception e)
             {
                 return new BaseResponseSocial<ModelPhoto>(EnumResponseStatusSocial.Exception, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="uid">Идентификатор пользователя, фотографии которого требуется добавить. Укажите uid при вызове этого метода без ключа сессии.</param>
+        /// <returns></returns>
+        public BaseResponseSocial<ResponseGetUploadUrlModel> GetUploadUrl(string access_token, string gid)
+        {
+            try
+            {
+                var param = $"application_key={appKey}format=jsongid={gid}method=photosV2.getUploadUrl";
+                var sig = getSign(param, access_token);
+                using (var webClient = new WebClient())
+                {
+                    // Создаём коллекцию параметров
+                    var pars = new NameValueCollection();
+
+                    // Добавляем необходимые параметры в виде пар ключ, значение
+                    pars.Add("application_key", appKey);
+                    pars.Add("format", "json");
+                    pars.Add("gid", gid);
+                    pars.Add("method", "photosV2.getUploadUrl");
+                    pars.Add("sig", sig);
+                    pars.Add("access_token", access_token);
+                    // Посылаем параметры на сервер
+                    // Может быть ответ в виде массива байт
+                    webClient.Encoding = Encoding.UTF8;
+                    var response = webClient.UploadValues(methodsUrl, pars);
+                    string content = webClient.Encoding.GetString(response);
+                    var model = JsonConvert.DeserializeObject<ResponseGetUploadUrlModel>(content);
+
+                    return new BaseResponseSocial<ResponseGetUploadUrlModel>(model);
+                }
+            }
+            catch (Exception e)
+            {
+                return new BaseResponseSocial<ResponseGetUploadUrlModel>(EnumResponseStatusSocial.Exception, e.Message);
+            }
+        }
+
+        public BaseResponseSocial<string> UploadPhoto(string uploadUrl, string filePath, string photoId)
+        {
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    var response = client.UploadFile(uploadUrl, filePath);
+                    string content = client.Encoding.GetString(response);
+                    var obj = JObject.Parse(content);
+                    var value = (string)obj.SelectToken($"$.photos.{photoId}.token");
+
+                    return new BaseResponseSocial<string>(value);
+                }
+            }
+            catch (Exception e)
+            {
+                return new BaseResponseSocial<string>(EnumResponseStatusSocial.Exception, e.Message);
             }
         }
         #endregion

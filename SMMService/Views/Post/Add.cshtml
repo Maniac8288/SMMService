@@ -1,4 +1,5 @@
 ﻿@model SMM.IServices.Models.Project.ProjectModel
+@using SMM.IServices.Enums;
 @using Newtonsoft.Json
 @section styles {
     <link href="~/asserts/js/plugins/jasny-bootstrap/css/jasny-bootstrap.min.css" rel="stylesheet" />
@@ -33,7 +34,7 @@
                             <span class="fileinput-new">
                                 <img src="~/asserts/img/icons/white-camera.png" />
                                 Фото
-                            </span><span class="fileinput-exists">Change</span><input type="file" name="...">
+                            </span><span class="fileinput-exists">Change</span><input type="file" name="..." data-bind="event: {change: ViewModel.fileUpload.bind(ViewModel)}">
                         </span>
 
                     </div>
@@ -97,16 +98,16 @@
             Выберите дату и время в будущем, когда вы хотите разместить свою публикацию.
         </div>
         <div class="choose-date">
-            <input type="date" data-bind="value:DatePublic"/>
+            <input type="date" data-bind="value:DatePublic" />
             <input type="time" data-bind="value:DatePublicTime" />
             <span>UTC+02</span>
         </div>
         <div class="list-menu ">
             <div class="item">
-                <button class="blue-btn" data-bind="click:ViewModel.PublicNow.bind(ViewModel)">Опубликовать сейчас</button>
+                <button class="blue-btn" data-bind="click:ViewModel.Public.bind(ViewModel,@((int)EnumStatusPost.Published))">Опубликовать сейчас</button>
             </div>
             <div class="item">
-                <button class="blue-btn" data-bind="click:ViewModel.SchedulePublic.bind(ViewModel)">Запланировать</button>
+                <button class="blue-btn" data-bind="click:ViewModel.Public.bind(ViewModel,@((int)EnumStatusPost.OnVerification))">Запланировать</button>
             </div>
             <div class="item">
                 <button class="red-btn">Отправить на проверку</button>

@@ -16,32 +16,30 @@ Post.Add = Post.Add || {};
     */
     Post.Add.AddViewModel.prototype.constructor = Post.Add.AddViewModel;
 
-    Post.Add.AddViewModel.prototype.PublicNow = function () {
+    Post.Add.AddViewModel.prototype.Public = function (status) {
         var self = this;
-        var model = this.Post.GetData();
-        model.ProjectId = this.Project.Id();
-        model.Status = 1;
-        $.post(this.UrlPublicNow, model).done(function (res) {
-            if (res.IsSuccess) {
-                window.location.href = res.Url;
+        var fd = this.Post.GetFormData();
+        fd.append("ProjectId", this.Project.Id());
+        fd.append("Status", status);
+        $.ajax({
+            url: this.UrlPublicNow,
+            data: fd,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            success: function (res) {
+                if (res.IsSuccess) {
+                    window.location.href = res.Url;
+                }
+                else {
+                    console.log(res.Message);
+                }
             }
-            else {
-                console.log(res.Message);
-            }
-        });
+        });     
     }
-    Post.Add.AddViewModel.prototype.SchedulePublic = function () {
+
+    Post.Add.AddViewModel.prototype.fileUpload = function (data, e) {
         var self = this;
-        var model = this.Post.GetData();
-        model.ProjectId = this.Project.Id();
-        model.Status = 2;
-        $.post(this.UrlPublicNow, model).done(function (res) {
-            if (res.IsSuccess) {
-                window.location.href = res.Url;
-            }
-            else {
-                console.log(res.Message);
-            }
-        });
-    }
+        this.Post.ImageFile(e.target.files[0]);
+    };
 })();

@@ -125,6 +125,30 @@ namespace SMM.Services
             }
         }
         /// <summary>
+        /// Получить ключ ид пользователя в одноклассниках
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public BaseResponse<string> GetUidUserOK(int userId)
+        {
+            try
+            {
+                using (var db = new DataContext())
+                {
+                    var user = db.Users.Include(x => x.UserOk).FirstOrDefault(x => x.Id == userId);
+                    if (user == null)
+                        return new BaseResponse<string>(EnumResponseStatus.Error, "Пользователь не найден");
+                    if (user.UserOk == null)
+                        return new BaseResponse<string>(EnumResponseStatus.SocialNotExist, "Пользователь не авторизован через ОК");
+                    return new BaseResponse<string>(EnumResponseStatus.Success, "Ид  получено", user.UserOk.OkId);
+                }
+            }
+            catch (Exception e)
+            {
+                return new BaseResponse<string>(EnumResponseStatus.Exception, e.Message);
+            }
+        }
+        /// <summary>
         /// Установить пользователя в куки
         /// </summary>
         /// <param name="userId">Ид пользователя</param>

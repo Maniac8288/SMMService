@@ -36,6 +36,11 @@ namespace SMMService
 
             bundles.Add(new ScriptBundle("~/bundles/js/plugins/emoji").Include(
                 "~/asserts/plugins/emojionearea/emojionearea.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/Main").Include(
+             "~/asserts/js/Forms/Project/ProjectModel.js",
+             "~/asserts/js/Forms/Layout/LayoutViewModel.js"
+             ));
         }
     }
 }

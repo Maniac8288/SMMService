@@ -77,6 +77,12 @@ namespace SMM.IServices.Interface
         /// <param name="socialId"></param>
         /// <returns></returns>
         BaseResponse<int> CheckUserWithOk(string id);
+        /// <summary>
+        /// Получить ключ ид пользователя в одноклассниках
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        BaseResponse<string> GetUidUserOK(int userId);
         #endregion
     }
 }

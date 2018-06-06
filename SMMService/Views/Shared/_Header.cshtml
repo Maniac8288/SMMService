@@ -21,93 +21,32 @@
                             <span>Архивированные проекты</span>
                         </div>
                     </li>
+
                     <li>
                         <div align="center">
                             <input type="text" class="search-project" placeholder="Поиск по названию..." />
                         </div>
                     </li>
+               
                     <li class="title-section">
                         <i class="icon-star-mini"></i>
                         <span class="title">Избранные</span>
                     </li>
+                    <!--ko foreach:LayoutViewModel.Projects-->
+                   
                     <li class="project col-md-12">
-                        <div>
-                            <img src="~/asserts/img/Temp/tem-client.png" />
-                            <div class="project-info">
-                                <span><i class="icon icon-star-gold"></i></span>
-                                <span class="title"> Artizana Fashion Salon</span>
+                        <a  data-bind="attr:{href:'@Url.Action("Settings","Client")/'+Id()}">
+                            <div>
+                                <img data-bind="attr:{src:ImageUrl}" />
+                                <div class="project-info">
+                                    <span><i class="icon icon-star-gold"></i></span>
+                                    <span class="title" data-bind="text:Name"> </span>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </li>
-                    <li class="project col-md-12">
-                        <div>
-                            <img src="~/asserts/img/Temp/вид-у-клиента.png" />
-                            <div class="project-info">
-                                <span><i class="icon icon-star active"></i></span>
-                                <span class="title"> Artizana Fashion Salon</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="project col-md-12">
-                        <div>
-                            <img src="~/asserts/img/Temp/tem-client.png" />
-                            <div class="project-info">
-                                <span><i class="icon icon-star active"></i></span>
-                                <span class="title"> Artizana Fashion Salon</span>
-                            </div>
-                        </div>
-                    </li>
-
-
-
-
-                    <li class="title-section">
-                        <i class="icon-clock"></i>
-                        <span class="title">Недавние</span>
-                    </li>
-                    <li class="project col-md-12">
-                        <div>
-                            <img src="~/asserts/img/Temp/tem-client.png" />
-                            <div class="project-info">
-                                <span><i class="icon icon-star active"></i></span>
-                                <span class="title"> Artizana Fashion Salon</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="project col-md-12">
-                        <div>
-                            <img src="~/asserts/img/Temp/вид-у-клиента.png" />
-                            <div class="project-info">
-                                <span><i class="icon icon-star active"></i></span>
-                                <span class="title"> Artizana Fashion Salon</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="project col-md-12">
-                        <div>
-                            <img src="~/asserts/img/Temp/tem-client.png" />
-                            <div class="project-info">
-                                <span><i class="icon icon-star active"></i></span>
-                                <span class="title"> Artizana Fashion Salon</span>
-                            </div>
-                        </div>
-                    </li>
-
-
-
-                    <li class="title-section">
-                        <i class="icon-boards"></i>
-                        <span class="title">Персональные доски</span>
-                    </li>
-                    <li class="project col-md-12">
-                        <div>
-                            <img src="~/asserts/img/Temp/tem-client.png" />
-                            <div class="project-info">
-                                <span><i class="icon icon-star active"></i></span>
-                                <span class="title"> Artizana Fashion Salon</span>
-                            </div>
-                        </div>
-                    </li>
+                    <!--/ko-->
+                  
 
                 </ul>
             </div>

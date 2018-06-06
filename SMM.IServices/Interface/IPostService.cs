@@ -30,5 +30,11 @@ namespace SMM.IServices.Interface
         /// <param name="postId">Id Постa</param>
         /// <returns></returns>
         BaseResponse VerificationPost(int userId, int postId);
+        /// <summary>
+        /// Получить посты по ид проекта
+        /// </summary>
+        /// <param name="projectId">Ид проекта</param>
+        /// <returns></returns>
+        List<PostModel> GetPostsProject(int projectId);
     }
 }

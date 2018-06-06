@@ -1,19 +1,25 @@
-﻿@section styles {
+﻿@model SMM.Web.Models.ViewModels.ArhiveModel
+@using SMM.IServices.Enums;
+@using Newtonsoft.Json
+@section styles {
     <link href="~/asserts/js/plugins/datepickerrange/daterangepicker.css" rel="stylesheet" />
 }
 @section scripts {
 
     <script src="~/asserts/js/plugins/datepickerrange/moment-with-locales.js"></script>
     <script src="~/asserts/js/plugins/datepickerrange/daterangepicker.js"></script>
+    <script src="~/asserts/js/Post/PostModel.js"></script>
     <script src="~/asserts/js/archive/ViewModel.js"></script>
     <script>
-        var ViewModel = new Archive.ViewModel();
+        var params = {};
+        params.Posts = @Html.Raw(JsonConvert.SerializeObject(Model.Posts));
+        var ViewModel = new Archive.ViewModel(params);
 
     </script>
     <script src="~/asserts/js/Common/DateInit.js"></script>
 }
 <div class="container body-content">
-    @Html.Partial("_Partial/_HeadMenu")
+    @Html.Partial("_Partial/_HeadMenu", Model.Project)
 </div>
 
 <div class="blue-filter">
@@ -50,7 +56,7 @@
     </div>
 </div>
 
-<div class="container body-content">
+<div class="container body-content" data-bind="with:ViewModel">
     <div class="col-md-9">
 
         <div class="filter-archive">
@@ -60,18 +66,18 @@
             <button class="red-btn active">Ждет подтверждения</button>
 
         </div>
-
+        <!--ko foreach: Posts-->
         <div class="post archive">
             <div class="box-post">
-                <div class="img-post">
-                    <img src="~/asserts/img/Temp/вид-у-клиента.png" />
+                <div class="img-post" data-bind="foreach:ImagesUrl">
+                    <img data-bind="attr:{src:$data}"/>
                 </div>
-                Доброе утро!
-                Желаем Вам приятных выодных!
+                <!--ko text:Content-->
+                <!--/ko-->
             </div>
             <div class="info-post">
                 <div class="date">
-                    Дата публикации: <span>14.01.18  18:00</span>
+                    Дата публикации: <span date-bind="text:DatePublic"></span>
                 </div>
 
                 <div class="publish-in">
@@ -86,11 +92,11 @@
                     <div>
                         Статус проверки:
                     </div>
-                    <div class="decline">
+                    <div class="decline" data-bind="if:Status() === @((int)EnumStatusPost.OnVerification) ">
                         <img src="~/asserts/img/icons/minus.png" />
                         <span>Не подтвержден</span>
                     </div>
-                    <div class="accept">
+                    <div class="accept"  data-bind="if:Status() === @((int)EnumStatusPost.Published) || Status() === @((int)EnumStatusPost.Confirmed) ">
                         <img src="~/asserts/img/icons/red-acept.png" />
                         Подтвержден клиентом <span>14.01.18</span>
                     </div>
@@ -113,6 +119,7 @@
                 </div>
             </div>
         </div>
+        <!--/ko-->
 
     </div>
 </div>

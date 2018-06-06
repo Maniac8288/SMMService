@@ -1703,6 +1703,9 @@ input:checked + .switcher:before {
 .box-post .edit-text {
     position: absolute;
 }
+.box-post .img-post img {
+    width:100%;
+}
 
 .edit-text .icon-pen {
     right: -9px;

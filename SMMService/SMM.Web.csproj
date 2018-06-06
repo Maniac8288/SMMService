@@ -161,6 +161,7 @@
     <Compile Include="Infrastructura\AuthorizeViewPage.cs" />
     <Compile Include="Infrastructura\WebUser.cs" />
     <Compile Include="Models\ModelSocial.cs" />
+    <Compile Include="Models\ViewModels\ArhiveModel.cs" />
     <Compile Include="Models\ViewModels\HomeModel.cs" />
     <Compile Include="Models\ViewModels\SettingProjectModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -214,6 +215,7 @@
     <Content Include="asserts\js\Calendar\ViewModel.js" />
     <Content Include="asserts\js\Common\DateInit.js" />
     <Content Include="asserts\js\Forms\Home\HomeViewModel.js" />
+    <Content Include="asserts\js\Forms\Layout\LayoutViewModel.js" />
     <Content Include="asserts\js\Forms\Project\ProjectModel.js" />
     <Content Include="asserts\js\Forms\Project\ProjectViewModel.js" />
     <Content Include="asserts\js\knockoutExtension\knockout-hightchart.js" />
