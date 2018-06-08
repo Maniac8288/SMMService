@@ -55,9 +55,39 @@ namespace SMM.Web.Controllers
         [HttpPost]
         public ActionResult GetProjectsUser()
         {
-            var userId = new WebUser().UserId;         
+            var userId = new WebUser().UserId;
             var response = _projectService.GetListProjects(userId);
             return Json(response);
         }
+
+        #region Инфо
+        /// <summary>
+        /// Страница с  редактированием информации
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult SettingInfo(int id)
+        {
+            var userId = new WebUser().UserId;
+            var project = _projectService.GetProject(id);
+            if (!project.IsSuccess || userId != project.Value.CreatorId)
+            {
+                //todo: сделать переход на страницу с ошибкой!
+                return RedirectToAction("Index", "Home");
+            }
+            return View(project.Value);
+        }
+        /// <summary>
+        /// Редактировать информацию о проекте
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditInfo(ProjectModel model)
+        {
+            var response = _projectService.EditInfoProject(model);
+            return Json(response);
+        }
+        #endregion
     }
 }

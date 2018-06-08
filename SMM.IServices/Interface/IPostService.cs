@@ -36,5 +36,11 @@ namespace SMM.IServices.Interface
         /// <param name="projectId">Ид проекта</param>
         /// <returns></returns>
         List<PostModel> GetPostsProject(int projectId);
+        /// <summary>
+        /// Получить посты по ид проекта для календаря
+        /// </summary>
+        /// <param name="projectId">Ид проекта</param>
+        /// <returns></returns>
+        List<PostCalendarModel> GetPostsForCalendar(int projectId);
     }
 }

@@ -105,6 +105,36 @@ namespace SMM.Services
                 return db.Projects.Where(x => x.CreatorId == userId).Select(ConvertToProjectModel).ToList();
             }
         }
+
+        #region Подробная информация о проекте 
+        /// <summary>
+        /// Редактировать информацию о проекте
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public BaseResponse EditInfoProject(ProjectModel model)
+        {
+            try
+            {
+                using(var db = new DataContext())
+                {
+                    var project = db.Projects.FirstOrDefault(x => x.Id == model.Id);
+                    if (project == null)
+                        return new BaseResponse(EnumResponseStatus.Error, "Проект не найден");
+                    project.AdditionalInfo = model.AdditionalInfo;
+                    project.MainInfo = model.MainInfo;
+                    project.JsonCards = model.JsonCards;
+                    db.SaveChanges();
+                    return new BaseResponse(EnumResponseStatus.Success,"Информация о проекте успешно изменена");
+                }
+            }
+            catch(Exception e)
+            {
+                return new BaseResponse(EnumResponseStatus.Exception, e.Message);
+            }
+        }
+        #endregion
+
         #region Конвертирование 
         private ProjectModel ConvertToProjectModel(Project m)
         {
@@ -117,7 +147,10 @@ namespace SMM.Services
                 DateCreate = m.DateCreate,
                 GroupVk = m.GroupVk,
                 Name = m.Name,
-                ImageUrl = FileService.GetImageProject(path, m.Id)
+                ImageUrl = FileService.GetImageProject(path, m.Id),
+                AdditionalInfo = m.AdditionalInfo,
+                MainInfo = m.MainInfo,
+                JsonCards = m.JsonCards
             };
         }
         #endregion

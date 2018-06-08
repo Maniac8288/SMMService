@@ -1,15 +1,21 @@
-﻿@section styles{
+﻿@model SMM.Web.Models.ViewModels.CalendarModel
+@using Newtonsoft.Json
+@section styles{
     <link href="~/asserts/js/plugins/Calendar/fullcalendar.min.css" rel="stylesheet" />
-    <link href="~/asserts/js/plugins/Calendar/fullcalendar.print.css"   rel="stylesheet" />
+    <link href="~/asserts/js/plugins/Calendar/fullcalendar.print.css" rel="stylesheet" />
     <link href="~/asserts/js/plugins/datepickerrange/daterangepicker.css" rel="stylesheet" />
 }
 @section scripts {
     <script src="~/asserts/js/plugins/datepickerrange/moment-with-locales.js"></script>
     <script src="~/asserts/js/plugins/datepickerrange/daterangepicker.js"></script>
+
+    <script src="~/asserts/js/Calendar/PostCalendarModel.js"></script>
     <script src="~/asserts/js/Calendar/ViewModel.js"></script>
     <script>
-        var ViewModel = new Calendar.ViewModel();
-
+        var params = {};
+        params.Posts =  @Html.Raw(JsonConvert.SerializeObject(Model.Posts));
+        var ViewModel = new Calendar.ViewModel(params);
+        console.log(ViewModel);
     </script>
     <script src="~/asserts/js/Common/DateInit.js"></script>
     <script src="~/asserts/js/plugins/Calendar/fullcalendar.min.js"></script>
@@ -17,12 +23,12 @@
         $(document).ready(function () {
             var target;
             $('#calendar').fullCalendar({
-                selectable: true,            
+                selectable: true,
                 dayClick: function (date) {
                     console.log('clicked ' + date.format());
                 },
                 select: function (startDate, endDate, e) {
-                     target = e.target;
+                    target = e.target;
                     target.className += " selected"
                     console.log(e);
                     console.log('clicked ' + startDate.format());
@@ -30,37 +36,39 @@
                 unselect: function (startDate, endDate, e) {
                     target.classList.remove("selected");
                     console.log(e);
-              
+
                 },
-                eventSources: [
-                    // your event source
-                    {
-                        events: [ // put the array in the `events` property
-                            {
-                                title: 'Lorem  dolor sit 1',
-                                start: '2018-04-05',
-                                icon: "vk" 
-                            },                         
-                        ],                      
-                        className:'active'
-           
-                    },
+                eventSources: ViewModel.Posts().map(function (item) { return item.GetDataCalendar() })
+                    //[
+                    //// your event source
+                    //{
+                    //    events: [ // put the array in the `events` property
+                    //        {
+                    //            title: 'Lorem  dolor sit 1',
+                    //            start: '2018-06-05',
+                    //            icon: "vk"
+                    //        },
+                    //    ],
+                    //    className: 'active'
 
-                    {
-                        events: [ // put the array in the `events` property
-                            {
-                                title: 'Lorem ipsum dolor sit 1',
-                                start: '2018-04-06',
-                                icon:'facebook'
-                            },
-                          
-                        ],
-                        className: 'wait'
-                   
-                    },
-                    // any other event sources...
+                    //},
 
-                ],
+                    //{
+                    //    events: [ // put the array in the `events` property
+                    //        {
+                    //            title: 'Lorem ipsum dolor sit 1',
+                    //            start: '2018-04-06',
+                    //            icon: 'facebook'
+                    //        },
+
+                    //    ],
+                    //    className: 'wait'
+
+                    //},
+                    //// any other event sources...
+
+                    //]
+                ,
                 eventRender: function (event, element) {
                     if (event.icon) {
                         element.find(".fc-title").prepend("<i class='icon-calendar-" + event.icon + "'></i>");
@@ -78,8 +86,8 @@
                 dayNames: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
                 dayNamesShort: ["ВС", "ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ"],
                 buttonText: {
-                    prev: "&nbsp;&#9668;&nbsp;",
-                    next: "&nbsp;&#9658;&nbsp;",
+                    prev: "Назад",
+                    next: "Вперед",
                     prevYear: "&nbsp;&lt;&lt;&nbsp;",
                     nextYear: "&nbsp;&gt;&gt;&nbsp;",
                     today: "Сегодня",
@@ -91,8 +99,16 @@
         });
     </script>
 }
+<style>
+    .fc-button-group, .fc button {
+        display:block;
+    }
+    .fc-toolbar.fc-header-toolbar {
+        display:block;
+    }
+</style>
 <div class="container body-content">
-    @Html.Partial("_Partial/_HeadMenu")
+    @Html.Partial("_Partial/_HeadMenu", Model.Project)
 </div>
 
 <div class="blue-filter">
@@ -104,7 +120,7 @@
                 </a>
             </div>
             <div class="item">
-                <a href="@Url.Action("Calendar","Post")">
+                <a href="@Url.Action("Calendar","Post",new { id = Model.Project.Id})">
                     <i class="icon icon-calendar"></i>  Календарь
                 </a>
             </div>

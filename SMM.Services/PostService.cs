@@ -23,6 +23,57 @@ namespace SMM.Services
     {
         private IUserService _userService = new UserService();
 
+        #region GetPost 
+        /// <summary>
+        /// Получить пост по ид
+        /// </summary>
+        /// <param name="postId"></param>
+        /// <returns></returns>
+        public PostModel GetPostById(int postId)
+        {
+
+            using (var db = new DataContext())
+            {
+                var post = db.Posts.FirstOrDefault(x => x.Id == postId);
+                if (post == null)
+                    return new PostModel();
+                return ConvertToPostModel(post);
+            }
+        }
+        /// <summary>
+        /// Получить посты по ид проекта
+        /// </summary>
+        /// <param name="projectId">Ид проекта</param>
+        /// <returns></returns>
+        public List<PostModel> GetPostsProject(int projectId)
+        {
+            using (var db = new DataContext())
+            {
+                var project = db.Projects.Include(x => x.Posts).FirstOrDefault(x => x.Id == projectId);
+                if (project == null)
+                    return new List<PostModel>();
+                return project.Posts.Select(ConvertToPostModel).OrderByDescending(x => x.DateCreate).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Получить посты по ид проекта для календаря
+        /// </summary>
+        /// <param name="projectId">Ид проекта</param>
+        /// <returns></returns>
+        public List<PostCalendarModel> GetPostsForCalendar(int projectId)
+        {
+            using (var db = new DataContext())
+            {
+                var project = db.Projects.Include(x => x.Posts).FirstOrDefault(x => x.Id == projectId);
+                if (project == null)
+                    return new List<PostCalendarModel>();
+                return project.Posts.Select(ConvertToPostCalendar).ToList();
+            }
+        }
+        #endregion
+
+        #region Публикация
         /// <summary>
         /// Опубликовать пост
         /// </summary>
@@ -64,7 +115,7 @@ namespace SMM.Services
                         if (!okRes.IsSuccess)
                             return new BaseResponse<int>() { Status = okRes.Status, Message = okRes.Message };
                     }
-                  
+
                     return new BaseResponse<int>() { Status = 0, Message = "Успешно", Value = model.Id };
                 }
             }
@@ -108,40 +159,8 @@ namespace SMM.Services
                 return new BaseResponse(EnumResponseStatus.Exception, e.Message);
             }
         }
-        /// <summary>
-        /// Получить пост по ид
-        /// </summary>
-        /// <param name="postId"></param>
-        /// <returns></returns>
-        public PostModel GetPostById(int postId)
-        {
+        #endregion
 
-            using (var db = new DataContext())
-            {
-                var post = db.Posts.FirstOrDefault(x => x.Id == postId);
-                if (post == null)
-                    return new PostModel();
-                return ConvertToPostModel(post);
-            }
-        }
-        /// <summary>
-        /// Получить посты по ид проекта
-        /// </summary>
-        /// <param name="projectId">Ид проекта</param>
-        /// <returns></returns>
-        public List<PostModel> GetPostsProject(int projectId)
-        {
-
-            using (var db = new DataContext())
-            {
-                var project = db.Projects.Include(x => x.Posts).FirstOrDefault(x => x.Id == projectId);
-                if (project == null)
-                    return new List<PostModel>();
-                return project.Posts.Select(ConvertToPostModel).OrderByDescending(x=>x.DateCreate).ToList();
-            }
-
-
-        }
         #region Одкноклассники 
         private BaseResponse<string> PublicationOK(int userId, PostModel post, string groupId)
         {
@@ -161,14 +180,14 @@ namespace SMM.Services
                         text = post.Content
                     }
                 };
-               
+
                 if (post.Status != EnumStatusPost.Published)
                     attachmentModel.publishAt = ((post.DatePublic)).ToString("yyyy-MM-dd HH':'mm':'ss");
                 if (post.ImageFile != null)
                 {
                     var uploadUrl = client.GetUploadUrl(accessToken.Value.access_token, groupId);
                     var files = FileService.GetListImagePostForUpload(HttpContext.Current.Server.MapPath(WebConfigurationManager.AppSettings["Post"] + post.Id + "/Image/"));
-                    var response = client.UploadPhoto(uploadUrl.Value.upload_url,files[0],uploadUrl.Value.photo_ids[0]);
+                    var response = client.UploadPhoto(uploadUrl.Value.upload_url, files[0], uploadUrl.Value.photo_ids[0]);
                     if (response.IsSuccess)
                     {
                         media.Add(new MediaModel
@@ -223,7 +242,17 @@ namespace SMM.Services
                 ProjectId = model.ProjectId,
                 UserId = model.UserId,
                 Status = (EnumStatusPost)model.Status,
-                ImagesUrl = FileService.GetListImagePostForView(path,model.Id)
+                ImagesUrl = FileService.GetListImagePostForView(path, model.Id)
+            };
+        }
+        private PostCalendarModel ConvertToPostCalendar(Post model)
+        {
+            return new PostCalendarModel()
+            {
+                Id = model.Id,
+                DatePublic = model.DatePublic,
+                Name = "Пока нету название у постов",
+                Soical = EnumSocial.ok.ToString()
             };
         }
         #endregion

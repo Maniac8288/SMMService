@@ -39,6 +39,18 @@ namespace SMM.Data.Models
         /// Статус проекта (EnumStatusProject)
         /// </summary>
         public int Status { get; set; }
+        /// <summary>
+        /// Основная информация о проекте
+        /// </summary>
+        public string MainInfo { get; set; }
+        /// <summary>
+        /// Дополнительная информация о проекте
+        /// </summary>
+        public string AdditionalInfo { get; set; }
+        /// <summary>
+        /// Дополнительные карточки в виде JSON строки
+        /// </summary>
+        public string JsonCards { get; set; }
 
         #region Связанные объекты
         /// <summary>

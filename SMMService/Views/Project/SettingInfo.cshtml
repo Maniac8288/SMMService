@@ -1,0 +1,71 @@
+﻿@model SMM.IServices.Models.Project.ProjectModel
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Settings";
+}
+@section Scripts {
+
+    <script src="~/asserts/js/Forms/Project/ProjectCardsModel.js"></script>
+    <script src="~/asserts/js/Forms/Project/ProjectInfoModel.js"></script>
+    <script src="~/asserts/js/Forms/Project/ProjectInfoViewModel.js"></script>
+    <script>
+        var params = {};
+        params.Project = @Html.Raw(JsonConvert.SerializeObject(Model));
+        params.UrlSave = '@Url.Action("EditInfo","Project")';
+        var ViewModel = new Project.ProjectInfoViewModel(params);
+    </script>
+}
+<div class="container body-content" data-bind="with:ViewModel">
+    @Html.Partial("_Partial/_HeadMenu", Model)
+
+    <div class="col-md-7" data-bind="with:Project">
+        <div class="group-setting">
+            <div class="title-setting">
+                <span>Основная информация</span>
+            </div>
+            <div class="setting">
+                <textarea class="text-box text-box-big" data-bind="textInput:MainInfo"></textarea>
+            </div>
+        </div>
+        <div class="group-setting">
+            <div class="title-setting">
+                <span>Дополнительная информация</span>
+            </div>
+            <div class="setting">
+                <textarea class="text-box" data-bind="textInput:AdditionalInfo"></textarea>
+            </div>
+        </div>
+        <!--ko foreach:JsonCards -->
+        <div class="group-setting">
+            <div class="title-setting">
+                <span data-bind="text:Name"></span>
+            </div>
+            <div class="setting">
+                <textarea class="text-box" data-bind="textInput:Info"></textarea>
+            </div>
+        </div>
+        <!--/ko-->
+        <div class="group-setting" data-bind="with:Card">
+            <div class="title-setting">
+                <span>Добавить карточку...</span>
+            </div>
+            <div class="setting">
+                <div>
+                    <input type="text" class="text-box text-box-input" placeholder="Введите название" data-bind="textInput:Name" />
+                </div>
+                <div>
+                    <textarea placeholder="Введите описание" class="text-box text-box-small" data-bind="textInput:Info"></textarea>
+                </div>
+            </div>
+            <div class="error" data-bind="if:Error() != ''">
+                <span data-bind="text:Error"></span>
+            </div>
+            <div class="group-setting ">
+                <button class="blue-btn" data-bind="click:$parent.AddCard.bind($parent)">Добавить карточку</button>
+            </div>
+        </div>
+        <div class="group-setting " style="float:right;">
+            <button class="blue-btn" data-bind="click:$parent.Save.bind($parent)">Сохранить</button>
+        </div>
+    </div>
+</div>

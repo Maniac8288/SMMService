@@ -56,6 +56,7 @@
     <Compile Include="Interface\IProjectService.cs" />
     <Compile Include="Interface\IUserService.cs" />
     <Compile Include="Models\Group\ModelGroup.cs" />
+    <Compile Include="Models\Post\PostCalendarModel.cs" />
     <Compile Include="Models\Post\PostModel.cs" />
     <Compile Include="Models\Project\ProjectModel.cs" />
     <Compile Include="Models\Responses\BaseResponse.cs" />

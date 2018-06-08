@@ -237,7 +237,16 @@ body {
     background-repeat: no-repeat;
     background-size: 100%;
 }
-
+.icon-calendar-ok {
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    width: 21px;
+    height: 21px;
+    background-image: url('../img/icons/social/Facebook.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
 .icon-vk.active {
     background-image: url('../img/icons/social/vk.png');
 }

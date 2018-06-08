@@ -45,9 +45,22 @@ namespace SMM.Web.Controllers
             };
             return View(viewModel);
         }
-        public ActionResult Calendar()
+        public ActionResult Calendar(int id)
         {
-            return View();
+
+            var userId = new WebUser().UserId;
+            var project = _projectService.GetProject(id);
+            if (!project.IsSuccess || userId != project.Value.CreatorId)
+            {
+                //todo: сделать переход на страницу с ошибкой!
+                return RedirectToAction("Index", "Home");
+            }
+            var model = new CalendarModel()
+            {
+                Posts = _postService.GetPostsForCalendar(id),
+                Project = project.Value
+            };
+            return View(model);
         }
         public ActionResult Verification()
         {

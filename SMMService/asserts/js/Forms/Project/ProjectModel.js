@@ -10,6 +10,7 @@
         this.ImageUrl = ko.observable(theParams.ImageUrl || "");
         this.GroupOk = ko.observable(theParams.GroupOK || "");
         this.GroupVk = ko.observable(theParams.GroupVK || "");
+
         return this;
     };
 

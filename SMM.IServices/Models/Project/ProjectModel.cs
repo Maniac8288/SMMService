@@ -46,5 +46,17 @@ namespace SMM.IServices.Models.Project
         /// Статус проекта
         /// </summary>
         public EnumStatusProject Status { get; set; }
+        /// <summary>
+        /// Основная информация о проекте
+        /// </summary>
+        public string MainInfo { get; set; }
+        /// <summary>
+        /// Дополнительная информация о проекте
+        /// </summary>
+        public string AdditionalInfo { get; set; }
+        /// <summary>
+        /// Дополнительные карточки в виде JSON строки
+        /// </summary>
+        public string JsonCards { get; set; }
     }
 }

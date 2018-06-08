@@ -88,6 +88,10 @@
     <Compile Include="Migrations\201806012048348_changeType_PostIdOk_IN_Post.Designer.cs">
       <DependentUpon>201806012048348_changeType_PostIdOk_IN_Post.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806081959373_addColumns_MainInfo_AdditinalInfo_JSonCards_IN_Project.cs" />
+    <Compile Include="Migrations\201806081959373_addColumns_MainInfo_AdditinalInfo_JSonCards_IN_Project.Designer.cs">
+      <DependentUpon>201806081959373_addColumns_MainInfo_AdditinalInfo_JSonCards_IN_Project.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Project.cs" />
@@ -131,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806012048348_changeType_PostIdOk_IN_Post.resx">
       <DependentUpon>201806012048348_changeType_PostIdOk_IN_Post.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806081959373_addColumns_MainInfo_AdditinalInfo_JSonCards_IN_Project.resx">
+      <DependentUpon>201806081959373_addColumns_MainInfo_AdditinalInfo_JSonCards_IN_Project.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

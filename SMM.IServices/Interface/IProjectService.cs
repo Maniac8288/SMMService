@@ -36,5 +36,11 @@ namespace SMM.IServices.Interface
         /// <param name="model">Проект</param>
         /// <returns></returns>
         BaseResponse EditProject(int userId, ProjectModel model);
+        /// <summary>
+        /// Редактировать информацию о проекте
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        BaseResponse EditInfoProject(ProjectModel model);
     }
 }

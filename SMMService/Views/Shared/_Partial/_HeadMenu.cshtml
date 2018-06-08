@@ -7,8 +7,8 @@
         @(Model != null ?  Model.Name : "")
     </h1>
     <div class="menu">
-        <a href="@Url.Action("SettingsPerson","Client")" class="blue-btn">Информация о клиенте</a>
-        <a href="@Url.Action("Settings","Client")" class="blue-btn">Настройка клиента</a>
+        <a href="@Url.Action("SettingInfo","Project",new { id  = Model.Id })" class="blue-btn">Информация о проекте</a>
+        <a href="@Url.Action("Settings","Client")" class="blue-btn">Настройка проекта</a>
     </div>
 </div>
 
