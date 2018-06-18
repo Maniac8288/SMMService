@@ -1,4 +1,5 @@
-﻿using SMM.IServices.Models.Post;
+﻿using SMM.IServices.Enums;
+using SMM.IServices.Models.Post;
 using SMM.IServices.Models.Responses;
 using System;
 using System.Collections.Generic;
@@ -42,5 +43,13 @@ namespace SMM.IServices.Interface
         /// <param name="projectId">Ид проекта</param>
         /// <returns></returns>
         List<PostCalendarModel> GetPostsForCalendar(int projectId);
+        /// <summary>
+        /// Отправить комментарий к посту 
+        /// </summary>
+        /// <param name="userId">Ид пользователя который оставляет комментарий</param>
+        /// <param name="postId">Ид поста которому принадлежит комментарий</param>
+        /// <param name="content">Содержимое комментария</param>
+        /// <returns></returns>
+        BaseResponse<CommentModel> SendComment(int userId, int postId, string content, EnumStatusComment status);
     }
 }

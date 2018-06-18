@@ -37,6 +37,10 @@ namespace SMM.Data
         /// Таблица с соц сетями
         /// </summary>
         public DbSet<Social> Socials { get; set; }
+        /// <summary>
+        /// Таблица с комментариями
+        /// </summary>
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {
@@ -50,6 +54,7 @@ namespace SMM.Data
             mb.Entity<UserVk>().Property(_ => _.UserId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             mb.Entity<UserVk>().HasKey(_ => _.UserId);
             #endregion
+
             #region Проекты 
             mb.Entity<Project>().HasRequired(x => x.User).WithMany(x => x.Projects).HasForeignKey(x => x.CreatorId);
             #endregion
@@ -66,6 +71,12 @@ namespace SMM.Data
             mb.Entity<Social>().HasMany(p => p.Posts).WithMany(c => c.Socials)
          .Map(t => t.MapLeftKey("SocialId").MapRightKey("PostId").ToTable("PostSocialsPublication"));
             #endregion
+
+            #region Comment
+            mb.Entity<Comment>().HasRequired(x => x.User).WithMany(x => x.Comments).HasForeignKey(x => x.UserId).WillCascadeOnDelete(false);
+            mb.Entity<Comment>().HasRequired(x => x.Post).WithMany(x => x.Comments).HasForeignKey(x => x.PostId);
+            #endregion
+
             base.OnModelCreating(mb);
         }
     }

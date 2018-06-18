@@ -5,8 +5,10 @@
     Post.PostViewModel = function (theParams) {
         theParams = theParams || {};
         this.UrlVerification = theParams.UrlVerification;
+        this.UrlSendComment = theParams.UrlSendComment;
         this.Post = new Post.PostModel(theParams.Post);
-      
+        this.Comment = ko.observable("");
+        this.StatusComment = ko.observable("All");
         return this;
     };
 
@@ -23,6 +25,23 @@
             }
             else {
                 console.log(res.Message);
+            }
+        });
+    }
+    /**
+     * Отправить комментарий 
+     **/
+    Post.PostViewModel.prototype.SendComment = function () {
+        var self = this;
+        if (this.Comment() == "")
+            return false;
+        $.post(this.UrlSendComment, { postId: this.Post.Id(), comment: this.Comment(), status: this.StatusComment() }).done(function (res) {
+            if (res.IsSuccess) {
+                self.Post.Comments.unshift(new Post.CommentModel(res.Value));
+                self.Comment("");
+            }
+            else {
+                console.error(res.Message);
             }
         });
     }

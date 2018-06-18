@@ -1,4 +1,5 @@
-﻿using SMM.IServices.Interface;
+﻿using SMM.IServices.Enums;
+using SMM.IServices.Interface;
 using SMM.IServices.Models.Post;
 using SMM.Services;
 using SMM.Social.Services;
@@ -96,5 +97,20 @@ namespace SMM.Web.Controllers
             var response = _postService.VerificationPost(userId, postId);
             return Json(response);
         }
+        #region Комментарии
+        /// <summary>
+        /// Отпарвить комментарий
+        /// </summary>
+        /// <param name="postId">Ид поста</param>
+        /// <param name="comment">Комментарий</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult SendComment(int postId,string comment,EnumStatusComment status)
+        {
+            var userId = new WebUser().UserId;
+            var response = _postService.SendComment(userId, postId, comment,status);
+            return Json(response);
+        }
+        #endregion
     }
 }

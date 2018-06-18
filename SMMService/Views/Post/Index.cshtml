@@ -7,6 +7,9 @@
 }
 @section Scripts {
 
+    <script src="~/asserts/js/knockoutExtensions/knockout-enterKey.js"></script>
+    <script src="~/asserts/js/User/UserModel.js"></script>
+    <script src="~/asserts/js/Post/CommentModel.js"></script>
     <script src="~/asserts/js/Social/Model.js"></script>
     <script src="~/asserts/js/Social/ViewModel.js"></script>
     <script src="~/asserts/js/Post/PostModel.js"></script>
@@ -15,6 +18,7 @@
         var Social = new Social.ViewModel();
         var params = {};
         params.UrlVerification = '@Url.Action("Verification", "Post")';
+        params.UrlSendComment = '@Url.Action("SendComment","Post")';
         params.Post = @Html.Raw(JsonConvert.SerializeObject(Model));
         var ViewModel = new Post.PostViewModel(params);
     </script>
@@ -38,7 +42,7 @@
                 <div class="img-post">
                     @foreach (var url in Model.ImagesUrl)
                     {
-                    <img src="@url" />
+                        <img src="@url" />
                     }
                 </div>
                 <div class="text-post">
@@ -76,7 +80,7 @@
                     }
                 </div>
             </div>
-            <div class="comments-box">
+            <div class="comments-box" data-bind="with:ViewModel">
                 <div class="send-box">
                     <div class="col-md-2">
                         <div class="image-circle"><img src="@User.ImageUrl" /></div>
@@ -84,7 +88,7 @@
                     <div class="col-md-10 send">
                         <div>
                             <div class="send-input">
-                                <input type="text" placeholder="Написать комментарий" id="add" />    <span class="icon icon-smile"></span>
+                                <input type="text" placeholder="Написать комментарий" id="add" data-bind="textInput:Comment,enterkey: SendComment" />    <span class="icon icon-smile"></span>
                                 <span class="icon icon-camera"></span>
                             </div>
 
@@ -95,14 +99,14 @@
                                 <div class="item">
                                     <label class="container-radio">
                                         для команды
-                                        <input type="radio" name="type">
+                                        <input type="radio" name="type" value="@EnumStatusComment.Team" data-bind="checked:StatusComment">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
                                 <div class="item">
                                     <label class="container-radio">
                                         для всех
-                                        <input type="radio" name="type">
+                                        <input type="radio" name="type" value="@EnumStatusComment.All" data-bind="checked:StatusComment">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
@@ -110,15 +114,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="comments-container ">
+                <div class="comments-container " data-bind="foreach:Post.Comments">
                     <div class="row">
                         <div class="col-md-3 info-user">
-                            <div class="image-circle"></div>
-                            <div class="name">
+                            <div class="image-circle"><img data-bind="attr:{src:User().ImageUrl}" /></div>
+                            <div class="name" data-bind="text:User().FirstName">
                                 Serghei
                             </div>
                         </div>
-                        <div class="message col-md-9">
+                        <div class="message col-md-9" data-bind="text:Content">
                             Благодарю всех кто отреагировал на пост.
                         </div>
                     </div>

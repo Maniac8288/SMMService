@@ -50,5 +50,9 @@ namespace SMM.IServices.Models.Post
         /// Ссылки на фотографию
         /// </summary>
         public List<string> ImagesUrl { get; set; }
+        /// <summary>
+        /// Комментарии 
+        /// </summary>
+        public List<CommentModel> Comments { get; set; }
     }
 }

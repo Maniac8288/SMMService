@@ -8,6 +8,8 @@
 
     <script src="~/asserts/js/plugins/datepickerrange/moment-with-locales.js"></script>
     <script src="~/asserts/js/plugins/datepickerrange/daterangepicker.js"></script>
+    <script src="~/asserts/js/User/UserModel.js"></script>
+    <script src="~/asserts/js/Post/CommentModel.js"></script>
     <script src="~/asserts/js/Post/PostModel.js"></script>
     <script src="~/asserts/js/archive/ViewModel.js"></script>
     <script>
@@ -70,7 +72,7 @@
         <div class="post archive">
             <div class="box-post">
                 <div class="img-post" data-bind="foreach:ImagesUrl">
-                    <img data-bind="attr:{src:$data}"/>
+                    <img data-bind="attr:{src:$data}" />
                 </div>
                 <!--ko text:Content-->
                 <!--/ko-->
@@ -96,23 +98,22 @@
                         <img src="~/asserts/img/icons/minus.png" />
                         <span>Не подтвержден</span>
                     </div>
-                    <div class="accept"  data-bind="if:Status() === @((int)EnumStatusPost.Published) || Status() === @((int)EnumStatusPost.Confirmed) ">
+                    <div class="accept" data-bind="if:Status() === @((int)EnumStatusPost.Published) || Status() === @((int)EnumStatusPost.Confirmed) ">
                         <img src="~/asserts/img/icons/red-acept.png" />
                         Подтвержден клиентом <span>14.01.18</span>
                     </div>
                 </div>
             </div>
             <div class="comments-box">
-
-                <div class="comments-container ">
+                <div class="comments-container " data-bind="foreach:Comments">
                     <div class="row">
                         <div class="col-md-3 info-user">
-                            <div class="image-circle"></div>
-                            <div class="name">
+                            <div class="image-circle"><img data-bind="attr:{src:User().ImageUrl}" /></div>
+                            <div class="name" data-bind="text:User().FirstName">
                                 Serghei
                             </div>
                         </div>
-                        <div class="message col-md-9">
+                        <div class="message col-md-9" data-bind="text:Content">
                             Благодарю всех кто отреагировал на пост.
                         </div>
                     </div>

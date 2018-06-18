@@ -223,8 +223,10 @@
     <Content Include="asserts\js\Forms\Project\ProjectInfoViewModel.js" />
     <Content Include="asserts\js\Forms\Project\ProjectModel.js" />
     <Content Include="asserts\js\Forms\Project\ProjectViewModel.js" />
-    <Content Include="asserts\js\knockoutExtension\knockout-hightchart.js" />
-    <Content Include="asserts\js\knockoutExtension\knockout-socialName.js" />
+    <Content Include="asserts\js\knockoutExtensions\knockout-emoji.js" />
+    <Content Include="asserts\js\knockoutExtensions\knockout-enterKey.js" />
+    <Content Include="asserts\js\knockoutExtensions\knockout-hightchart.js" />
+    <Content Include="asserts\js\knockoutExtensions\knockout-socialName.js" />
     <Content Include="asserts\js\plugins\Calendar\fullcalendar.min.css" />
     <Content Include="asserts\js\plugins\Calendar\fullcalendar.min.js" />
     <Content Include="asserts\js\plugins\Calendar\fullcalendar.print.css" />
@@ -239,12 +241,14 @@
     <Content Include="asserts\js\plugins\jasny-bootstrap\js\jasny-bootstrap.js" />
     <Content Include="asserts\js\plugins\jasny-bootstrap\js\jasny-bootstrap.min.js" />
     <Content Include="asserts\js\Post\Add\AddViewModel.js" />
+    <Content Include="asserts\js\Post\CommentModel.js" />
     <Content Include="asserts\js\Post\Index\PostViewModel.js" />
     <Content Include="asserts\js\Post\PostModel.js" />
     <Content Include="asserts\js\Social\Model.js" />
     <Content Include="asserts\js\Social\ViewModel.js" />
     <Content Include="asserts\js\Statistic\ViewModel.js" />
     <Content Include="asserts\js\User\SettingViewModel.js" />
+    <Content Include="asserts\js\User\UserModel.js" />
     <Content Include="asserts\plugins\emojionearea\emoji-custom.css" />
     <Content Include="asserts\plugins\emojionearea\emojionearea.min.css" />
     <Content Include="asserts\plugins\emojionearea\emojionearea.min.js" />

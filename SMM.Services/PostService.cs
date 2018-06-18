@@ -16,6 +16,7 @@ using System.Web;
 using System.Web.Configuration;
 using SMM.Social.Models.OK.Publication;
 using SMM.Social.Models.OK.Photos;
+using SMM.IServices.Models.User;
 
 namespace SMM.Services
 {
@@ -34,10 +35,12 @@ namespace SMM.Services
 
             using (var db = new DataContext())
             {
-                var post = db.Posts.FirstOrDefault(x => x.Id == postId);
+                var post = db.Posts.Include(x => x.Comments).FirstOrDefault(x => x.Id == postId);
                 if (post == null)
                     return new PostModel();
-                return ConvertToPostModel(post);
+                var postModel = ConvertToPostModel(post);
+                postModel.Comments = postModel.Comments.OrderByDescending(x => x.DateCreate).ToList();
+                return postModel;
             }
         }
         /// <summary>
@@ -49,10 +52,15 @@ namespace SMM.Services
         {
             using (var db = new DataContext())
             {
-                var project = db.Projects.Include(x => x.Posts).FirstOrDefault(x => x.Id == projectId);
+                var project = db.Projects.Include(x => x.Posts).Include(x => x.Posts.Select(p => p.Comments)).FirstOrDefault(x => x.Id == projectId);
                 if (project == null)
                     return new List<PostModel>();
-                return project.Posts.Select(ConvertToPostModel).OrderByDescending(x => x.DateCreate).ToList();
+                var posts = project.Posts.Select(ConvertToPostModel).OrderByDescending(x => x.DateCreate).ToList();
+                foreach(var post in posts)
+                {
+                    post.Comments = post.Comments.OrderByDescending(x => x.DateCreate).ToList();
+                }
+                return posts;
             }
         }
 
@@ -136,7 +144,7 @@ namespace SMM.Services
             {
                 using (var db = new DataContext())
                 {
-                    var post = db.Posts.FirstOrDefault(x => x.Id == postId);
+                    var post = db.Posts.Include(x => x.Comments).FirstOrDefault(x => x.Id == postId);
                     if (post == null)
                         return new BaseResponse(EnumResponseStatus.Error, "Пост не найден");
                     var group = db.Projects.FirstOrDefault(x => x.Id == post.ProjectId);
@@ -157,6 +165,48 @@ namespace SMM.Services
             catch (Exception e)
             {
                 return new BaseResponse(EnumResponseStatus.Exception, e.Message);
+            }
+        }
+        #endregion
+
+        #region Комментарии
+        /// <summary>
+        /// Отправить комментарий к посту 
+        /// </summary>
+        /// <param name="userId">Ид пользователя который оставляет комментарий</param>
+        /// <param name="postId">Ид поста которому принадлежит комментарий</param>
+        /// <param name="content">Содержимое комментария</param>
+        /// <returns></returns>
+        public BaseResponse<CommentModel> SendComment(int userId, int postId, string content, EnumStatusComment status)
+        {
+            try
+            {
+                using (var db = new DataContext())
+                {
+                    #region Валдиация
+                    var user = db.Users.FirstOrDefault(x => x.Id == userId);
+                    if (user == null)
+                        return new BaseResponse<CommentModel>(EnumResponseStatus.ValidationError, "Пользователь не найден");
+                    var post = db.Posts.FirstOrDefault(x => x.Id == postId);
+                    if (post == null)
+                        return new BaseResponse<CommentModel>(EnumResponseStatus.ValidationError, "Пост не найден");
+                    #endregion
+                    var comment = new Comment()
+                    {
+                        Content = content,
+                        PostId = postId,
+                        UserId = userId,
+                        DateCreate = DateTime.Now,
+                        Status = (int)status
+                    };
+                    db.Comments.Add(comment);
+                    db.SaveChanges();
+                    return new BaseResponse<CommentModel>(EnumResponseStatus.Success, "Комментарий успешно оставлен", ConvertToCommentModel(comment));
+                }
+            }
+            catch (Exception e)
+            {
+                return new BaseResponse<CommentModel>(EnumResponseStatus.Exception, e.Message);
             }
         }
         #endregion
@@ -242,6 +292,7 @@ namespace SMM.Services
                 ProjectId = model.ProjectId,
                 UserId = model.UserId,
                 Status = (EnumStatusPost)model.Status,
+                Comments = model.Comments.Select(ConvertToCommentModel).ToList(),
                 ImagesUrl = FileService.GetListImagePostForView(path, model.Id)
             };
         }
@@ -254,6 +305,31 @@ namespace SMM.Services
                 Name = "Пока нету название у постов",
                 Soical = EnumSocial.ok.ToString()
             };
+        }
+        ///
+        private CommentModel ConvertToCommentModel(Comment model)
+        {
+            using (var db = new DataContext())
+            {
+                var user = db.Users.FirstOrDefault(x => x.Id == model.UserId);
+                if (user == null)
+                    user = new User();
+                return new CommentModel()
+                {
+                    Id = model.Id,
+                    Content = model.Content,
+                    PostId = model.PostId,
+                    DateCreate = model.DateCreate,
+                    Status = (EnumStatusComment)model.Status,
+                    User = new UserModel()
+                    {
+                        FirstName = user.FirstName,
+                        ImageUrl = user.ImageUrl,
+                        LastName = user.LastName,
+                        Id = user.Id
+                    }
+                };
+            }
         }
         #endregion
     }

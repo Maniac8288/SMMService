@@ -57,6 +57,10 @@ namespace SMM.Data.Models
         /// Публикация в каких социальных сетях
         /// </summary>
         public List<Social> Socials { get; set; }
+        /// <summary>
+        /// Комментарии
+        /// </summary>
+        public List<Comment> Comments { get; set; }
         #endregion
     }
 }

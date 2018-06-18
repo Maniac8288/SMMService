@@ -12,6 +12,7 @@
         this.Status = ko.observable(theParams.Status || "");
         this.ImageFile = ko.observable(theParams.ImageFile || "");
         this.ImagesUrl = ko.observableArray(theParams.ImagesUrl || "");
+        this.Comments = ko.observableArray(theParams.Comments ? theParams.Comments.map(function (item) { return new Post.CommentModel(item) }) : []);
         return this;
     };
 

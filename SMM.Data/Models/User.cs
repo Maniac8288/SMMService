@@ -39,7 +39,10 @@ namespace SMM.Data.Models
         /// Связь с таблицей постов
         /// </summary>
         public List<Post> Posts { get; set; }
-
+        /// <summary>
+        /// Комментарии
+        /// </summary>
+        public List<Comment> Comments { get; set; }
         #region Связь с социальными сетями
         /// <summary>
         /// Связь с пользователем ОК

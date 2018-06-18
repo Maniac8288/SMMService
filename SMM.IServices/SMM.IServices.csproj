@@ -50,12 +50,14 @@
   <ItemGroup>
     <Compile Include="Enums\EnumResponseStatus.cs" />
     <Compile Include="Enums\EnumSocial.cs" />
+    <Compile Include="Enums\EnumStatusComment.cs" />
     <Compile Include="Enums\EnumStatusPost.cs" />
     <Compile Include="Enums\EnumStatusProject.cs" />
     <Compile Include="Interface\IPostService.cs" />
     <Compile Include="Interface\IProjectService.cs" />
     <Compile Include="Interface\IUserService.cs" />
     <Compile Include="Models\Group\ModelGroup.cs" />
+    <Compile Include="Models\Post\CommentModel.cs" />
     <Compile Include="Models\Post\PostCalendarModel.cs" />
     <Compile Include="Models\Post\PostModel.cs" />
     <Compile Include="Models\Project\ProjectModel.cs" />
