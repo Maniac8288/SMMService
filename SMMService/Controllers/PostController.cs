@@ -23,6 +23,10 @@ namespace SMM.Web.Controllers
         public ActionResult Index(int id)
         {
             var post = _postService.GetPostById(id);
+            if(post.Status == EnumStatusPost.OnVerification)
+            {
+                return RedirectToAction("Verification", "Post", new { id });
+            }
             return View(post);
         }
         public ActionResult Add(int id)
@@ -63,9 +67,16 @@ namespace SMM.Web.Controllers
             };
             return View(model);
         }
-        public ActionResult Verification()
+        [HttpGet]
+        public ActionResult Verification(int id)
         {
-            return View();
+            var post = _postService.GetPostById(id);
+            var viewModel = new VerificationModel()
+            {
+                Post = post,
+                Project = _projectService.GetProject(post.ProjectId).Value
+            };
+            return View(viewModel);
         }
 
         /// <summary>
@@ -91,7 +102,7 @@ namespace SMM.Web.Controllers
         /// <param name="postId"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Verification(int postId)
+        public ActionResult VerificationPost(int postId)
         {
             var userId = new WebUser().UserId;
             var response = _postService.VerificationPost(userId, postId);
@@ -105,12 +116,40 @@ namespace SMM.Web.Controllers
         /// <param name="comment">Комментарий</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult SendComment(int postId,string comment,EnumStatusComment status)
+        public ActionResult SendComment(int postId, string comment, EnumStatusComment status)
         {
             var userId = new WebUser().UserId;
-            var response = _postService.SendComment(userId, postId, comment,status);
+            var response = _postService.SendComment(userId, postId, comment, status);
             return Json(response);
         }
+        #region Редактирование поста
+        /// <summary>
+        /// Изменить содержимое поста
+        /// </summary>
+        /// <param name="postId">Ид поста</param>
+        /// <param name="content">Новое содержимое поста</param>
+        /// <returns></returns>
+        public ActionResult ChangeContentPost(int postId, string content)
+        {
+            var userId = new WebUser().UserId;
+            var response = _postService.ChangeContent(userId, postId, content);
+            return Json(response);
+        }
+        /// <summary>
+        /// Удалить пост
+        /// </summary>
+        /// <param name="postId">Ид пост</param>
+        /// <param name="projectId">Ид проекта к которому пренадлижит пост</param>
+        /// <returns></returns>
+        public ActionResult DeletePost(int postId, int projectId)
+        {
+            var userId = new WebUser().UserId;
+            var response = _postService.DeletePost(userId, postId);
+            if (response.IsSuccess)
+                return Json(new { response.IsSuccess, Url = Url.Action("Archive", "Post", new {  projectId }) });
+            return Json(response);
+        }
+        #endregion
         #endregion
     }
 }

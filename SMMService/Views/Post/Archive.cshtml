@@ -62,20 +62,22 @@
     <div class="col-md-9">
 
         <div class="filter-archive">
-            <button class="blue-btn">Все</button>
-            <button class="green-btn">Опубликовано</button>
-            <button class="blue-btn">Запланировано </button>
-            <button class="red-btn active">Ждет подтверждения</button>
-
+            <button class="blue-btn" data-bind="click:Filter.bind($data,''),css:{active:FilterStatus() == ''}">Все</button>
+            <button class="green-btn" data-bind="click:Filter.bind($data,@((int)EnumStatusPost.Published)),css:{active:FilterStatus() == @((int)EnumStatusPost.Published)}">Опубликовано</button>
+            <button class="blue-btn" data-bind="click:Filter.bind($data,@((int)EnumStatusPost.Confirmed)),css:{active:FilterStatus() == @((int)EnumStatusPost.Confirmed)}">Запланировано </button>
+            <button class="red-btn" data-bind="click:Filter.bind($data,@((int)EnumStatusPost.OnVerification)),css:{active:FilterStatus() == @((int)EnumStatusPost.OnVerification)}">Ждет подтверждения</button>
         </div>
-        <!--ko foreach: Posts-->
+        <!--ko foreach: FilterPosts-->
+
         <div class="post archive">
-            <div class="box-post">
+            <div class="box-post" data-bind="click:function(){window.location = '@Url.Action("Index","Post")?id='+Id()}">
                 <div class="img-post" data-bind="foreach:ImagesUrl">
                     <img data-bind="attr:{src:$data}" />
                 </div>
-                <!--ko text:Content-->
-                <!--/ko-->
+                <span>
+                    <!--ko text:Content-->
+                    <!--/ko-->
+                </span>
             </div>
             <div class="info-post">
                 <div class="date">
@@ -84,9 +86,17 @@
 
                 <div class="publish-in">
                     Опубликовано в:
-
-                    <img src="~/asserts/img/icons/social/Facebook.png" />
-                    <img src="~/asserts/img/icons/social/vk-mini.png" />
+                    <!--ko if:PostIdOK != ""-->
+                    <a data-bind="attr:{href:'https://ok.ru/group/59073327530026/topic/'+PostIdOK}">
+                        <img src="~/asserts/img/icons/social/OK-active.png" />
+                    </a>
+                    <!--/ko-->
+                    <!--ko if:PostIdVK != ""-->
+                    <a data-bind="attr:{href:'https://ok.ru/group/'+@Model.Project.GroupOK+'/topic/'+PostIdVK}">
+                        <img src="~/asserts/img/icons/social/vk-mini.png" />
+                    </a>
+                    <!--/ko-->
+                    @*<img src="~/asserts/img/icons/social/Facebook.png" />*@
 
                 </div>
 
@@ -120,6 +130,7 @@
                 </div>
             </div>
         </div>
+
         <!--/ko-->
 
     </div>

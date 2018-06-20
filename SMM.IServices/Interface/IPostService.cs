@@ -51,5 +51,22 @@ namespace SMM.IServices.Interface
         /// <param name="content">Содержимое комментария</param>
         /// <returns></returns>
         BaseResponse<CommentModel> SendComment(int userId, int postId, string content, EnumStatusComment status);
+        #region Редактирование поста
+        /// <summary>
+        /// Сменить содержимое поста
+        /// </summary>
+        /// <param name="userId">Ид пользователя который хочет изменить контнет</param>
+        /// <param name="postId">Ид поста</param>
+        /// <param name="content">Новое содержимое поста</param>
+        /// <returns></returns>
+        BaseResponse ChangeContent(int userId, int postId, string content);
+        /// <summary>
+        /// Удалить пост
+        /// </summary>
+        /// <param name="userId">Ид пользователя который хочет изменить контнет</param>
+        /// <param name="postId">Ид поста</param>
+        /// <returns></returns>
+        BaseResponse DeletePost(int userId, int postId);
+        #endregion
     }
 }

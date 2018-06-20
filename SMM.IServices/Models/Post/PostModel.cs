@@ -54,5 +54,9 @@ namespace SMM.IServices.Models.Post
         /// Комментарии 
         /// </summary>
         public List<CommentModel> Comments { get; set; }
+        /// <summary>
+        /// Ид поста в одноклассниках
+        /// </summary>
+        public string PostIdOK { get; set; }
     }
 }

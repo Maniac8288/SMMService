@@ -1,22 +1,38 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-@section Scripts {
+@model SMM.Web.Models.ViewModels.VerificationModel
+@using SMM.IServices.Enums;
+@using Newtonsoft.Json
 
+@section Scripts {
+<script src="~/asserts/js/plugins/common/clipboard.js"></script>
     <script src="~/asserts/js/Social/Model.js"></script>
     <script src="~/asserts/js/Social/ViewModel.js"></script>
+    <script src="~/asserts/js/User/UserModel.js"></script>
+    <script src="~/asserts/js/Post/CommentModel.js"></script>
+    <script src="~/asserts/js/Post/PostModel.js"></script>
+    <script src="~/asserts/js/Post/Verification/VerificationViewModel.js"></script>
     <script>
         var Social = new Social.ViewModel();
+         var params = {};
+        params.Post = @Html.Raw(JsonConvert.SerializeObject(Model.Post));
+          params.UrlVerification = '@Url.Action("VerificationPost", "Post")';
+        params.UrlChangeContent = '@Url.Action("ChangeContentPost","Post")';
+        params.UrlDeletePost = '@Url.Action("DeletePost","Post")';
+        params.ProjectId = @Model.Project.Id;
+        var ViewModel = new Post.VerificationViewModel(params);
+
     </script>
 }
 
 <div class="container body-content">
-    @Html.Partial("_Partial/_HeadMenu")
+    @Html.Partial("_Partial/_HeadMenu", Model.Project)
 </div>
 <section class="grey-hr"></section>
-<div class="container body-content">
+<div class="container body-content" data-bind="with:ViewModel">
     <div class="col-md-9">
-        <div class="post">
+        <div class="post" data-bind="with:Post">
             <div class="date-post">
                 Создан <span>14.01.18 - 12:00</span>
             </div>
@@ -26,25 +42,42 @@
                     <div class="tooltip-box">
                         Заменить фото
                     </div>
-                    <i class="icon-trash"></i>
+                    <i class="icon-trash" data-bind="click:$parent.DeletePost.bind($parent)"></i>
                     <i class="icon-downlaod"></i>
                 </div>
-                <div class="img-post">
-                    <img src="~/asserts/img/Temp/вид-у-клиента.png" />
+                <div class="img-post" data-bind="foreach:ImagesUrl">
+                    <img data-bind="attr:{src:$data}" />
                 </div>
                 <div class="text-post">
-                    Доброе утро!
-                    Желаем Вам приятных выходных!
+                    <!--ko ifnot:$parent.IsEditContent-->
+                    <!--ko text:Content-->
+                    <!--/ko-->
+                    <!--/ko-->
+                    <!--ko if:$parent.IsEditContent-->
+                    <input data-bind="textInput:$parent.TempContent" />
+                    <!--/ko-->
                     <div class="pull-right">
-                        <div class="edit-text">
+                        <!--ko ifnot:$parent.IsEditContent-->
+                        <div class="edit-text" data-bind="click:$parent.IsEditContent.bind($parent,true)">
                             <div class="tooltip-box">
                                 Редактировать текст
                             </div>
                             <i class="icon-pen"></i>
-
                         </div>
-                        <i class="icon-file"></i>
-                        <div class="tooltip-box file">
+                        <!--/ko-->
+                        <!--ko if:$parent.IsEditContent-->
+                        <div class="edit-text" >
+                            <div class="tooltip-box" data-bind="click:$parent.EditContent.bind($parent)">
+                             Сохранить
+                            </div>
+                            <div class="tooltip-box"  data-bind="click:$parent.CancelEdit.bind($parent)">
+                                Отмена
+                            </div>
+                        </div>
+                        <!--/ko-->
+
+                        <i class="icon-file" data-bind="click:$parent.Clipboard.bind($parent)"></i>
+                        <div class="tooltip-box file" data-bind="click:$parent.Clipboard.bind($parent)">
                             Копировать текст
                         </div>
                     </div>
@@ -53,21 +86,33 @@
             </div>
             <div class="info-post">
                 <div class="date">
-                    Дата публикации: <span>14.01.18  18:00</span>
+                    Дата публикации: <span date-bind="text:DatePublic"></span>
                 </div>
                 @Html.Partial("_Partial/_Social")
                 <div class="status-post">
                     <div>
                         Статус проверки:
                     </div>
-                    <div class="decline">
-                        <img src="~/asserts/img/icons/minus.png" />
-                        <span>Не подтвержден</span>
-                    </div>
-                    <div class="accept">
-                        <img src="~/asserts/img/icons/red-acept.png" />
-                        Подтвержден клиентом <span>14.01.18</span>
-                    </div>
+                    @if (Model.Post.Status == EnumStatusPost.OnVerification)
+                    {
+                        <div>
+                            <span class="status">
+                                Ждет подтверждения
+                            </span>
+                        </div>
+                        <div>
+                            <button class="blue-btn" data-bind="click:$parent.Verification.bind($parent)">
+                                Подтвердить
+                            </button>
+                        </div>
+                    }
+                    else if (Model.Post.Status == EnumStatusPost.Published || Model.Post.Status == EnumStatusPost.Confirmed)
+                    {
+                        <div class="accept">
+                            <img src="~/asserts/img/icons/red-acept.png" />
+                            Подтвержден клиентом <span>14.01.18</span>
+                        </div>
+                    }
                 </div>
             </div>
             <div class="comments-box">
@@ -104,15 +149,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="comments-container ">
+                <div class="comments-container " data-bind="foreach:Comments">
                     <div class="row">
                         <div class="col-md-3 info-user">
-                            <div class="image-circle"></div>
-                            <div class="name">
+                            <div class="image-circle"><img data-bind="attr:{src:User().ImageUrl}" /></div>
+                            <div class="name" data-bind="text:User().FirstName">
                                 Serghei
                             </div>
                         </div>
-                        <div class="message col-md-9">
+                        <div class="message col-md-9" data-bind="text:Content">
                             Благодарю всех кто отреагировал на пост.
                         </div>
                     </div>

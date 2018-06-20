@@ -56,7 +56,7 @@ namespace SMM.Services
                 if (project == null)
                     return new List<PostModel>();
                 var posts = project.Posts.Select(ConvertToPostModel).OrderByDescending(x => x.DateCreate).ToList();
-                foreach(var post in posts)
+                foreach (var post in posts)
                 {
                     post.Comments = post.Comments.OrderByDescending(x => x.DateCreate).ToList();
                 }
@@ -121,7 +121,14 @@ namespace SMM.Services
                         post.Id = model.Id;
                         var okRes = PublicationOK(userId, post, project.GroupOK);
                         if (!okRes.IsSuccess)
+                        {                        
                             return new BaseResponse<int>() { Status = okRes.Status, Message = okRes.Message };
+                        }
+                        else
+                        {
+                            model.PostIdOK = okRes.Value;
+                            db.SaveChanges();
+                        }
                     }
 
                     return new BaseResponse<int>() { Status = 0, Message = "Успешно", Value = model.Id };
@@ -211,6 +218,71 @@ namespace SMM.Services
         }
         #endregion
 
+        #region Редактирование поста
+        /// <summary>
+        /// Сменить содержимое поста
+        /// </summary>
+        /// <param name="userId">Ид пользователя который хочет изменить контнет</param>
+        /// <param name="postId">Ид поста</param>
+        /// <param name="content">Новое содержимое поста</param>
+        /// <returns></returns>
+        public BaseResponse ChangeContent(int userId, int postId,string content)
+        {
+            try
+            {
+                using (var db = new DataContext())
+                {
+                    #region Валидация
+                    var user = db.Users.FirstOrDefault(x => x.Id == userId);
+                    if (user == null)
+                        return new BaseResponse(EnumResponseStatus.ValidationError, "Пользователь не найден");
+                    var post = db.Posts.FirstOrDefault(x => x.Id == postId);
+                    if (post == null)
+                        return new BaseResponse(EnumResponseStatus.ValidationError, "Пост не найден");
+                    #endregion
+
+                    post.Content = content;
+                    db.SaveChanges();
+                    return new BaseResponse(EnumResponseStatus.Success, "Успешно");
+                }
+            }
+            catch(Exception e)
+            {
+                return new BaseResponse(EnumResponseStatus.Exception, e.Message);
+            }
+        }
+        /// <summary>
+        /// Удалить пост
+        /// </summary>
+        /// <param name="userId">Ид пользователя который хочет изменить контнет</param>
+        /// <param name="postId">Ид поста</param>
+        /// <returns></returns>
+        public BaseResponse DeletePost(int userId,int postId)
+        {
+            try
+            {
+                using (var db = new DataContext())
+                {
+                    #region Валидация
+                    var user = db.Users.FirstOrDefault(x => x.Id == userId);
+                    if (user == null)
+                        return new BaseResponse(EnumResponseStatus.ValidationError, "Пользователь не найден");
+                    var post = db.Posts.FirstOrDefault(x => x.Id == postId);
+                    if (post == null)
+                        return new BaseResponse(EnumResponseStatus.ValidationError, "Пост не найден");
+                    #endregion
+                    db.Posts.Remove(post);
+                    db.SaveChanges();
+                    return new BaseResponse(EnumResponseStatus.Success, "Успешно");
+                }
+            }
+            catch (Exception e)
+            {
+                return new BaseResponse(EnumResponseStatus.Exception, e.Message);
+            }
+        }
+        #endregion
+
         #region Одкноклассники 
         private BaseResponse<string> PublicationOK(int userId, PostModel post, string groupId)
         {
@@ -293,7 +365,8 @@ namespace SMM.Services
                 UserId = model.UserId,
                 Status = (EnumStatusPost)model.Status,
                 Comments = model.Comments.Select(ConvertToCommentModel).ToList(),
-                ImagesUrl = FileService.GetListImagePostForView(path, model.Id)
+                ImagesUrl = FileService.GetListImagePostForView(path, model.Id),
+                PostIdOK = model.PostIdOK
             };
         }
         private PostCalendarModel ConvertToPostCalendar(Post model)

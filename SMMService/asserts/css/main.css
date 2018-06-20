@@ -18,8 +18,10 @@ a,a:hover{
 body {
     background-color: #fff;
 }
+.transform-none:hover {
+    text-decoration:none;
+}
 /* Icons */
-
 .icon-trash {
     position: absolute;
     display: inline-block;
@@ -51,6 +53,7 @@ body {
     height: 33px;
     background-image: url(../img/icons/file.png);
     left: 143px;
+    cursor:pointer;
 }
 
 .icon-downlaod {
@@ -439,7 +442,10 @@ button.red-btn:active, a.red-btn:active, a.red-btn.active {
     cursor: pointer;
     background-color: #fff;
 }
-
+    .green-btn.active {
+        color: #fff;
+        background-color: #0b8043;
+    }
 button.green-btn:active, a.green-btn:active, a.green-btn.active {
     background-color: #0b8043;
     color: #FFF !important;
@@ -456,11 +462,15 @@ button.green-btn:active, a.green-btn:active, a.green-btn.active {
     cursor: pointer;
     background-color: #fff;
 }
+    .blue-btn.active {
+        color: #fff;
+        background-color: #1976d2;
+    }
 
-button.blue-btn:active, a.blue-btn:active, a.blue-btn.active {
-    background-color: #1976d2;
-    color: #FFF !important;
-}
+    button.blue-btn:active, a.blue-btn:active, a.blue-btn.active {
+        background-color: #1976d2;
+        color: #FFF !important;
+    }
 
 .blue-btn-active {
     display: inline-block;

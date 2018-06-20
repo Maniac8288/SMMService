@@ -6,7 +6,6 @@
     ViewBag.Title = "Home Page";
 }
 @section Scripts {
-
     <script src="~/asserts/js/knockoutExtensions/knockout-enterKey.js"></script>
     <script src="~/asserts/js/User/UserModel.js"></script>
     <script src="~/asserts/js/Post/CommentModel.js"></script>
@@ -17,7 +16,7 @@
     <script>
         var Social = new Social.ViewModel();
         var params = {};
-        params.UrlVerification = '@Url.Action("Verification", "Post")';
+        params.UrlVerification = '@Url.Action("VerificationPost", "Post")';
         params.UrlSendComment = '@Url.Action("SendComment","Post")';
         params.Post = @Html.Raw(JsonConvert.SerializeObject(Model));
         var ViewModel = new Post.PostViewModel(params);
