@@ -1,13 +1,18 @@
 ﻿@model SMM.Web.Models.ViewModels.HomeModel
 @using Newtonsoft.Json
 @section Scripts {
+    <script src="~/asserts/js/Forms/Project/Group/GroupModel.js"></script>
     <script src="~/asserts/js/Forms/Project/ProjectModel.js"></script>
     <script src="~/asserts/js/Forms/Home/HomeViewModel.js"></script>
     <script>
+        var urlSetGroup = '@Url.Action("SetGroup","Project")';
+
         var params = {};
         params.UrlCreateProject = '@Url.Action("CreateProject","Project")';
         params.UrlProject = '@Url.Action("Settings", "Client")';
         params.Projects =  @Html.Raw(JsonConvert.SerializeObject(Model.Projects));
+        params.Groups =  @Html.Raw(JsonConvert.SerializeObject(Model.Groups));
+        params.UrlCreateGroup = '@Url.Action("CreateGroup","Home")';
         var ViewModel = new Home.HomeViewModel(params);
     </script>
 }
@@ -18,7 +23,7 @@
             <a class="blue-btn" data-toggle="modal" data-target="#addProject">
                 Добавить проект
             </a>
-            <a class="blue-btn">
+            <a class="blue-btn" data-toggle="modal" data-target="#addGroup">
                 Добавить группу
             </a>
         </div>
@@ -29,168 +34,18 @@
         </div>
     </div>
     <!--ko if:ViewModel.TypeFilter() === 'squad'-->
-    <div class="row">
-        <div class="list-clients col-md-12" data-bind="foreach:ViewModel.Projects">
-            <div class="client">
-                <a data-bind="attr:{href:'@Url.Action("Settings","Client")/'+Id()}">
-                    <div class="image">
-                        <span class="title" data-bind="text:Name">
-
-                        </span>
-                        <img data-bind="attr:{src:ImageUrl()}" />
-                        <span class="favorit"><i class="icon-star active"></i></span>
-                    </div>
-                </a>
-                <div class="menu-clients">
-
-                    <div class="list-users">
-                        <div class="user">
-                            <div class="image-circle"></div>
-                            <span class="name">A</span>
-                        </div>
-                        <div class="user">
-                            <div class="image-circle"></div>
-                        </div>
-                        <div class="user">
-                            <div class="image-circle"></div>
-                        </div>
-                        <div class="user">
-                            <div class="image-circle"></div>
-                            <span class="name">K</span>
-                        </div>
-                        <div class="setting">
-                            <div class="dropdown">
-                                <a id="drop-setting" role="button" data-toggle="dropdown" href="#">    <i class="icon-settings"></i></a>
-
-                                <ul class="dropdown-menu users-menu" role="menu" aria-labelledby="drop-setting">
-
-                                    <li>
-                                        <div class="title black">
-                                            Сменить группу
-                                        </div>
-                                    </li>
-                                    <li class="user row">
-                                        <div>Без группы</div>
-                                        <span class="active-group"></span>
-                                    </li>
-                                    <li class="user row">
-                                        <div>Группа 1</div>
-                                    </li>
-                                    <li class="user row">
-                                        <div>Группа 2</div>
-                                    </li>
-                                    <li class="user row">
-                                        <div>Группа 3</div>
-                                    </li>
-                                    <li class="user row">
-                                        <div>Архивировать</div>
-                                    </li>
-
-                                </ul>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @Html.Partial("~/Views/Home/Partial/_SquadProjects.cshtml")
     <!--/ko-->
     <!--ko if:ViewModel.TypeFilter() === 'row'-->
-    <div class="list-group">
-
-        <div class="section-group col-md-12">
-            <div class="title-group"></div>
-            <!--ko foreach:ViewModel.Projects-->
-            <div class="groups ">
-               
-                <div class="col-md-9 grey-block">
-                   
-                    <div>
-                        <a data-bind="attr:{href:'@Url.Action("Settings","Client")/'+Id()}">
-                            <img style="width: 301px" data-bind="attr:{src:ImageUrl()}" />
-                        </a>
-                    </div>
-                        <div class="group-info">
-                            <span><i class="icon icon-star active"></i></span>
-                            <span class="title" data-bind="text:Name"></span>
-                        </div>
-                    
-                </div>
-            
-                <div class="col-md-3">
-                    <div class="list-users">
-                        <div class="user">
-                            <div class="image-circle"></div>
-                            <span class="name">A</span>
-                        </div>
-                        <div class="user">
-                            <div class="image-circle"></div>
-                        </div>
-                        <div class="user">
-                            <div class="image-circle"></div>
-                        </div>
-                        <div class="user">
-                            <div class="image-circle"></div>
-                            <span class="name">K</span>
-                        </div>
-                        <div class="setting">
-                            <div class="dropdown">
-                                <a id="drop-setting" role="button" data-toggle="dropdown" href="#">    <i class="icon-settings"></i></a>
-
-                                <ul class="dropdown-menu users-menu" role="menu" aria-labelledby="drop-setting">
-
-                                    <li>
-                                        <div class="title black">
-                                            Сменить группу
-                                        </div>
-                                    </li>
-                                    <li class="user row">
-                                        <div>Без группы</div>
-                                    </li>
-                                    <li class="user row">
-                                        <div>Группа 1</div>
-                                    </li>
-                                    <li class="user row">
-                                        <div>Группа 2</div>
-                                    </li>
-                                    <li class="user row">
-                                        <div>Группа 3</div>
-                                    </li>
-                                    <li class="user row">
-                                        <div>Архивировать</div>
-                                    </li>
-
-                                </ul>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--/ko-->
-
-        </div>
-
-
-
-    </div>
+    @Html.Partial("~/Views/Home/Partial/_RowProjects.cshtml")
     <!--/ko-->
 </div>
-<div class="modal fade add" id="addProject" data-bind="with:ViewModel">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body add-project-body">
-                <div class="input-block">
-                    <input type="text" name="name" placeholder="Введите название проекта" data-bind="textInput:NewProject.Name" />
-                </div>
-                <div class="input-block">
-                    <span class="error" data-bind="text:ErrorCreateProject"></span>
-                </div>
-                <div>
-                    <button class="blue-btn-active" data-bind="click:CreateProject">Добавить</button>
-                </div>
-            </div>
-        </div><!-- /.модальное окно-Содержание -->
-    </div><!-- /.модальное окно-диалог -->
-</div><!-- /.модальное окно --> 
+
+<!--Модальные окна-->
+<!--Добавить проект-->
+@Html.Partial("~/Views/Home/Popup/_AddProject.cshtml")
+
+<!--Добавить группу-->
+@Html.Partial("~/Views/Home/Popup/_AddGroup.cshtml")
+
+<!--Конец модальных окн-->

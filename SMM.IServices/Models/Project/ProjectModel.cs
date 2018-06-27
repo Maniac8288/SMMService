@@ -58,5 +58,13 @@ namespace SMM.IServices.Models.Project
         /// Дополнительные карточки в виде JSON строки
         /// </summary>
         public string JsonCards { get; set; }
+        /// <summary>
+        /// Хэштэги которые прендалжит проекту
+        /// </summary>
+        public List<HashtagModel> Hashtags { get; set; }
+        /// <summary>
+        /// Ид группы
+        /// </summary>
+        public int? GroupId { get; set; }
     }
 }

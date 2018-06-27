@@ -60,8 +60,10 @@
     <Compile Include="Models\Post\CommentModel.cs" />
     <Compile Include="Models\Post\PostCalendarModel.cs" />
     <Compile Include="Models\Post\PostModel.cs" />
+    <Compile Include="Models\Project\HashtagModel.cs" />
     <Compile Include="Models\Project\ProjectModel.cs" />
     <Compile Include="Models\Responses\BaseResponse.cs" />
+    <Compile Include="Models\User\Group\GroupModel.cs" />
     <Compile Include="Models\User\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

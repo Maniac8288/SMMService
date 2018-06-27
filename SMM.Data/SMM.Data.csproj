@@ -104,8 +104,22 @@
     <Compile Include="Migrations\201806181948038_addColumn_Status_IN_Comments.Designer.cs">
       <DependentUpon>201806181948038_addColumn_Status_IN_Comments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806230905454_addTable_HashTag.cs" />
+    <Compile Include="Migrations\201806230905454_addTable_HashTag.Designer.cs">
+      <DependentUpon>201806230905454_addTable_HashTag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806230915486_renameColumn_Title.cs" />
+    <Compile Include="Migrations\201806230915486_renameColumn_Title.Designer.cs">
+      <DependentUpon>201806230915486_renameColumn_Title.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806271855329_addTable_Group.cs" />
+    <Compile Include="Migrations\201806271855329_addTable_Group.Designer.cs">
+      <DependentUpon>201806271855329_addTable_Group.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\Hashtag.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Social.cs" />
@@ -160,6 +174,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806181948038_addColumn_Status_IN_Comments.resx">
       <DependentUpon>201806181948038_addColumn_Status_IN_Comments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806230905454_addTable_HashTag.resx">
+      <DependentUpon>201806230905454_addTable_HashTag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806230915486_renameColumn_Title.resx">
+      <DependentUpon>201806230915486_renameColumn_Title.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806271855329_addTable_Group.resx">
+      <DependentUpon>201806271855329_addTable_Group.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

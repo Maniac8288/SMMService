@@ -38,36 +38,36 @@
                     console.log(e);
 
                 },
-                eventSources: ViewModel.Posts().map(function (item) { return item.GetDataCalendar() })
-                    //[
-                    //// your event source
-                    //{
-                    //    events: [ // put the array in the `events` property
-                    //        {
-                    //            title: 'Lorem  dolor sit 1',
-                    //            start: '2018-06-05',
-                    //            icon: "vk"
-                    //        },
-                    //    ],
-                    //    className: 'active'
+                eventSources: /*ViewModel.Posts().map(function (item) { return item.GetDataCalendar() })*/
+                    [
+                    // your event source
+                    {
+                        events: [ // put the array in the `events` property
+                            {
+                                title: 'Lorem  dolor sit 1',
+                                start: '2018-06-05',
+                                icon: "vk"
+                            },
+                        ],
+                        className: 'active'
 
-                    //},
+                    },
 
-                    //{
-                    //    events: [ // put the array in the `events` property
-                    //        {
-                    //            title: 'Lorem ipsum dolor sit 1',
-                    //            start: '2018-04-06',
-                    //            icon: 'facebook'
-                    //        },
+                    {
+                        events: [ // put the array in the `events` property
+                            {
+                                title: 'Lorem ipsum dolor sit 1',
+                                start: '2018-06-05',
+                                icon: 'facebook'
+                            },
 
-                    //    ],
-                    //    className: 'wait'
+                        ],
+                        className: 'wait'
 
-                    //},
-                    //// any other event sources...
+                    },
+                    // any other event sources...
 
-                    //]
+                    ]
                 ,
                 eventRender: function (event, element) {
                     if (event.icon) {
@@ -94,7 +94,8 @@
                     month: "Месяц",
                     week: "Неделя",
                     day: "День"
-                }
+                },
+
             });
         });
     </script>

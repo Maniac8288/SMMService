@@ -23,7 +23,8 @@ namespace SMM.Web.Controllers
             var projects =  _projectService.GetListProjects(userId);
             var model = new HomeModel()
             {
-                Projects = projects
+                Projects = projects,
+                Groups = _userService.GetGroups(userId)
             };
                 
             return View(model);
@@ -160,6 +161,27 @@ namespace SMM.Web.Controllers
             }
             return RedirectToAction("Index");
         }
+        #endregion
+
+        #region Группы
+
+        /// <summary>
+        /// Создание группы
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult CreateGroup(string name)
+        {
+            var userId = new WebUser().UserId;
+            var checkAuth = _userService.CheckAuthUser(userId);
+            if (!checkAuth.IsSuccess)
+                return Json(checkAuth);
+            var response = _userService.CreateGroup(name, userId);
+            return Json(response);
+        }
+
+
         #endregion
     }
 }

@@ -51,6 +51,10 @@ namespace SMM.Data.Models
         /// Дополнительные карточки в виде JSON строки
         /// </summary>
         public string JsonCards { get; set; }
+        /// <summary>
+        /// Ид группы 
+        /// </summary>
+        public int? GroupId { get; set; }
 
         #region Связанные объекты
         /// <summary>
@@ -61,6 +65,14 @@ namespace SMM.Data.Models
         /// Список постов
         /// </summary>
         public List<Post> Posts { get; set; }
+        /// <summary>
+        /// Хэштэги которые прендалжит проекту
+        /// </summary>
+        public List<Hashtag> Hashtags { get; set; }
+        /// <summary>
+        /// Группа проекта
+        /// </summary>
+        public Group Group { get; set; }
         #endregion
     }
 }

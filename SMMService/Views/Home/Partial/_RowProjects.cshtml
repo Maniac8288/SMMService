@@ -1,0 +1,78 @@
+﻿<div class="list-group">
+
+    <div class="section-group col-md-12">
+        <div class="title-group"></div>
+        <!--ko foreach:ViewModel.Projects-->
+        <div class="groups ">
+
+            <div class="col-md-9 grey-block">
+
+                <div>
+                    <a data-bind="attr:{href:'@Url.Action("Settings","Client")/'+Id()}">
+                        <img style="width: 301px" data-bind="attr:{src:ImageUrl()}" />
+                    </a>
+                </div>
+                <div class="group-info">
+                    <span><i class="icon icon-star active"></i></span>
+                    <span class="title" data-bind="text:Name"></span>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+                <div class="list-users">
+                    <div class="user">
+                        <div class="image-circle"></div>
+                        <span class="name">A</span>
+                    </div>
+                    <div class="user">
+                        <div class="image-circle"></div>
+                    </div>
+                    <div class="user">
+                        <div class="image-circle"></div>
+                    </div>
+                    <div class="user">
+                        <div class="image-circle"></div>
+                        <span class="name">K</span>
+                    </div>
+                    <div class="setting">
+                        <div class="dropdown">
+                            <a id="drop-setting" role="button" data-toggle="dropdown" href="#">    <i class="icon-settings"></i></a>
+
+                            <ul class="dropdown-menu users-menu" role="menu" aria-labelledby="drop-setting">
+
+                                <li>
+                                    <div class="title black">
+                                        Сменить группу
+                                    </div>
+                                </li>
+                                <li class="user row">
+                                    <div>Без группы</div>
+                                </li>
+                                <li class="user row">
+                                    <div>Группа 1</div>
+                                </li>
+                                <li class="user row">
+                                    <div>Группа 2</div>
+                                </li>
+                                <li class="user row">
+                                    <div>Группа 3</div>
+                                </li>
+                                <li class="user row">
+                                    <div>Архивировать</div>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ko-->
+
+    </div>
+
+
+
+</div>

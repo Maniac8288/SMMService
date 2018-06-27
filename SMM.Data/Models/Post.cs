@@ -61,6 +61,10 @@ namespace SMM.Data.Models
         /// Комментарии
         /// </summary>
         public List<Comment> Comments { get; set; }
+        /// <summary>
+        /// Хэштэги поста
+        /// </summary>
+        public List<Hashtag> Hashtags { get; set; }
         #endregion
     }
 }

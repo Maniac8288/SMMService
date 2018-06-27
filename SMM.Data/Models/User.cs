@@ -43,6 +43,10 @@ namespace SMM.Data.Models
         /// Комментарии
         /// </summary>
         public List<Comment> Comments { get; set; }
+        /// <summary>
+        /// Список групп которые есть у пользователя 
+        /// </summary>
+        public List<Group> Groups { get; set; }
         #region Связь с социальными сетями
         /// <summary>
         /// Связь с пользователем ОК

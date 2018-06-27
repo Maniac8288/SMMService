@@ -20,6 +20,9 @@ namespace SMM.Web.Controllers
         {
             return View();
         }
+
+
+        #region Создание/Редактирование проекта
         /// <summary>
         /// Создать проект
         /// </summary>
@@ -34,7 +37,7 @@ namespace SMM.Web.Controllers
             return Json(response);
         }
         /// <summary>
-        /// Создать проект
+        /// Редактировать проект
         /// </summary>
         [HttpPost]
         public ActionResult EditProject(ProjectModel model)
@@ -48,6 +51,9 @@ namespace SMM.Web.Controllers
             }
             return Json(response);
         }
+        #endregion
+
+
         /// <summary>
         /// Получить проекты пользователя
         /// </summary>
@@ -86,6 +92,20 @@ namespace SMM.Web.Controllers
         public ActionResult EditInfo(ProjectModel model)
         {
             var response = _projectService.EditInfoProject(model);
+            return Json(response);
+        }
+        #endregion
+
+        #region Группы 
+        /// <summary>
+        /// Установить группу проекту
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        public ActionResult SetGroup(int projectId, int? groupId)
+        {
+            var response = _projectService.SetGroup(projectId, groupId);
             return Json(response);
         }
         #endregion

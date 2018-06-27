@@ -1,6 +1,7 @@
 ﻿using SMM.IServices.Enums;
 using SMM.IServices.Models.Responses;
 using SMM.IServices.Models.User;
+using SMM.IServices.Models.User.Group;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,6 +84,21 @@ namespace SMM.IServices.Interface
         /// <param name="userId"></param>
         /// <returns></returns>
         BaseResponse<string> GetUidUserOK(int userId);
+        #endregion
+        #region Работа с группами пользователя
+        /// <summary>
+        /// Создать группы
+        /// </summary>
+        /// <param name="name">Название группы</param>
+        /// <param name="userId">Ид создателя</param>
+        /// <returns></returns>
+        BaseResponse CreateGroup(string name, int userId);
+        /// <summary>
+        /// Получить список груп пользователя
+        /// </summary>
+        /// <param name="userId">Ид пользователя</param>
+        /// <returns></returns>
+        List<GroupModel> GetGroups(int userId);
         #endregion
     }
 }

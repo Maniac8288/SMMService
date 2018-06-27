@@ -219,6 +219,8 @@
     <Content Include="asserts\js\Common\DateInit.js" />
     <Content Include="asserts\js\Forms\Home\HomeViewModel.js" />
     <Content Include="asserts\js\Forms\Layout\LayoutViewModel.js" />
+    <Content Include="asserts\js\Forms\Project\Group\GroupModel.js" />
+    <Content Include="asserts\js\Forms\Project\HashTagModel.js" />
     <Content Include="asserts\js\Forms\Project\ProjectCardsModel.js" />
     <Content Include="asserts\js\Forms\Project\ProjectInfoModel.js" />
     <Content Include="asserts\js\Forms\Project\ProjectInfoViewModel.js" />
@@ -226,6 +228,7 @@
     <Content Include="asserts\js\Forms\Project\ProjectViewModel.js" />
     <Content Include="asserts\js\knockoutExtensions\knockout-emoji.js" />
     <Content Include="asserts\js\knockoutExtensions\knockout-enterKey.js" />
+    <Content Include="asserts\js\knockoutExtensions\knockout-hashTag.js" />
     <Content Include="asserts\js\knockoutExtensions\knockout-hightchart.js" />
     <Content Include="asserts\js\knockoutExtensions\knockout-socialName.js" />
     <Content Include="asserts\js\plugins\Calendar\fullcalendar.min.css" />
@@ -366,6 +369,10 @@
     <Content Include="Views\Client\Team.cshtml" />
     <Content Include="Views\Home\ErrorAuth.cshtml" />
     <Content Include="Views\Project\SettingInfo.cshtml" />
+    <Content Include="Views\Home\Popup\_AddProject.cshtml" />
+    <Content Include="Views\Home\Popup\_AddGroup.cshtml" />
+    <Content Include="Views\Home\Partial\_RowProjects.cshtml" />
+    <Content Include="Views\Home\Partial\_SquadProjects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

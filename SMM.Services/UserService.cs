@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Data.Entity;
+using SMM.IServices.Models.User.Group;
 
 namespace SMM.Services
 {
@@ -318,6 +319,63 @@ namespace SMM.Services
             }
         }
 
+        #endregion
+
+
+        #region Работа с группами пользователя
+        /// <summary>
+        /// Создать группы
+        /// </summary>
+        /// <param name="name">Название группы</param>
+        /// <param name="userId">Ид создателя</param>
+        /// <returns></returns>
+        public BaseResponse CreateGroup(string name, int userId)
+        {
+            try
+            {
+                using (var db = new DataContext())
+                {
+                    if (db.Groups.Any(x => x.Name == name && x.UserId == userId))
+                        return new BaseResponse<int>(EnumResponseStatus.ValidationError, "Группа с таким названием уже существуеет");
+                    var grp = new Group()
+                    {                       
+                        Name = name,
+                        UserId = userId,                        
+                    };
+                    db.Groups.Add(grp);
+                    db.SaveChanges();
+                    return new BaseResponse(EnumResponseStatus.Success, "Группа успешно создан");
+                }
+            }
+            catch (Exception e)
+            {
+                return new BaseResponse(EnumResponseStatus.Exception, e.Message);
+            }
+        }
+        /// <summary>
+        /// Получить список груп пользователя
+        /// </summary>
+        /// <param name="userId">Ид пользователя</param>
+        /// <returns></returns>
+        public List<GroupModel> GetGroups(int userId)
+        {
+            using(var db = new DataContext())
+            {
+                return db.Groups.Where(x => x.UserId == userId).Select(ConvertGroup).ToList();
+            }
+        }
+
+        #region Конвертирование 
+        private GroupModel ConvertGroup(Group model)
+        {
+            return new GroupModel
+            {
+                Id = model.Id,
+                Name = model.Name,
+                UserId = model.UserId
+            };
+        }
+        #endregion
         #endregion
     }
 }

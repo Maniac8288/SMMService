@@ -907,6 +907,9 @@ input:checked + .switcher:before {
 .group-setting {
     margin-bottom: 20px;
 }
+.group-setting .setting{
+    position:relative;
+}
 
     .group-setting .title-setting {
         font-size: 16px;

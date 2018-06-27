@@ -4,7 +4,7 @@
     ViewBag.Title = "Settings";
 }
 @section Scripts {
-
+<script src="~/asserts/js/Forms/Project/HashTagModel.js"></script>
     <script src="~/asserts/js/Forms/Project/ProjectCardsModel.js"></script>
     <script src="~/asserts/js/Forms/Project/ProjectInfoModel.js"></script>
     <script src="~/asserts/js/Forms/Project/ProjectInfoViewModel.js"></script>
@@ -21,10 +21,34 @@
     <div class="col-md-7" data-bind="with:Project">
         <div class="group-setting">
             <div class="title-setting">
+                <span>Хэштэги страницы</span>
+            </div>
+            <div class="setting">
+                <input data-bind="textInput:HashtagTitle,hashTag:HashtagTitle" />
+                <button class="blue-btn active" data-bind="click:AddHashTag">Добавить</button>
+            </div>
+            <div>
+                <!--ko foreach:Hashtags-->
+                <div>
+                    <span data-bind="text:Title"></span>
+                </div>
+                <!--/ko-->
+            </div>
+        </div>
+        <div class="group-setting">
+            <div class="title-setting">
                 <span>Основная информация</span>
             </div>
             <div class="setting">
+                <!--ko if:EditMainInfo-->
                 <textarea class="text-box text-box-big" data-bind="textInput:MainInfo"></textarea>
+                <!--/ko-->
+                <!--ko ifnot:EditMainInfo-->
+                <p data-bind="text:MainInfo">
+                </p>
+                <!--/ko-->
+                <!--todo: сделать специальный класс для этого карандаша-->
+                <i class="icon-pen" data-bind="click:EditMainInfo.bind($data,true)"></i>
             </div>
         </div>
         <div class="group-setting">
@@ -32,7 +56,15 @@
                 <span>Дополнительная информация</span>
             </div>
             <div class="setting">
+                <!--ko if:EditAdditionalInfo-->
                 <textarea class="text-box" data-bind="textInput:AdditionalInfo"></textarea>
+                <!--/ko-->
+                <!--ko ifnot:EditAdditionalInfo-->
+                <p data-bind="text:AdditionalInfo">
+                </p>
+                <i class="icon-pen" data-bind="click:EditAdditionalInfo.bind($data,true)"></i>
+                <!--/ko-->
+
             </div>
         </div>
         <!--ko foreach:JsonCards -->

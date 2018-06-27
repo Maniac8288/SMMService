@@ -1,0 +1,18 @@
+﻿
+<div class="modal fade add" id="addGroup" data-bind="with:ViewModel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body add-project-body">
+                <div class="input-block">
+                    <input type="text" name="name" placeholder="Введите название группы" data-bind="textInput:NewGroup.Name" />
+                </div>
+                <div class="input-block">
+                    <span class="error" data-bind="text:ErrorCreateGroup"></span>
+                </div>
+                <div>
+                    <button class="blue-btn-active" data-bind="click:CreateGroup">Добавить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

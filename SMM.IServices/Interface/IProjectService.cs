@@ -42,5 +42,14 @@ namespace SMM.IServices.Interface
         /// <param name="model"></param>
         /// <returns></returns>
         BaseResponse EditInfoProject(ProjectModel model);
+        #region Группы 
+        /// <summary>
+        /// Установить группу
+        /// </summary>
+        /// <param name="projectId">Ид проекта</param>
+        /// <param name="groupId">Ид группы</param>
+        /// <returns></returns>
+        BaseResponse SetGroup(int projectId, int? groupId);
+        #endregion
     }
 }

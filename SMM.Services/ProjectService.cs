@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Configuration;
+using System.Data.Entity;
 
 namespace SMM.Services
 {
@@ -59,14 +60,15 @@ namespace SMM.Services
             {
                 using (var db = new DataContext())
                 {
-                    var project = db.Projects.FirstOrDefault(x => x.Id == model.Id);
+                    var project = db.Projects.Include(x => x.Hashtags).FirstOrDefault(x => x.Id == model.Id);
                     if (project == null)
                         return new BaseResponse(EnumResponseStatus.Error, "Проект не найден");
                     if (project.CreatorId != userId)
                         return new BaseResponse(EnumResponseStatus.Error, "Вы не являетесь автором данного проекта");
                     project.GroupOK = model.GroupOK;
                     project.GroupVk = model.GroupVk;
-                    project.Name = model.Name;        
+                    project.Name = model.Name;
+
                     db.SaveChanges();
                     return new BaseResponse();
                 }
@@ -85,14 +87,14 @@ namespace SMM.Services
         {
             using (var db = new DataContext())
             {
-                var project = db.Projects.FirstOrDefault(x => x.Id == id);
+                var project = db.Projects.Include(x => x.Hashtags).FirstOrDefault(x => x.Id == id);
                 if (project == null)
                     return new BaseResponse<ProjectModel>(EnumResponseStatus.Error, "Проект не был найден");
                 var response = ConvertToProjectModel(project);
                 return new BaseResponse<ProjectModel>(EnumResponseStatus.Success, response);
             }
         }
-    
+
         /// <summary>
         /// Получить список проектов 
         /// </summary>
@@ -102,9 +104,45 @@ namespace SMM.Services
         {
             using (var db = new DataContext())
             {
-                return db.Projects.Where(x => x.CreatorId == userId).Select(ConvertToProjectModel).ToList();
+                return db.Projects.Include(x => x.Hashtags).Where(x => x.CreatorId == userId).Select(ConvertToProjectModel).ToList();
             }
         }
+
+        #region Группы 
+        /// <summary>
+        /// Установить группу
+        /// </summary>
+        /// <param name="projectId">Ид проекта</param>
+        /// <param name="groupId">Ид группы</param>
+        /// <returns></returns>
+        public BaseResponse SetGroup(int projectId, int? groupId)
+        {
+            try
+            {
+                using (var db = new DataContext())
+                {
+                    var project = db.Projects.FirstOrDefault(x => x.Id == projectId);
+                    #region Валидация                     
+                    if (project == null)
+                        return new BaseResponse(EnumResponseStatus.ValidationError, "Проект не найден");
+                    if (groupId != null)
+                    {
+                        var grp = db.Groups.FirstOrDefault(x => x.Id == groupId);
+                        if (grp == null)
+                            return new BaseResponse(EnumResponseStatus.ValidationError, "Группа не найдена");
+                    }
+                    #endregion
+                    project.GroupId = groupId;
+                    db.SaveChanges();
+                    return new BaseResponse(EnumResponseStatus.Success, "Успешно");
+                }
+            }
+            catch (Exception e)
+            {
+                return new BaseResponse(EnumResponseStatus.Exception, e.Message);
+            }
+        }
+        #endregion
 
         #region Подробная информация о проекте 
         /// <summary>
@@ -116,19 +154,30 @@ namespace SMM.Services
         {
             try
             {
-                using(var db = new DataContext())
+                using (var db = new DataContext())
                 {
-                    var project = db.Projects.FirstOrDefault(x => x.Id == model.Id);
+                    var project = db.Projects.Include(x => x.Hashtags).FirstOrDefault(x => x.Id == model.Id);
                     if (project == null)
                         return new BaseResponse(EnumResponseStatus.Error, "Проект не найден");
                     project.AdditionalInfo = model.AdditionalInfo;
                     project.MainInfo = model.MainInfo;
                     project.JsonCards = model.JsonCards;
+                    foreach (var tag in model.Hashtags)
+                    {
+                        if (tag.Id == 0)
+                        {
+                            project.Hashtags.Add(new Hashtag()
+                            {
+                                ProjectId = project.Id,
+                                Title = tag.Title,
+                            });
+                        }
+                    }
                     db.SaveChanges();
-                    return new BaseResponse(EnumResponseStatus.Success,"Информация о проекте успешно изменена");
+                    return new BaseResponse(EnumResponseStatus.Success, "Информация о проекте успешно изменена");
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return new BaseResponse(EnumResponseStatus.Exception, e.Message);
             }
@@ -138,7 +187,7 @@ namespace SMM.Services
         #region Конвертирование 
         private ProjectModel ConvertToProjectModel(Project m)
         {
-            var path = System.Web.HttpContext.Current.Server.MapPath(WebConfigurationManager.AppSettings["ProjectImage"]+m.Id+"/Image/");
+            var path = System.Web.HttpContext.Current.Server.MapPath(WebConfigurationManager.AppSettings["ProjectImage"] + m.Id + "/Image/");
             return new ProjectModel
             {
                 Id = m.Id,
@@ -150,7 +199,14 @@ namespace SMM.Services
                 ImageUrl = FileService.GetImageProject(path, m.Id),
                 AdditionalInfo = m.AdditionalInfo,
                 MainInfo = m.MainInfo,
-                JsonCards = m.JsonCards
+                JsonCards = m.JsonCards,
+                Hashtags = m.Hashtags?.Select(x => new HashtagModel()
+                {
+                    Id = x.Id,
+                    ProjectId = x.ProjectId,
+                    Title = x.Title
+                }).ToList(),
+                GroupId = m.GroupId
             };
         }
         #endregion
