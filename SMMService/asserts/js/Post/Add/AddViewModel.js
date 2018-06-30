@@ -6,8 +6,10 @@ Post.Add = Post.Add || {};
     Post.Add.AddViewModel = function (theParams) {
         theParams = theParams || {};
         this.UrlPublicNow = theParams.UrlPublicNow;
-        this.Post = new Post.PostModel(theParams.Post);
+        this.Post = ko.observable(new Post.PostModel(theParams.Post));
         this.Project = new Project.ProjectModel(theParams.Project)
+
+        this.HashTagsSelected = ko.observableArray([]);        
         return this;
     };
 
@@ -18,7 +20,7 @@ Post.Add = Post.Add || {};
 
     Post.Add.AddViewModel.prototype.Public = function (status) {
         var self = this;
-        var fd = this.Post.GetFormData();
+        var fd = this.Post().GetFormData();
         fd.append("ProjectId", this.Project.Id());
         fd.append("Status", status);
         $.ajax({
@@ -40,6 +42,15 @@ Post.Add = Post.Add || {};
 
     Post.Add.AddViewModel.prototype.fileUpload = function (data, e) {
         var self = this;
-        this.Post.ImageFile(e.target.files[0]);
+        this.Post().ImageFile(e.target.files[0]);
     };
+    Post.Add.AddViewModel.prototype.VideoUpload = function (data, e) {
+        var self = this;
+        this.Post().VideoFile(e.target.files[0]);
+    };
+    Post.Add.AddViewModel.prototype.AddHashtag = function (hashTag) {
+        this.HashTagsSelected.push(hashTag);
+        this.Post().Content(this.Post().Content() + " " + hashTag.Title() + " ")
+        $(".emojionearea-editor").html(this.Post().Content());
+    }
 })();

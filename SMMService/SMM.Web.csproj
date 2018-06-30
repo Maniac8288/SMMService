@@ -373,6 +373,7 @@
     <Content Include="Views\Home\Popup\_AddGroup.cshtml" />
     <Content Include="Views\Home\Partial\_RowProjects.cshtml" />
     <Content Include="Views\Home\Partial\_SquadProjects.cshtml" />
+    <Content Include="Views\Shared\_Partial\_HeadProjects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

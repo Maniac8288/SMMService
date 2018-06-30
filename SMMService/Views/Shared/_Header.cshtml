@@ -5,53 +5,7 @@
 
 <div class="navbar header navbar-fixed-top">
     <div class="container">
-        <div class="navbar-header">
-            @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>*@
-            <div class="dropdown">
-                <a id="drop-setting" class="navbar-brand" role="button" data-toggle="dropdown" href="#">Проекты</a>
-
-                <ul class="dropdown-menu project-menu" role="menu" aria-labelledby="drop-setting">
-
-                    <li>
-                        <div align="center" class="archiv-projects">
-                            <span>Архивированные проекты</span>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div align="center">
-                            <input type="text" class="search-project" placeholder="Поиск по названию..." />
-                        </div>
-                    </li>
-               
-                    <li class="title-section">
-                        <i class="icon-star-mini"></i>
-                        <span class="title">Избранные</span>
-                    </li>
-                    <!--ko foreach:LayoutViewModel.Projects-->
-                   
-                    <li class="project col-md-12">
-                        <a  data-bind="attr:{href:'@Url.Action("Settings","Client")/'+Id()}">
-                            <div>
-                                <img data-bind="attr:{src:ImageUrl}" />
-                                <div class="project-info">
-                                    <span><i class="icon icon-star-gold"></i></span>
-                                    <span class="title" data-bind="text:Name"> </span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <!--/ko-->
-                  
-
-                </ul>
-            </div>
-            @*@Html.ActionLink("Проекты", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
-        </div>
+        @Html.Partial("~/Views/Shared/_Partial/_HeadProjects.cshtml")
         <div class="pull-right">
             <ul class="nav header-menu">
                 <li class="nav-item">

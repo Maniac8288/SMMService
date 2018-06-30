@@ -5,6 +5,7 @@ using SMM.Social.Models.OK;
 using SMM.Social.Models.OK.Group;
 using SMM.Social.Models.OK.Photos;
 using SMM.Social.Models.OK.Publication;
+using SMM.Social.Models.OK.Video;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -50,7 +51,7 @@ namespace SMM.Social.Services
         /// <summary>
         /// Доступ к
         /// </summary>
-        private static string scope = "VALUABLE_ACCESS,GROUP_CONTENT,GET_EMAIL,PHOTO_CONTENT";
+        private static string scope = "VALUABLE_ACCESS,GROUP_CONTENT,GET_EMAIL,PHOTO_CONTENT,VIDEO_CONTENT";
         /// <summary>
         /// Ссылка для использование методов апи
         /// </summary>
@@ -334,9 +335,9 @@ namespace SMM.Social.Services
                 return new BaseResponseSocial<ModelPhoto>(EnumResponseStatusSocial.Exception, e.Message);
             }
         }
-
+        
         /// <summary>
-        /// 
+        /// Получить ссылку для загрзки фотографий
         /// </summary>
         /// <param name="access_token"></param>
         /// <param name="uid">Идентификатор пользователя, фотографии которого требуется добавить. Укажите uid при вызове этого метода без ключа сессии.</param>
@@ -392,6 +393,71 @@ namespace SMM.Social.Services
             catch (Exception e)
             {
                 return new BaseResponseSocial<string>(EnumResponseStatusSocial.Exception, e.Message);
+            }
+        }
+        public BaseResponseSocial UploadVideo(string uploadUrl, string filePath, string photoId)
+        {
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    var response = client.UploadFile(uploadUrl, filePath);
+                    string content = client.Encoding.GetString(response);
+                    //var obj = JObject.Parse(content);
+                    //var value = (string)obj.SelectToken($"$.photos.{photoId}.token");
+
+                    return new BaseResponseSocial();
+                }
+            }
+            catch (Exception e)
+            {
+                return new BaseResponseSocial<string>(EnumResponseStatusSocial.Exception, e.Message);
+            }
+        }
+        #endregion
+
+        #region Работа с видео
+        /// <summary>
+        /// Получить ссылку для загрзки видео
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="uid">Идентификатор пользователя, фотографии которого требуется добавить. Укажите uid при вызове этого метода без ключа сессии.</param>
+        /// <returns></returns>
+        public BaseResponseSocial<ResponseGetVideoUploadUrl> GetVideoUploadUrl(string access_token,string file_name, long file_size, string gid)
+        {
+            try
+            {
+                var param = $"application_key={appKey}file_name={file_name}file_size={file_size.ToString()}format=jsongid={gid}method=video.getUploadUrl";
+                var sig = getSign(param, access_token);
+                using (var webClient = new WebClient())
+                {
+                    // Создаём коллекцию параметров
+                    var pars = new NameValueCollection();
+
+                    // Добавляем необходимые параметры в виде пар ключ, значение
+                    pars.Add("application_key", appKey);
+                    pars.Add("file_name", file_name);
+                    pars.Add("file_size", file_size.ToString());
+                    pars.Add("format", "json");
+                    pars.Add("gid", gid);
+               
+                          
+                    pars.Add("method", "video.getUploadUrl");
+                    pars.Add("sig", sig);
+                    pars.Add("access_token", access_token);
+                    // Посылаем параметры на сервер
+                    // Может быть ответ в виде массива байт
+                    webClient.Encoding = Encoding.UTF8;
+                    var response = webClient.UploadValues(methodsUrl, pars);
+                    string content = webClient.Encoding.GetString(response);
+                    var model = JsonConvert.DeserializeObject<ResponseGetVideoUploadUrl>(content);
+
+                    return new BaseResponseSocial<ResponseGetVideoUploadUrl>(model);
+                }
+            }
+            catch (Exception e)
+            {
+                return new BaseResponseSocial<ResponseGetVideoUploadUrl>(EnumResponseStatusSocial.Exception, e.Message);
             }
         }
         #endregion

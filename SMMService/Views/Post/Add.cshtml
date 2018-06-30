@@ -62,7 +62,7 @@
                             <span class="fileinput-new">
                                 <img src="~/asserts/img/icons/videos-mini.png" />
                                 Видео
-                            </span><span class="fileinput-exists">Change</span><input type="file" multiple name="...">
+                            </span><span class="fileinput-exists">Change</span><input type="file" multiple name="..."  data-bind="event: {change: ViewModel.VideoUpload.bind(ViewModel)}">
                         </span>
 
                     </div>
@@ -84,8 +84,26 @@
             </div>
         </div>
         <div class="text-box-post">
-            <textarea placeholder="Введите текст..." data-bind="textInput:Content,emoji:Content"></textarea>
-            <span class="hashtags">#хэштэги</span>
+           
+            <textarea placeholder="Введите текст..." id="test" data-bind="value:Content,emoji:Content"></textarea>
+            <div class="dropdown">
+                <span id="drop-hashtags" role="button" data-toggle="dropdown" class="hashtags">#хэштэги</span>
+                <ul class="dropdown-menu project-menu" role="menu" aria-labelledby="drop-hashtags" data-bind="with:ViewModel.Project">
+
+                    <!--ko if:Hashtags().length !== 0-->
+                    <!--ko foreach:Hashtags-->
+                    <li >
+                        <a  data-bind="text:Title,click:ViewModel.AddHashtag.bind(ViewModel,$data)"> </a>
+                    </li>
+                    <!--/ko-->
+                    <!--/ko-->
+                    <!--ko if:Hashtags().length === 0-->
+                    <li>
+                        Хэш тэги отстуствуют, добавте их в <a href="@Url.Action("SettingInfo","Project",new { id=Model.Id})"> настройках проекта</a>
+                    </li>
+                    <!--/ko-->
+                </ul>
+            </div>
         </div>
         <div class="title-section">
             Выберите в какие соц. сети опубликовать пост:

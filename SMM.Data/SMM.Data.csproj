@@ -116,6 +116,10 @@
     <Compile Include="Migrations\201806271855329_addTable_Group.Designer.cs">
       <DependentUpon>201806271855329_addTable_Group.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806301546445_AddColumn_IsFavorite_IsArhive_IN_Project.cs" />
+    <Compile Include="Migrations\201806301546445_AddColumn_IsFavorite_IsArhive_IN_Project.Designer.cs">
+      <DependentUpon>201806301546445_AddColumn_IsFavorite_IsArhive_IN_Project.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Group.cs" />
@@ -183,6 +187,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806271855329_addTable_Group.resx">
       <DependentUpon>201806271855329_addTable_Group.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806301546445_AddColumn_IsFavorite_IsArhive_IN_Project.resx">
+      <DependentUpon>201806301546445_AddColumn_IsFavorite_IsArhive_IN_Project.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

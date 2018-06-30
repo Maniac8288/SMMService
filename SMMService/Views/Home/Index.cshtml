@@ -6,10 +6,12 @@
     <script src="~/asserts/js/Forms/Home/HomeViewModel.js"></script>
     <script>
         var urlSetGroup = '@Url.Action("SetGroup","Project")';
+        var urlSetFavorite = '@Url.Action("SetFavorite","Project")';
 
         var params = {};
         params.UrlCreateProject = '@Url.Action("CreateProject","Project")';
         params.UrlProject = '@Url.Action("Settings", "Client")';
+        params.UrlSetArhive = '@Url.Action("SetArhive", "Project")';
         params.Projects =  @Html.Raw(JsonConvert.SerializeObject(Model.Projects));
         params.Groups =  @Html.Raw(JsonConvert.SerializeObject(Model.Groups));
         params.UrlCreateGroup = '@Url.Action("CreateGroup","Home")';

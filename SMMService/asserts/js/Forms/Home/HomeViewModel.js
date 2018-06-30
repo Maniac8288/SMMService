@@ -4,13 +4,13 @@
 
     Home.HomeViewModel = function (theParams) {
         theParams = theParams || {};
-        if (!theParams.UrlCreateProject || !theParams.UrlProject || !theParams.UrlCreateGroup)
+        if (!theParams.UrlCreateProject || !theParams.UrlProject || !theParams.UrlCreateGroup || !theParams.UrlSetArhive)
             console.error("В параметры HomeViewModel не переданы все ссылки");
 
         this.UrlCreateProject = theParams.UrlCreateProject;
         this.UrlProject = theParams.UrlProject;
         this.UrlCreateGroup = theParams.UrlCreateGroup;
-
+        this.UrlSetArhive = theParams.UrlSetArhive;
 
         this.NewProject = new Project.ProjectModel();
         this.ErrorCreateProject = ko.observable("");
@@ -23,6 +23,12 @@
         this.ErrorCreateGroup = ko.observable("");
 
         this.Groups = ko.observable(theParams.Groups ? theParams.Groups.map(function (item) { return new Project.Group.GroupModel(item) }) : []);
+        var self = this;
+        // Слушаем событие
+        document.addEventListener('SetFavorite', function (e) {
+            var project = self.Projects().filter(function (item) { return item.Id() == e.detail.Id })[0];
+            project.IsFavorite(e.detail.IsFavorite);
+        }, false)
         return this;
     };
 
@@ -75,5 +81,21 @@
                 console.error(error);
             })
     }
-
+    /**
+  * Архивировать
+  */
+    Home.HomeViewModel.prototype.SetArchive = function (projectId) {   
+        var self = this;
+        $.post(this.UrlSetArhive, { projectId: projectId, isArhive: true }).done(function (res) {
+            if (res.IsSuccess) {
+                self.Projects(self.Projects().filter(function (item) { return item.Id() != projectId }));
+                var eventSetArhive = new CustomEvent('SetArhive', { 'detail': { Id: projectId, IsArhive: true } });
+                document.dispatchEvent(eventSetArhive)
+            }
+            else
+                console.log(res.Message);
+        }).fail(function (res) {
+            console.error(res);
+        });
+    }
 })();

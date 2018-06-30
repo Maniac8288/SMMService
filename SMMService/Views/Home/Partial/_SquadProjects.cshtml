@@ -8,11 +8,10 @@
 
                     </span>
                     <img data-bind="attr:{src:ImageUrl()}" />
-                    <span class="favorit"><i class="icon-star active"></i></span>
+                    <span class="favorit" data-bind="click:SetFavorite"><i class="icon-star" data-bind="css:{'active':IsFavorite()}"></i></span>
                 </div>
             </a>
             <div class="menu-clients">
-
                 <div class="list-users">
                     <div class="user">
                         <div class="image-circle"></div>
@@ -40,7 +39,7 @@
                                     </div>
                                 </li>
                                 
-                                <li class="user row" data-bind="click:SetGroup.bind($data,'')">
+                                <li class="user row" data-bind="click:SetGroup.bind($data,'','')">
                                     <div>Без группы</div>
                                     <!--ko if:GroupId() == ''-->
                                     <span class="active-group"></span>
@@ -48,14 +47,14 @@
                                 </li>
                                 <!--ko foreach:ViewModel.Groups-->
                                 
-                                <li class="user row" data-bind="click:$parent.SetGroup.bind($parent,Id())">
+                                <li class="user row" data-bind="click:$parent.SetGroup.bind($parent,Id(),Name())">
                                     <div data-bind="text:Name">Группа 1</div>
                                     <!--ko if:$parent.GroupId() == Id()-->
                                     <span class="active-group"></span>
                                     <!--/ko-->
                                 </li>
                                 <!--/ko-->
-                                <li class="user row">
+                                <li class="user row" data-bind="click:ViewModel.SetArchive.bind(ViewModel,Id())">
                                     <div>Архивировать</div>
                                 </li>
 

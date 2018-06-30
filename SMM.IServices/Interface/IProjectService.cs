@@ -30,6 +30,13 @@ namespace SMM.IServices.Interface
         /// <returns></returns>
         List<ProjectModel> GetListProjects(int userId);
         /// <summary>
+        /// Получить список проектов 
+        /// </summary>
+        /// <param name="userId">Ид пользователя </param>
+        /// <param name="search">Слово для поиска по названию проекта </param>
+        /// <returns></returns>
+        List<ProjectModel> GetAllProjects(int userId,string search);
+        /// <summary>
         /// Редактировать проект
         /// </summary>
         /// <param name="userId">Ид пользователя</param>
@@ -43,6 +50,22 @@ namespace SMM.IServices.Interface
         /// <returns></returns>
         BaseResponse EditInfoProject(ProjectModel model);
         #region Группы 
+        /// <summary>
+        /// Установить/Убрать группу в избранные
+        /// </summary>
+        /// <param name="projectId">Ид проекта</param>
+        /// <param name="userId">Ид пользователя</param>
+        /// <param name="IsFavorite">Избранные</param>
+        /// <returns></returns>
+        BaseResponse SetFavorite(int projectId, int userId, bool IsFavorite);
+        /// <summary>
+        /// Установить/Убрать проект из архивированых
+        /// </summary>
+        /// <param name="projectId">Ид проекта</param>
+        /// <param name="userId">Ид пользователя</param>
+        /// <param name="IsArhive">Архивировать или нет</param>
+        /// <returns></returns>
+        BaseResponse SetArhive(int projectId, int userId, bool IsArhive);
         /// <summary>
         /// Установить группу
         /// </summary>

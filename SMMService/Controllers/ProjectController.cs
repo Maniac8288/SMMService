@@ -59,10 +59,10 @@ namespace SMM.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult GetProjectsUser()
+        public ActionResult GetProjectsUser(string search)
         {
             var userId = new WebUser().UserId;
-            var response = _projectService.GetListProjects(userId);
+            var response = _projectService.GetAllProjects(userId,search);
             return Json(response);
         }
 
@@ -97,6 +97,30 @@ namespace SMM.Web.Controllers
         #endregion
 
         #region Группы 
+        /// <summary>
+        /// Установить/Убрать проект в избранные
+        /// </summary>
+        /// <param name="projectId">Ид проекта</param>
+        /// <param name="isFavorite">Является ли избранным</param>
+        /// <returns></returns>
+        public ActionResult SetFavorite(int projectId, bool isFavorite)
+        {
+            var userId = new WebUser().UserId;
+            var response = _projectService.SetFavorite(projectId, userId,isFavorite);
+            return Json(response);
+        }
+        /// <summary>
+        /// Установить/Убрать проект из архива
+        /// </summary>
+        /// <param name="projectId">Ид проекта</param>
+        /// <param name="isArhive">Архивировать или нет</param>
+        /// <returns></returns>
+        public ActionResult SetArhive(int projectId, bool isArhive)
+        {
+            var userId = new WebUser().UserId;
+            var response = _projectService.SetArhive(projectId, userId, isArhive);
+            return Json(response);
+        }
         /// <summary>
         /// Установить группу проекту
         /// </summary>

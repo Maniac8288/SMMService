@@ -18,6 +18,10 @@ namespace SMM.Social.Models.OK.Publication
         /// </summary>
         public string text { get; set; }
         /// <summary>
+        /// Ид видео
+        /// </summary>
+        public string movieId { get; set; }
+        /// <summary>
         /// list - список фотографий
         /// </summary>
         public List<MediaPhotoModel> list { get; set; }

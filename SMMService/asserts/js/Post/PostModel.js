@@ -11,11 +11,13 @@
         this.DatePublicTime = ko.observable(theParams.DatePublicTime || "");
         this.Status = ko.observable(theParams.Status || "");
         this.ImageFile = ko.observable(theParams.ImageFile || "");
+        this.VideoFile = ko.observable(theParams.VideoFile || "");
         this.ImagesUrl = ko.observableArray(theParams.ImagesUrl || "");
         this.Comments = ko.observableArray(theParams.Comments ? theParams.Comments.map(function (item) { return new Post.CommentModel(item) }) : []);
 
         this.PostIdOK = theParams.PostIdOK || "";
         this.PostIdVK = theParams.PostIdVK || "";
+
         return this;
     };
 
@@ -31,6 +33,7 @@
             Content: this.Content(),
             DatePublic: new Date(this.DatePublic() + " " + this.DatePublicTime()).toISOString(),
             ImageFile: this.ImageFile(),
+            VideoFile: this.VideoFile(),
         };
     }
 
@@ -41,6 +44,9 @@
         formData.append("Content", this.Content());
         formData.append("DatePublic", new Date(this.DatePublic() + " " + this.DatePublicTime()).toISOString());
         formData.append("ImageFile", this.ImageFile());
+        formData.append("VideoFile", this.VideoFile());
         return formData;
     }
+
+    
 })();

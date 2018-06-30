@@ -13,7 +13,7 @@
                     </a>
                 </div>
                 <div class="group-info">
-                    <span><i class="icon icon-star active"></i></span>
+                    <span class="favorit" data-bind="click:SetFavorite"><i class="icon-star" data-bind="css:{'active':IsFavorite()}"></i></span>
                     <span class="title" data-bind="text:Name"></span>
                 </div>
 
@@ -46,19 +46,23 @@
                                         Сменить группу
                                     </div>
                                 </li>
-                                <li class="user row">
+
+                                <li class="user row" data-bind="click:SetGroup.bind($data,'','')">
                                     <div>Без группы</div>
+                                    <!--ko if:GroupId() == ''-->
+                                    <span class="active-group"></span>
+                                    <!--/ko-->
                                 </li>
-                                <li class="user row">
-                                    <div>Группа 1</div>
+                                <!--ko foreach:ViewModel.Groups-->
+
+                                <li class="user row" data-bind="click:$parent.SetGroup.bind($parent,Id(),Name())">
+                                    <div data-bind="text:Name">Группа 1</div>
+                                    <!--ko if:$parent.GroupId() == Id()-->
+                                    <span class="active-group"></span>
+                                    <!--/ko-->
                                 </li>
-                                <li class="user row">
-                                    <div>Группа 2</div>
-                                </li>
-                                <li class="user row">
-                                    <div>Группа 3</div>
-                                </li>
-                                <li class="user row">
+                                <!--/ko-->
+                                <li class="user row" data-bind="click:ViewModel.SetArchive.bind(ViewModel,Id())">
                                     <div>Архивировать</div>
                                 </li>
 

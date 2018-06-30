@@ -19,11 +19,12 @@ namespace SMM.Web.Controllers
         private IUserService _userService = new UserService();
         private IPostService _postService = new PostService();
         private IProjectService _projectService = new ProjectService();
-        // GET: Post
+
+        #region GET
         public ActionResult Index(int id)
         {
             var post = _postService.GetPostById(id);
-            if(post.Status == EnumStatusPost.OnVerification)
+            if (post.Status == EnumStatusPost.OnVerification)
             {
                 return RedirectToAction("Verification", "Post", new { id });
             }
@@ -78,7 +79,8 @@ namespace SMM.Web.Controllers
             };
             return View(viewModel);
         }
-
+        #endregion
+        #region POST
         /// <summary>
         /// Опубликовать пост сейчас
         /// </summary>
@@ -108,6 +110,7 @@ namespace SMM.Web.Controllers
             var response = _postService.VerificationPost(userId, postId);
             return Json(response);
         }
+        #endregion
         #region Комментарии
         /// <summary>
         /// Отпарвить комментарий
@@ -146,7 +149,7 @@ namespace SMM.Web.Controllers
             var userId = new WebUser().UserId;
             var response = _postService.DeletePost(userId, postId);
             if (response.IsSuccess)
-                return Json(new { response.IsSuccess, Url = Url.Action("Archive", "Post", new {  projectId }) });
+                return Json(new { response.IsSuccess, Url = Url.Action("Archive", "Post", new { projectId }) });
             return Json(response);
         }
         #endregion

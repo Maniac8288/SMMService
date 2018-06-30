@@ -58,6 +58,7 @@
     <Compile Include="Models\OK\Photos\ResponseGetUploadUrlModel.cs" />
     <Compile Include="Models\OK\Publication\AttachmentModel.cs" />
     <Compile Include="Models\OK\Publication\MediaModel.cs" />
+    <Compile Include="Models\OK\Video\ResponseGetVideoUploadUrl.cs" />
     <Compile Include="Models\Vk\BaseResponse\AccessTokenResponse.cs" />
     <Compile Include="Models\Vk\BaseResponse\BaseResponseVk.cs" />
     <Compile Include="Models\Vk\Group\ModelGroup.cs" />

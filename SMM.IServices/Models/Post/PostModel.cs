@@ -42,14 +42,21 @@ namespace SMM.IServices.Models.Post
         /// Статус пользователя
         /// </summary>
         public EnumStatusPost Status { get; set; }
+        #region Файлы 
         /// <summary>
         /// Файл изображения (для сохранения)
         /// </summary>
         public HttpPostedFileBase ImageFile { get; set; }
         /// <summary>
+        /// Файл с видео
+        /// </summary>
+        public HttpPostedFileBase VideoFile { get; set; }
+        #endregion
+        /// <summary>
         /// Ссылки на фотографию
         /// </summary>
         public List<string> ImagesUrl { get; set; }
+       
         /// <summary>
         /// Комментарии 
         /// </summary>

@@ -112,8 +112,16 @@ namespace SMM.Services
                     };
                     db.Posts.Add(model);
                     db.SaveChanges();
-                    var path = HttpContext.Current.Server.MapPath(WebConfigurationManager.AppSettings["Post"] + model.Id + "/Image/");
-                    FileService.UploadPost(path, post.ImageFile);
+                    if (post.ImageFile != null)
+                    {
+                        var path = HttpContext.Current.Server.MapPath(WebConfigurationManager.AppSettings["Post"] + model.Id + "/Image/");
+                        FileService.UploadPost(path, post.ImageFile);
+                    }
+                    if(post.VideoFile != null)
+                    {
+                        var path = HttpContext.Current.Server.MapPath(WebConfigurationManager.AppSettings["Post"] + model.Id + "/Video/");
+                        FileService.UploadPost(path, post.VideoFile);
+                    }
                     if (post.Status == EnumStatusPost.Published)
                     {
                         post.DatePublic = datePublic;
@@ -322,6 +330,22 @@ namespace SMM.Services
                                     id = response.Value
                                 }
                             }
+                        });
+                    }
+                }
+                if (post.VideoFile != null)
+                {
+                    var videoName = post.VideoFile.FileName;
+                    var fileSize = post.VideoFile.ContentLength;
+                    var videoUploadUrl = client.GetVideoUploadUrl(accessToken.Value.access_token, videoName, fileSize, groupId);
+                    var files = FileService.GetListImagePostForUpload(HttpContext.Current.Server.MapPath(WebConfigurationManager.AppSettings["Post"] + post.Id + "/Video/"));
+                    var response = client.UploadVideo(videoUploadUrl.Value.upload_url, files[0], videoUploadUrl.Value.video_id.ToString());
+                    if (response.IsSuccess)
+                    {
+                        media.Add(new MediaModel
+                        {
+                            type = "movie-reshare",
+                            movieId = videoUploadUrl.Value.video_id.ToString()
                         });
                     }
                 }

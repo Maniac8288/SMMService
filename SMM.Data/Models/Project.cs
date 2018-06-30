@@ -55,6 +55,14 @@ namespace SMM.Data.Models
         /// Ид группы 
         /// </summary>
         public int? GroupId { get; set; }
+        /// <summary>
+        /// Является ли проект избронным
+        /// </summary>
+        public bool IsFavorite { get; set; }
+        /// <summary>
+        /// Находится ли проект в архиве
+        /// </summary>
+        public bool IsArhive { get; set; }
 
         #region Связанные объекты
         /// <summary>

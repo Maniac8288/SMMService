@@ -66,5 +66,17 @@ namespace SMM.IServices.Models.Project
         /// Ид группы
         /// </summary>
         public int? GroupId { get; set; }
+        /// <summary>
+        /// Название группы
+        /// </summary>
+        public string GroupName { get; set; }
+        /// <summary>
+        /// Является ли проект избронным
+        /// </summary>
+        public bool IsFavorite { get; set; }
+        /// <summary>
+        /// Находится ли проект в архиве
+        /// </summary>
+        public bool IsArhive { get; set; }
     }
 }
